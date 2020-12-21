@@ -1,0 +1,19 @@
+<div class="header-statistic">
+</div>
+<div class="header-information">
+  <div *ngIf="$link | async let link">
+    <span>{{link.short}}</span>
+    <span>{{link.original}}</span>
+  </div>
+</div>
+<div class="version-history">
+  <div *ngIf="$linkVersions | async let linkVersions">
+    <div *ngFor="let linkVersion of linkVersions"
+         class="version-wrapper">
+      <div class="version-information">
+        <span>{{linkVersion.original}}</span>
+        <span>{{linkVersion.iat}}</span>
+      </div>
+    </div>
+  </div>
+</div>

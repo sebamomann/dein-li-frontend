@@ -43,7 +43,7 @@ export class AuthenticationService {
   }
 
   public get accessToken() {
-    return this.currentUserValue.token;
+    return this.currentUserValue.session.token;
   }
 
   logout() {
@@ -98,7 +98,7 @@ export class AuthenticationService {
 
   public getRefreshToken() {
     if (this.currentUserValue !== null) {
-      return this.currentUserValue.refreshToken;
+      return this.currentUserValue.session.refreshToken;
     }
 
     return '';
@@ -115,7 +115,7 @@ export class AuthenticationService {
       })
       .pipe(
         map((res) => {
-          this.setAccessToken(res.data.token);
+          this.setAccessToken(res.data.session.token);
         }),
         finalize(() => {
           this.refreshing = false;
@@ -129,7 +129,7 @@ export class AuthenticationService {
 
   private setAccessToken(token: any) {
     const currentUser = this.currentUserValue;
-    currentUser.token = token;
+    currentUser.session.token = token;
 
     this.setCurrentUser(currentUser);
   }

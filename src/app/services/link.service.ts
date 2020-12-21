@@ -1,0 +1,45 @@
+import {Injectable} from '@angular/core';
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
+import {catchError, map} from 'rxjs/operators';
+import {ILink} from '../models/ILink.model';
+import {Observable, of} from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class LinkService {
+
+  constructor(private httpClient: HttpClient) {
+  }
+
+  public loadLinkByShort(short: string): Observable<ILink> {
+    const url = `${environment.API_URL}link/${short}`;
+
+    const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
+
+    return res.pipe(
+      map(response => {
+        return response.body as ILink;
+      }),
+      catchError(() => {
+        return of(null);
+      })
+    );
+  }
+
+  public loadLinkVersions(short: string): Observable<ILink[]> {
+    const url = `${environment.API_URL}link/${short}/version`;
+
+    const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
+
+    return res.pipe(
+      map(response => {
+        return response.body as ILink[];
+      }),
+      catchError(() => {
+        return of(null);
+      })
+    );
+  }
+}
