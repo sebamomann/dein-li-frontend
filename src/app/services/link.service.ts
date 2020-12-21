@@ -73,4 +73,19 @@ export class LinkService {
       })
     );
   }
+
+  public loadLinks(): Observable<ILink[]> {
+    const url = `${environment.API_URL}link/all`;
+
+    const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
+
+    return res.pipe(
+      map(response => {
+        return response.body as ILink;
+      }),
+      catchError(() => {
+        return of(null);
+      })
+    );
+  }
 }

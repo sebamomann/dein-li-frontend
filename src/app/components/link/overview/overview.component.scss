@@ -1,0 +1,42 @@
+.link-list {
+  width: 100%;
+  display: grid;
+  grid-gap: 10% 5%;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+
+  .card-block {
+    border-radius: 8px;
+    background-color: #3D3A3A;
+    color: white;
+    padding: 15px 25px 25px;
+    transition: 0.5s all;
+    position: relative;
+
+    &:hover {
+      transform: scale(1.1);
+      transition: 0.25s all;
+    }
+
+    span {
+      display: block;
+      text-align: center;
+
+      &:first-child {
+        font-size: 1.5em;
+        font-weight: bolder;
+        color: #2976c4;
+      }
+
+      &:nth-child(2) {
+        margin-top: 25px;
+        color: gray;
+        font-style: italic;
+      }
+
+      &.date {
+        bottom: 5px;
+        right: 5px;
+      }
+    }
+  }
+}

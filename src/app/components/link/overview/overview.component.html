@@ -1,1 +1,14 @@
-<p>overview works!</p>
+<h2 class="title">Deine Links</h2>
+
+<main>
+  <div class="link-list" *ngIf="$links | async let links">
+    <ng-container *ngFor="let link of links">
+      <div class="card-block"
+      (click)="redirectToLink(link)">
+        <span>{{link.short}}</span>
+        <span>{{link.original}}</span>
+        <span class="date">{{link.iat | date : 'dd.MM.yyyy'}}</span>
+      </div>
+    </ng-container>
+  </div>
+</main>

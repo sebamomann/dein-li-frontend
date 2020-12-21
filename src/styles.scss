@@ -28,4 +28,13 @@ body {
     position: relative;
     color: #2976c4;
   }
+
+  .date {
+    color: gray;
+    font-size: 0.75em;
+    font-style: italic;
+    position: absolute;
+    bottom: 10px;
+    right: 0;
+  }
 }
