@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChildren} from '@angular/core';
 import {ILink} from '../../models/ILink.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LinkService} from '../../services/link.service';
 import {Observable} from 'rxjs';
 import {ILinkStats} from '../../models/ILinkStats.model';
@@ -44,8 +44,15 @@ export class LinkComponent implements OnInit {
   public lastDay: number;
 
   constructor(private route: ActivatedRoute, private linkService: LinkService,
-              private dialog: MatDialog, private snackBar: MatSnackBar) {
+              private dialog: MatDialog, private snackBar: MatSnackBar,
+              private router: Router) {
     this.route.queryParams.subscribe(params => {
+      if (params.l === undefined) {
+        this.router.navigate(['/link/overview'], {
+          skipLocationChange: true,
+          queryParamsHandling: 'preserve'
+        });
+      }
       this.short = params.l;
     });
   }
