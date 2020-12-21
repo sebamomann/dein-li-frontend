@@ -25,8 +25,14 @@
       <div class="highlighter"></div>
       <div class="header-information">
         <div *ngIf="$link | async let link">
-          <span><span class="baseUrl">{{baseUrl}}</span>{{link.short}}</span>
+          <span>
+            <span class="baseUrl">{{baseUrl}}</span>
+            {{link.short}}
+          </span>
           <span>{{link.original}}</span>
+          <mat-icon class="copy-to-clipboard"
+                    (click)="copyLinkToClipboard(baseUrl + link.short)">content_copy
+          </mat-icon>
         </div>
       </div>
       <div class="highlighter"></div>
@@ -60,7 +66,14 @@
               <div class="line-after"></div>
             </div>
             <div class="version-information">
-              <span>{{linkVersion.original}}</span>
+              <span>
+                <mat-icon (click)="openLinkInNewTab(linkVersion.original)">
+                  launch
+                </mat-icon>
+                <span>
+                  {{linkVersion.original}}
+                </span>
+              </span>
               <span class="date">{{linkVersion.iat | date : 'dd.MM.y HH:mm'}}</span>
             </div>
           </ng-container>

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LinkComponent} from './link.component';
 import {RouterModule, Routes} from '@angular/router';
-import {MatDialogModule, MatIconModule} from '@angular/material';
+import {MatDialogModule, MatIconModule, MatSnackBarModule} from '@angular/material';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import {AddVersionDialogModule} from '../../dialogs/add-version-dialog/add-version-dialog.module';
 
@@ -17,6 +17,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MatIconModule,
     MatDialogModule,
+    MatSnackBarModule,
     AddVersionDialogModule
   ],
   entryComponents: [

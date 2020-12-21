@@ -9,7 +9,7 @@ import {environment} from '../../../environments/environment';
 
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatSnackBar} from '@angular/material';
 
 export const fadeAnimation = trigger('listAnimation', [
   transition('* <=> *', [
@@ -44,7 +44,7 @@ export class LinkComponent implements OnInit {
   public lastDay: number;
 
   constructor(private route: ActivatedRoute, private linkService: LinkService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.route.queryParams.subscribe(params => {
       this.short = params.l;
     });
@@ -153,6 +153,29 @@ export class LinkComponent implements OnInit {
       // TODO can be better
       this.$link = this.linkService.loadLinkByShort(this.short);
       this.$linkVersions = this.linkService.loadLinkVersions(this.short);
+    });
+  }
+
+  openLinkInNewTab(original: any) {
+    window.open(original, '_blank');
+  }
+
+  copyLinkToClipboard(link: any) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = link;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+
+    this.snackBar.open('Link in die Zwischenablage kopiert', null, {
+      duration: 2000,
+      panelClass: 'snackbar-default'
     });
   }
 }

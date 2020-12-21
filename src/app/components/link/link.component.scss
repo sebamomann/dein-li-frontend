@@ -78,6 +78,7 @@
       padding: 10px 50px 15px;
       border-radius: 10px;
       background-color: #3d3a3a;
+      position: relative;
 
       & > div {
         text-align: center;
@@ -103,6 +104,14 @@
             font-style: italic;
           }
         }
+      }
+
+      .copy-to-clipboard {
+        position: absolute;
+        opacity: 0.25;
+        bottom: 5px;
+        right: 5px;
+        color: white;
       }
     }
   }
@@ -159,10 +168,21 @@
         }
 
         span {
+          mat-icon {
+            cursor: pointer;
+            margin-right: 8px;
+            font-weight: lighter;
+            opacity: 0.25;
+          }
+
           &:first-child {
             top: 50%;
             position: absolute;
             transform: translateY(-50%);
+
+            & > mat-icon, span {
+              vertical-align: middle;
+            }
           }
 
           &.date {
