@@ -44,7 +44,7 @@
           <div class="version-information new-version">
             <div>
               <div class="add-version-button"
-              (click)="openAddVersionDialog()">
+                   (click)="openAddVersionDialog()">
                 <mat-icon>add_box</mat-icon>
                 <span>Neue Version</span>
               </div>
@@ -61,7 +61,7 @@
             </div>
             <div class="version-information">
               <span>{{linkVersion.original}}</span>
-              <span class="date">{{linkVersion.iat}}</span>
+              <span class="date">{{linkVersion.iat | date : 'dd.MM.y HH:mm'}}</span>
             </div>
           </ng-container>
         </div>
