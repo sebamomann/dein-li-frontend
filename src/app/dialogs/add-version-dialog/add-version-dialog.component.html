@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Neue Version</h2>
+<mat-dialog-content class="mat-typography">
+  <p>Setzen einen neuen Link zu dem <a href="{{link}}">{{link}}</a> beim Aufruf weiterleitet.</p>
+
+  <form [formGroup]="event">
+    <mat-form-field>
+      <label for="link">
+        <input formControlName="link"
+               id="link"
+               placeholder="Link zum Kürzen"
+               matInput>
+      </label>
+      <mat-error>{{getLinkErrorMessage()}}</mat-error>
+    </mat-form-field>
+    <button
+      (click)="saveFnc()"
+      color="primary"
+      mat-raised-button>
+      Speichern
+    </button>
+  </form>
+</mat-dialog-content>

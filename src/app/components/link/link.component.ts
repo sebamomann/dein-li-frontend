@@ -8,6 +8,8 @@ import {Chart} from 'chart.js';
 import {environment} from '../../../environments/environment';
 
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
+import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
+import {MatDialog} from '@angular/material';
 
 export const fadeAnimation = trigger('listAnimation', [
   transition('* <=> *', [
@@ -41,7 +43,8 @@ export class LinkComponent implements OnInit {
   public lastMonth: string;
   public lastDay: number;
 
-  constructor(private route: ActivatedRoute, private linkService: LinkService) {
+  constructor(private route: ActivatedRoute, private linkService: LinkService,
+              private dialog: MatDialog) {
     this.route.queryParams.subscribe(params => {
       this.short = params.l;
     });
@@ -137,8 +140,19 @@ export class LinkComponent implements OnInit {
     return this.monthNames[(new Date(linkVersion.iat)).getMonth()];
   }
 
-  setLastInformation(linkVersion: any) {
-    this.lastDay = this.getDay(linkVersion);
-    this.lastMonth = this.getMonthName(linkVersion);
+  openAddVersionDialog() {
+    const dialogRef = this.dialog.open(AddVersionDialogComponent, {
+      id: 'add-version-dialog',
+      width: '80%',
+      maxWidth: '500px',
+      height: 'auto',
+      data: this.short,
+    });
+
+    dialogRef.afterClosed().subscribe(sLink => {
+      // TODO can be better
+      this.$link = this.linkService.loadLinkByShort(this.short);
+      this.$linkVersions = this.linkService.loadLinkVersions(this.short);
+    });
   }
 }
