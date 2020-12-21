@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {ILink} from '../models/ILink.model';
 import {Observable, of} from 'rxjs';
+import {ILinkStats} from '../models/ILinkStats.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,21 @@ export class LinkService {
     return res.pipe(
       map(response => {
         return response.body as ILink[];
+      }),
+      catchError(() => {
+        return of(null);
+      })
+    );
+  }
+
+  loadLinkStats(short: string) {
+    const url = `${environment.API_URL}link/${short}/history`;
+
+    const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
+
+    return res.pipe(
+      map(response => {
+        return response.body as ILinkStats;
       }),
       catchError(() => {
         return of(null);
