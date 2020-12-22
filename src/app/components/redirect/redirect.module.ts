@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {RedirectComponent} from './redirect.component';
 import {RouterModule, Routes} from '@angular/router';
 import {LockedComponent} from './locked/locked.component';
+import {MatButtonModule, MatCardModule, MatIconModule} from '@angular/material';
 
 const routes: Routes = [
   {path: '', component: RedirectComponent},
@@ -12,10 +13,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [RedirectComponent, LockedComponent],
+  declarations: [RedirectComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule
   ]
 })
 

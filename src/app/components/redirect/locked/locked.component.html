@@ -1,1 +1,17 @@
-<p>locked works!</p>
+<mat-card class="float solo-notification">
+  <mat-card-content>
+    <img src="assets/img/404.svg" alt="">
+    <div>
+      <h2>Hmmm ...</h2>
+      <p>Sorry - Dieser Link ist wohl aktuell gesperrt. Versuche es später nochmal oder melde dich beim Ersteller dieses
+        Links.</p>
+    </div>
+    <mat-card-actions>
+      <button [routerLink]="['/']"
+              mat-raised-button>
+        <mat-icon>home</mat-icon>
+        Zurück
+      </button>
+    </mat-card-actions>
+  </mat-card-content>
+</mat-card>
