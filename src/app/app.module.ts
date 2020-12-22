@@ -8,6 +8,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './_helper/interceptor/authentication.interceptor';
 import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import {MatIconModule, MatToolbarModule} from '@angular/material';
 
 registerLocaleData(localeDe);
 
@@ -19,7 +20,9 @@ registerLocaleData(localeDe);
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatIconModule
   ],
   providers: [
     {

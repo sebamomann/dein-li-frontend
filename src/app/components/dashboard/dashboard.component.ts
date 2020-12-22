@@ -7,6 +7,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
 import {MatDialog} from '@angular/material';
 import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.component';
+import {ToolbarService} from '../../services/toolbar.service';
 
 // @ts-ignore
 const validUrl = require('valid-url');
@@ -24,8 +25,11 @@ export class DashboardComponent implements OnInit {
   public userIsLoggedIn: any;
 
   constructor(public linkService: LinkService, private formBuilder: FormBuilder,
-              private authService: AuthenticationService, private dialog: MatDialog) {
+              private authService: AuthenticationService, private dialog: MatDialog,
+              private toolbarService: ToolbarService) {
     this.userIsLoggedIn = this.authService.userIsLoggedIn();
+
+    this.toolbarService.setTitle('Gesamt Aufrufe Letzte 24 Stunden');
   }
 
   @ViewChildren('canvas') set content(content: ElementRef) {

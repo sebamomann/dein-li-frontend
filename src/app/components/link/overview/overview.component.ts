@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {ILink} from '../../../models/ILink.model';
 import {LinkService} from '../../../services/link.service';
 import {Router} from '@angular/router';
+import {ToolbarService} from '../../../services/toolbar.service';
 
 @Component({
   selector: 'app-overview',
@@ -12,11 +13,14 @@ import {Router} from '@angular/router';
 export class OverviewComponent implements OnInit {
   public $links: Observable<ILink[]>;
 
-  constructor(private linkService: LinkService, private router: Router) {
+  constructor(private linkService: LinkService, private router: Router,
+              private toolbarService: ToolbarService) {
   }
 
   ngOnInit() {
     this.$links = this.linkService.loadLinks();
+
+    this.toolbarService.setTitle('Deine Links');
   }
 
   public redirectToLink(link: ILink) {

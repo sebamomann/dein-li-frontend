@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {ToolbarService} from './services/toolbar.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'dein-li-frontend';
+  public title = 'Dein Link - In Kurzform';
+
+  constructor(private toolbarService: ToolbarService) {
+    this.toolbarService.title$.subscribe((sTitle) => {
+      this.title = sTitle;
+    });
+  }
 }

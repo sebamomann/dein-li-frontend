@@ -1,14 +1,6 @@
 @import "src/app/styles/header-chart";
 @import "src/app/styles/variables";
 
-@mixin md-icon-size($size: 24px) {
-  font-size: $size;
-  height: $size;
-  width: $size;
-  line-height: $size;
-}
-
-
 ::ng-deep .mat-form-field .mat-form-field-label {
   color: lightgray;
 }

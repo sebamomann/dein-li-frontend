@@ -1,0 +1,28 @@
+@import "src/app/styles/variables";
+
+mat-toolbar {
+  background-image: linear-gradient($dark-background 0%, $dark-background 75%, $background 100%);
+  color: $blue;
+  margin-bottom: 50px;
+
+  .toolbar-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    max-width: 1275px;
+    margin: 0 auto;
+    width: 100%;
+    align-items: center;
+
+    mat-icon {
+      @include md-icon-size(30px);
+      margin: 0 10px 0 0;
+      outline: none;
+    }
+
+    .title {
+      font-size: 1.5em;
+      text-align: center;
+      font-weight: bolder;
+    }
+  }
+}

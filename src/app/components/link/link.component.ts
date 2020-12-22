@@ -10,6 +10,7 @@ import {environment} from '../../../environments/environment';
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import {MatDialog, MatSnackBar} from '@angular/material';
+import {ToolbarService} from '../../services/toolbar.service';
 
 export const fadeAnimation = trigger('listAnimation', [
   transition('* <=> *', [
@@ -45,7 +46,7 @@ export class LinkComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private linkService: LinkService,
               private dialog: MatDialog, private snackBar: MatSnackBar,
-              private router: Router) {
+              private router: Router, private toolbarService: ToolbarService) {
     this.route.queryParams.subscribe(params => {
       if (params.l === undefined) {
         this.router.navigate(['/link/overview'], {
@@ -55,6 +56,8 @@ export class LinkComponent implements OnInit {
       }
       this.short = params.l;
     });
+
+    this.toolbarService.setTitle('Aufrufe Letzte 24 Stunden');
   }
 
   @ViewChildren('canvas') set content(content: ElementRef) {
