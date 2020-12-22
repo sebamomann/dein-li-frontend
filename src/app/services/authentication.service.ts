@@ -115,7 +115,7 @@ export class AuthenticationService {
       })
       .pipe(
         map((res) => {
-          this.setAccessToken(res.data.session.token);
+          this.setAccessToken(res.session.token);
         }),
         finalize(() => {
           this.refreshing = false;

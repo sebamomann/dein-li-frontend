@@ -1,4 +1,5 @@
 @import "src/app/styles/header-chart";
+@import "src/app/styles/variables";
 
 @mixin md-icon-size($size: 24px) {
   font-size: $size;
@@ -33,17 +34,13 @@ main {
   grid-gap: 20px;
 
   .link-creation, .link-management {
-    text-align: center;
+    text-align: left;
     margin: 25px auto 0 auto;
     padding: 25px;
-    background-color: #635e5e;
+    background-color: $light-background;
     border-radius: 8px;
     width: calc(100% - 50px);
 
-    h3, p {
-      text-align: left;
-      color: #bdbdbd;
-    }
 
     p {
       margin-top: 25px;
@@ -70,10 +67,16 @@ main {
   }
 
   .link-creation {
-    background-color: #3D3A3A;
+    background-color: $median-background;
+  }
+
+  .link-creation {
+    color: $light-background;
   }
 
   .link-management {
+    color: $background;
+
     button {
       width: 100%;
 

@@ -1,3 +1,5 @@
+@import "src/app/styles/variables";
+
 .link-list {
   width: 100%;
   display: grid;
@@ -6,7 +8,7 @@
 
   .card-block {
     border-radius: 8px;
-    background-color: #3D3A3A;
+    background-color: $median-background;
     color: white;
     padding: 15px 25px 25px;
     transition: 0.5s all;

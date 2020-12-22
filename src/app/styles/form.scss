@@ -1,0 +1,24 @@
+@import "src/app/styles/variables";
+
+.form {
+  color: black;
+
+  &.float {
+    text-align: center;
+    width: 50%;
+    max-width: 500px;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $light-background;
+    left: 50%;
+
+    mat-form-field {
+      width: 100%;
+    }
+
+    mat-horizontal-stepper {
+      background-color: $light-background;
+    }
+  }
+}
