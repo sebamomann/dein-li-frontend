@@ -1,6 +1,6 @@
 <div class="header-statistic-wrapper">
   <div class="header-statistic">
-    <div *ngIf="$linkStats | async let linkStats"
+    <div *ngIf="$linkStats | async let linkStats; else loading"
          class="statistic-chart-wrapper">
       <div class="statistic-chart">
         <canvas id="canvas" width="100%" height="30vh"> {{chart}} </canvas>
@@ -19,52 +19,53 @@
   </div>
 </div>
 <main>
-  <div class="main-statistic">
-    <div class="header-information-wrapper">
-      <div class="highlighter"></div>
-      <div class="header-information">
-        <div *ngIf="$link | async let link">
+  <div *ngIf="$link | async let link; else loading">
+    <div class="main-statistic">
+      <div class="header-information-wrapper">
+        <div class="highlighter"></div>
+        <div class="header-information">
+          <div *ngIf="$link | async let link">
           <span>
             <span class="baseUrl">{{baseUrl}}</span><!--
             -->{{link.short}}
           </span>
-          <span>{{link.original}}</span>
-          <mat-icon class="copy-to-clipboard"
-                    (click)="copyLinkToClipboard(baseUrl + link.short)">content_copy
-          </mat-icon>
+            <span>{{link.original}}</span>
+            <mat-icon class="copy-to-clipboard"
+                      (click)="copyLinkToClipboard(baseUrl + link.short)">content_copy
+            </mat-icon>
+          </div>
         </div>
+        <div class="highlighter"></div>
       </div>
-      <div class="highlighter"></div>
-    </div>
-    <div class="version-history">
-      <div *ngIf="$linkVersions | async let linkVersions"
-           [@listAnimation]="linkVersions.length">
-        <div class="version-wrapper">
-          <div class="date-information solo">
-            <div class="main-information">
-              <span>NOW</span>
-            </div>
-            <div class="line-after"></div>
-          </div>
-          <div class="version-information new-version">
-            <div>
-              <div class="add-version-button"
-                   (click)="openAddVersionDialog()">
-                <mat-icon>add_box</mat-icon>
-                <span>Neue Version</span>
-              </div>
-            </div>
-          </div>
-          <ng-container *ngFor="let linkVersion of linkVersions">
-            <div class="date-information">
-              <div class="line-before"></div>
+      <div class="version-history">
+        <div *ngIf="$linkVersions | async let linkVersions"
+             [@listAnimation]="linkVersions.length">
+          <div class="version-wrapper">
+            <div class="date-information solo">
               <div class="main-information">
-                <span>{{getDay(linkVersion)}}.&nbsp;</span>
-                <span>{{getMonthName(linkVersion)}}</span>
+                <span>NOW</span>
               </div>
               <div class="line-after"></div>
             </div>
-            <div class="version-information">
+            <div class="version-information new-version">
+              <div>
+                <div class="add-version-button"
+                     (click)="openAddVersionDialog()">
+                  <mat-icon>add_box</mat-icon>
+                  <span>Neue Version</span>
+                </div>
+              </div>
+            </div>
+            <ng-container *ngFor="let linkVersion of linkVersions">
+              <div class="date-information">
+                <div class="line-before"></div>
+                <div class="main-information">
+                  <span>{{getDay(linkVersion)}}.&nbsp;</span>
+                  <span>{{getMonthName(linkVersion)}}</span>
+                </div>
+                <div class="line-after"></div>
+              </div>
+              <div class="version-information">
               <span>
                 <mat-icon (click)="openLinkInNewTab(linkVersion.original)">
                   open_in_new
@@ -73,11 +74,16 @@
                   {{linkVersion.original}}
                 </span>
               </span>
-              <span class="date">{{linkVersion.iat | date : 'dd.MM.y HH:mm'}}</span>
-            </div>
-          </ng-container>
+                <span class="date">{{linkVersion.iat | date : 'dd.MM.y HH:mm'}}</span>
+              </div>
+            </ng-container>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </main>
+
+<ng-template #loading>
+  <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
+</ng-template>

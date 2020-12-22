@@ -1,8 +1,8 @@
 <main>
-  <div class="link-list" *ngIf="$links | async let links">
+  <div class="link-list" *ngIf="$links | async let links; else loading">
     <ng-container *ngFor="let link of links">
       <div class="card-block"
-      (click)="redirectToLink(link)">
+           (click)="redirectToLink(link)">
         <span>{{link.short}}</span>
         <span>{{link.original}}</span>
         <span class="date">{{link.iat | date : 'dd.MM.yyyy'}}</span>
@@ -10,3 +10,7 @@
     </ng-container>
   </div>
 </main>
+
+<ng-template #loading>
+  <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
+</ng-template>

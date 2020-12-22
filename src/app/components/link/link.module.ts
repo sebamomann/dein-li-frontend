@@ -6,6 +6,7 @@ import {MatDialogModule, MatIconModule, MatSnackBarModule} from '@angular/materi
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import {AddVersionDialogModule} from '../../dialogs/add-version-dialog/add-version-dialog.module';
 import {AuthGuard} from '../../_helper/auth.gaurd';
+import {HexagonLoaderModule} from '../../html-templates/hexagon-loader/hexagon-loader.module';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
     MatIconModule,
     MatDialogModule,
     MatSnackBarModule,
-    AddVersionDialogModule
+    AddVersionDialogModule,
+    HexagonLoaderModule
   ],
   entryComponents: [
     AddVersionDialogComponent
