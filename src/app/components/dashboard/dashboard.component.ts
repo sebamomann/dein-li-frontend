@@ -5,6 +5,11 @@ import {Chart} from 'chart.js';
 import {LinkService} from '../../services/link.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
+import {MatDialog} from '@angular/material';
+import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.component';
+
+// @ts-ignore
+const validUrl = require('valid-url');
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +24,7 @@ export class DashboardComponent implements OnInit {
   public userIsLoggedIn: any;
 
   constructor(public linkService: LinkService, private formBuilder: FormBuilder,
-              private authService: AuthenticationService) {
+              private authService: AuthenticationService, private dialog: MatDialog) {
     this.userIsLoggedIn = this.authService.userIsLoggedIn();
   }
 
@@ -115,7 +120,22 @@ export class DashboardComponent implements OnInit {
   }
 
   saveFnc() {
+    const link = this.get('link').value;
 
+    if (!validUrl.isUri(link)) {
+      this.get('link').setErrors({invalid: true});
+      return;
+    }
+
+    this.linkService.create(link).subscribe((sResponse) => {
+      const dialogRef = this.dialog.open(SuccessfulCreationDialogComponent, {
+        id: 'successful-creation-dialog',
+        width: '80%',
+        maxWidth: '500px',
+        height: 'auto',
+        data: sResponse,
+      });
+    });
   }
 
   private get(str: string) {

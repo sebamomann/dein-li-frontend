@@ -88,4 +88,19 @@ export class LinkService {
       })
     );
   }
+
+  create(original: string) {
+    const url = `${environment.API_URL}link`;
+
+    const res = this.httpClient.post(url, {original}, {observe: 'response', reportProgress: true});
+
+    return res.pipe(
+      map(response => {
+        return response.body as ILink;
+      }),
+      catchError(() => {
+        return of(null);
+      })
+    );
+  }
 }

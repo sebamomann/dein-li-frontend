@@ -26,8 +26,8 @@
       <div class="header-information">
         <div *ngIf="$link | async let link">
           <span>
-            <span class="baseUrl">{{baseUrl}}</span>
-            {{link.short}}
+            <span class="baseUrl">{{baseUrl}}</span><!--
+            -->{{link.short}}
           </span>
           <span>{{link.original}}</span>
           <mat-icon class="copy-to-clipboard"

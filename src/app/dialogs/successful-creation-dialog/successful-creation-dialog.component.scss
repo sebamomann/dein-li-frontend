@@ -1,0 +1,44 @@
+.copy-form {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  padding: 15px 0 1.25em;
+
+  ::ng-deep .mat-form-field-wrapper {
+    margin-bottom: -1.25em;
+  }
+
+  ::ng-deep .mat-form-field-flex {
+    background-color: lightgray;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+  }
+
+  ::ng-deep .mat-form-field-infix {
+    padding-top: 0;
+    padding-bottom: 9px;
+    padding-left: 15px;
+  }
+
+  ::ng-deep .mat-form-field-underline {
+    display: none;
+  }
+
+  button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+}
+
+.open-analytics {
+  margin: 8px 0 25px;
+}
+
+p {
+  margin: 8px 0;
+
+  &:last-of-type {
+    a {
+      font-style: italic;
+    }
+  }
+}

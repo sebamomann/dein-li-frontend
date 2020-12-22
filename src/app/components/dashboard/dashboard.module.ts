@@ -3,7 +3,9 @@ import {CommonModule} from '@angular/common';
 import {DashboardComponent} from './dashboard.component';
 import {RouterModule, Routes} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule} from '@angular/material';
+import {MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule} from '@angular/material';
+import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.component';
+import {SuccessfulCreationDialogModule} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.module';
 
 const routes: Routes = [
   {path: '', component: DashboardComponent},
@@ -19,9 +21,14 @@ const routes: Routes = [
     MatInputModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
+    SuccessfulCreationDialogModule
   ],
   exports: [
     DashboardComponent
+  ],
+  entryComponents: [
+    SuccessfulCreationDialogComponent
   ]
 })
 export class DashboardModule {

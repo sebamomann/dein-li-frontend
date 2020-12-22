@@ -41,6 +41,9 @@ main {
     border-radius: 8px;
     width: calc(100% - 50px);
 
+    h3 {
+      margin-top: 0;
+    }
 
     p {
       margin-top: 25px;
@@ -68,10 +71,7 @@ main {
 
   .link-creation {
     background-color: $median-background;
-  }
-
-  .link-creation {
-    color: $light-background;
+    color: lightgray;
   }
 
   .link-management {
