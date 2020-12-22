@@ -1,0 +1,86 @@
+@import "src/app/styles/header-chart";
+
+@mixin md-icon-size($size: 24px) {
+  font-size: $size;
+  height: $size;
+  width: $size;
+  line-height: $size;
+}
+
+
+::ng-deep .mat-form-field .mat-form-field-label {
+  color: lightgray;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: white;
+}
+
+::ng-deep .mat-form-field-underline .mat-form-field-ripple {
+  background-color: lightgray;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: lightgray;
+}
+
+::ng-deep .mat-form-field .mat-form-field-label {
+}
+
+main {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 20px;
+
+  .link-creation, .link-management {
+    text-align: center;
+    margin: 25px auto 0 auto;
+    padding: 25px;
+    background-color: #635e5e;
+    border-radius: 8px;
+    width: calc(100% - 50px);
+
+    h3, p {
+      text-align: left;
+      color: #bdbdbd;
+    }
+
+    p {
+      margin-top: 25px;
+      text-align: justify;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 4fr 1fr;
+      grid-gap: 10px;
+      color: white;
+
+      button {
+        background-color: transparent;
+        color: #2976C4;
+        box-shadow: none;
+        font-size: 1.5em;
+
+        mat-icon {
+          @include md-icon-size(35px);
+        }
+      }
+    }
+  }
+
+  .link-creation {
+    background-color: #3D3A3A;
+  }
+
+  .link-management {
+    button {
+      width: 100%;
+
+      mat-icon {
+        margin-right: 10px;
+        vertical-align: middle;
+      }
+    }
+  }
+}

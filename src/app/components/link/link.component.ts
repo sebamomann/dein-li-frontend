@@ -79,7 +79,6 @@ export class LinkComponent implements OnInit {
 
       calls = [...calls.slice(currentHours + 1), ...calls.slice(0, currentHours + 1)];
 
-
       const labels = [];
       const data = [];
 

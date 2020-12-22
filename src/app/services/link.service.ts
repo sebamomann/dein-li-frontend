@@ -44,7 +44,7 @@ export class LinkService {
     );
   }
 
-  loadLinkStats(short: string) {
+  loadLinkStats(short?: string) {
     const url = `${environment.API_URL}link/${short}/history`;
 
     const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});

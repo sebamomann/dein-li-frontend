@@ -1,1 +1,65 @@
-<button [routerLink]="'/link/overview'">Meine Links</button>
+<div class="header-statistic-wrapper">
+  <h2 class="title">Gesamt Aufrufe Letzte 24 Stunden</h2>
+  <div class="header-statistic">
+    <div *ngIf="$totalStats | async let totalStats"
+         class="statistic-chart-wrapper">
+      <div class="statistic-chart">
+        <canvas id="canvas" width="100%" height="30vh"> {{chart}} </canvas>
+      </div>
+      <!--      <div class="statistic-information">-->
+      <!--        <div>-->
+      <!--          <span>{{totalStats.total}}</span>-->
+      <!--          <span>Aufrufe Gesamt</span>-->
+      <!--        </div>-->
+      <!--        <div>-->
+      <!--          <span>{{totalStats.distinctCalls}}</span>-->
+      <!--          <span>Geräte Gesamt</span>-->
+      <!--        </div>-->
+      <!--      </div>-->
+    </div>
+  </div>
+</div>
+
+
+<main>
+  <div class="link-creation">
+    <h3>Kürze einen Link auf nur 7 Zeichen!</h3>
+    <form [formGroup]="event">
+      <mat-form-field>
+        <label for="link">
+          <input formControlName="link"
+                 id="link"
+                 placeholder="Link zum Kürzen"
+                 matInput>
+        </label>
+        <mat-error>{{getLinkErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <button
+        (click)="saveFnc()"
+        color="primary"
+        mat-raised-button>
+        <mat-icon>settings</mat-icon>
+        Los!
+      </button>
+    </form>
+    <p>Dein Link ist nach der Generierung sofot gültig. Du kannst ihn direkt teilen.</p>
+  </div>
+  <div class="link-management" *ngIf="userIsLoggedIn">
+    <h3>Deine Links</h3>
+    <button [routerLink]="'/link/overview'" mat-raised-button>
+      <mat-icon>launch</mat-icon>
+      Zu meinen Links
+    </button>
+    <!--    <p></p>-->
+  </div>
+  <div class="link-management" *ngIf="!userIsLoggedIn">
+    <h3>Deine Links</h3>
+    <button [routerLink]="'/account/login'" mat-raised-button>
+      <mat-icon>login</mat-icon>
+      Login
+    </button>
+    <p>Logge dich ein um deine Links zu sehen. Ebenso werden deine generierten Links dir zugeordnet, damit du deine
+      Analysen anschauen kannst.</p>
+  </div>
+</main>
+
