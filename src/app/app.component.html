@@ -1,15 +1,17 @@
-<mat-toolbar>
-  <div class="toolbar-wrapper">
-    <div>
-      <mat-icon [routerLink]="['/']">home</mat-icon>
-      <mat-icon [routerLink]="['/link']">view_module</mat-icon>
+<div class="wrapper">
+  <mat-toolbar>
+    <div class="toolbar-wrapper">
+      <div>
+        <mat-icon [routerLink]="['/']">home</mat-icon>
+        <mat-icon [routerLink]="['/link']">view_module</mat-icon>
+      </div>
+      <h2 class="title">
+        {{title}}
+      </h2>
     </div>
-    <h2 class="title">
-      {{title}}
-    </h2>
-  </div>
-</mat-toolbar>
+  </mat-toolbar>
 
-<div class="main-wrapper">
-  <router-outlet></router-outlet>
+  <div class="main-wrapper">
+    <router-outlet></router-outlet>
+  </div>
 </div>

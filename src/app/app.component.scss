@@ -4,6 +4,8 @@ mat-toolbar {
   background-image: linear-gradient($dark-background 0%, $dark-background 75%, $background 100%);
   color: $blue;
   margin-bottom: 50px;
+  z-index: 2;
+  position: relative;
 
   .toolbar-wrapper {
     display: grid;
