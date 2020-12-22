@@ -28,6 +28,8 @@
       border-radius: 10px;
       background-color: $median-background;
       position: relative;
+      max-width: 500px;
+      line-break: anywhere;
 
       & > div {
         text-align: center;
