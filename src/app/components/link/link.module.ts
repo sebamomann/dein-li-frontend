@@ -5,15 +5,18 @@ import {RouterModule, Routes} from '@angular/router';
 import {MatDialogModule, MatIconModule, MatSnackBarModule} from '@angular/material';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import {AddVersionDialogModule} from '../../dialogs/add-version-dialog/add-version-dialog.module';
+import {AuthGuard} from '../../_helper/auth.gaurd';
 
 const routes: Routes = [
   {
     path: 'overview',
     loadChildren: './overview/overview.module#OverviewModule',
+    canActivate: [AuthGuard]
   },
   {
     path: '',
     component: LinkComponent,
+    canActivate: [AuthGuard]
   },
 ];
 
