@@ -30,9 +30,11 @@
       }
 
       &:nth-child(2) {
+        font-size: 0.75em;
         margin-top: 25px;
         color: lightgray;
         font-style: italic;
+        line-break: anywhere;
       }
 
       &.date {
