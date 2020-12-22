@@ -1,22 +1,66 @@
-mat-card-actions {
-  margin: 25px 0 0 0;
+mat-card {
+  &.float {
+    margin: 10% auto 0;
 
-  &.double {
-    display: grid;
-    grid-template-columns: minmax(auto, 1fr) auto;
+    &.solo-notification {
+      max-width: 500px;
 
-    &.fill {
-      grid-template-columns: 1fr 1fr;
-    }
+      mat-card-title {
+        text-align: center;
+      }
 
-    & > div {
-      & > button {
+      mat-card-content {
+        display: grid;
+        grid-gap: 5%;
+        grid-template-columns: auto 2fr;
+        grid-template-rows: 2fr 1fr;
+
+        img {
+          height: 200px;
+          grid-row-start: 1;
+          grid-row-end: 3;
+        }
+
+        p {
+          text-align: justify;
+        }
+      }
+
+      mat-card-actions {
+        position: relative;
         margin: 0;
-        display: block;
+        text-align: right;
+        bottom: 0;
 
-        &.left {
-          padding: 0;
-          text-align: left;
+        button {
+          position: absolute;
+          bottom: 8px;
+          right: 0;
+        }
+      }
+    }
+  }
+
+  mat-card-actions {
+    margin: 25px 0 0 0;
+
+    &.double {
+      display: grid;
+      grid-template-columns: minmax(auto, 1fr) auto;
+
+      &.fill {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      & > div {
+        & > button {
+          margin: 0;
+          display: block;
+
+          &.left {
+            padding: 0;
+            text-align: left;
+          }
         }
       }
     }
