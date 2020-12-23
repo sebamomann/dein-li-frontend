@@ -32,6 +32,7 @@ registerLocaleData(localeDe);
     },
     {provide: LOCALE_ID, useValue: 'de-DE'}
   ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

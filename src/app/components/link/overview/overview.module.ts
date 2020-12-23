@@ -4,6 +4,8 @@ import {OverviewComponent} from './overview.component';
 import {RouterModule, Routes} from '@angular/router';
 import {SuccessfulCreationDialogComponent} from '../../../dialogs/successful-creation-dialog/successful-creation-dialog.component';
 import {HexagonLoaderModule} from '../../../html-templates/hexagon-loader/hexagon-loader.module';
+import {AppModule} from '../../../app.module';
+import {TextPipesModule} from '../../../pipes/text-pipes.module';
 
 const routes: Routes = [
   {
@@ -19,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     HexagonLoaderModule,
+    TextPipesModule,
   ]
 })
 export class OverviewModule {

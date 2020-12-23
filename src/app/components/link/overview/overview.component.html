@@ -4,7 +4,7 @@
       <div class="card-block"
            (click)="redirectToLink(link)">
         <span>{{link.short}}</span>
-        <span>{{link.original}}</span>
+        <span>{{link.original | truncate: [50, '...']}}</span>
         <span class="date">{{link.iat | date : 'dd.MM.yyyy'}}</span>
       </div>
     </ng-container>

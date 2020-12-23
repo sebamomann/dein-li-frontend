@@ -44,3 +44,28 @@
     }
   }
 }
+
+@media all and (max-width: 1024px) {
+  .link-list {
+    width: 95%;
+    margin: 0 auto;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 15px;
+
+    .card-block {
+      padding: 16px;
+
+      span {
+        &:first-child {
+          font-size: 1.25em;
+          font-weight: bolder;
+        }
+
+        &:nth-child(2) {
+          margin-top: 16px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+}
