@@ -26,15 +26,14 @@
         <div class="header-information">
           <div *ngIf="$link | async let link">
             <mat-expansion-panel>
-              <mat-expansion-panel-header>
+              <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
                 <mat-panel-title>
                   <mat-icon class="copy-to-clipboard"
                             (click)="copyLinkToClipboard(baseUrl + link.short, $event)">content_copy
                   </mat-icon>
                   <span>
                     <span class="baseUrl">{{baseUrl}}</span><!--
-                    -->{{link.short}}
-                  </span>
+                    -->{{link.short}}</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div class="content">
