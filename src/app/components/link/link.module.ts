@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LinkComponent} from './link.component';
 import {RouterModule, Routes} from '@angular/router';
-import {MatDialogModule, MatIconModule, MatSnackBarModule} from '@angular/material';
+import {MatDialogModule, MatExpansionModule, MatIconModule, MatSnackBarModule} from '@angular/material';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import {AddVersionDialogModule} from '../../dialogs/add-version-dialog/add-version-dialog.module';
 import {AuthGuard} from '../../_helper/auth.gaurd';
@@ -23,15 +23,16 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [LinkComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    MatIconModule,
-    MatDialogModule,
-    MatSnackBarModule,
-    AddVersionDialogModule,
-    HexagonLoaderModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        MatIconModule,
+        MatDialogModule,
+        MatSnackBarModule,
+        AddVersionDialogModule,
+        HexagonLoaderModule,
+        MatExpansionModule
+    ],
   entryComponents: [
     AddVersionDialogComponent
   ]

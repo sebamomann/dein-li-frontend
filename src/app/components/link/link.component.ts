@@ -165,7 +165,9 @@ export class LinkComponent implements OnInit {
     window.open(original, '_blank');
   }
 
-  copyLinkToClipboard(link: any) {
+  copyLinkToClipboard(link: any, e: Event) {
+    e.preventDefault();
+
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';

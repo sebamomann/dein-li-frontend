@@ -10,6 +10,7 @@
     .highlighter {
       border-bottom: 1px solid white;
       width: 90%;
+      align-self: center;
 
       &:nth-child(1) {
         justify-self: start;
@@ -34,35 +35,58 @@
       & > div {
         text-align: center;
 
-        & > span {
-          display: block;
+        mat-expansion-panel {
+          background-color: transparent;
+          box-shadow: none;
 
-          &:first-child {
-            font-size: 3em;
-            color: rgb(41, 118, 196);
-            font-weight: bold;
+          mat-expansion-panel-header {
+            padding: 5px;
+
+            ::ng-deep .mat-expansion-indicator {
+              &:after {
+                color: white;
+              }
+            }
+
+            &:hover {
+              background-color: transparent;
+            }
+
+            mat-panel-title {
+              display: grid;
+              grid-template-columns: auto 1fr;
+
+              & > span {
+                width: 100%;
+                text-align: center;
+                font-size: 3em;
+                color: rgb(41, 118, 196);
+                font-weight: bold;
+
+                & > .baseUrl {
+                  font-size: 0.5em;
+                  color: lightgray;
+                  font-style: normal;
+                  vertical-align: middle;
+                }
+              }
+
+              .copy-to-clipboard {
+                @include md-icon-size(1.75em);
+                align-self: center;
+                opacity: 0.25;
+                color: white;
+                padding: 7px 5px 0;
+              }
+            }
           }
 
-          & > .baseUrl {
-            font-size: 0.5em;
-            color: lightgray;
-            font-style: normal;
-          }
-
-          &:nth-child(2) {
+          .content {
             margin-top: 10px;
             color: lightgray;
             font-style: italic;
           }
         }
-      }
-
-      .copy-to-clipboard {
-        position: absolute;
-        opacity: 0.25;
-        bottom: 5px;
-        right: 5px;
-        color: white;
       }
     }
   }
