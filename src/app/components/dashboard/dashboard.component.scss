@@ -1,25 +1,6 @@
 @import "src/app/styles/header-chart";
 @import "src/app/styles/variables";
 
-::ng-deep .mat-form-field .mat-form-field-label {
-  color: lightgray;
-}
-
-::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-  color: white;
-}
-
-::ng-deep .mat-form-field-underline .mat-form-field-ripple {
-  background-color: lightgray;
-}
-
-::ng-deep .mat-form-field-underline {
-  background-color: lightgray;
-}
-
-::ng-deep .mat-form-field .mat-form-field-label {
-}
-
 main {
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -67,6 +48,25 @@ main {
   .link-creation {
     background-color: $median-background;
     color: lightgray;
+
+    ::ng-deep .mat-form-field .mat-form-field-label {
+      color: lightgray;
+    }
+
+    ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+      color: white;
+    }
+
+    ::ng-deep .mat-form-field-underline .mat-form-field-ripple {
+      background-color: lightgray;
+    }
+
+    ::ng-deep .mat-form-field-underline {
+      background-color: lightgray;
+    }
+
+    ::ng-deep .mat-form-field .mat-form-field-label {
+    }
   }
 
   .link-management {
