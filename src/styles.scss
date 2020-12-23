@@ -86,3 +86,10 @@ body {
     color: $blue;
   }
 }
+
+@media all and (max-width: 1024px) {
+  .contribution {
+    font-size: 1.125em;
+    margin: 50px auto;
+  }
+}

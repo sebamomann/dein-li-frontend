@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
               private toolbarService: ToolbarService) {
     this.userIsLoggedIn = this.authService.userIsLoggedIn();
 
-    this.toolbarService.setTitle('Gesamt Aufrufe Letzte 24 Stunden');
+    this.toolbarService.setTitle('Home');
   }
 
   @ViewChildren('canvas') set content(content: ElementRef) {
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
       const data = [];
 
       calls.forEach((fCall) => {
-        labels.push(fCall.hour + ':00 Uhr');
+        labels.push(fCall.hour + ' Uhr');
         data.push(+fCall.calls);
       });
 
@@ -87,13 +87,9 @@ export class DashboardComponent implements OnInit {
               },
               ticks: {
                 fontColor: 'white',
+                stepSize: 1,
               },
-              scaleLabel: {
-                display: true,
-                labelString: 'Aufrufe',
-                fontSize: 20,
-                padding: 10,
-              }
+              scaleLabel: {}
             }],
             xAxes: [{
               gridLines: {
@@ -104,7 +100,7 @@ export class DashboardComponent implements OnInit {
               },
               scaleLabel: {
                 display: true,
-                labelString: 'Uhrzeit',
+                labelString: 'Aufrufe der Letzten 24 Stunden',
                 fontSize: 20,
                 padding: 10,
               },

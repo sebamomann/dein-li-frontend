@@ -28,3 +28,15 @@ mat-toolbar {
     }
   }
 }
+
+@media all and (max-width: 1024px) {
+  mat-toolbar {
+    margin-bottom: 25px;
+
+    .toolbar-wrapper {
+      .title {
+        display: none;
+      }
+    }
+  }
+}
