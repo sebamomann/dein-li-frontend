@@ -8,3 +8,19 @@
 ::ng-deep .mat-horizontal-content-container {
   padding: 0 !important;;
 }
+
+::ng-deep .mat-form-field .mat-form-field-label {
+  color: initial;
+}
+
+::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+  color: initial;
+}
+
+::ng-deep .mat-form-field-underline .mat-form-field-ripple {
+  background-color: initial;
+}
+
+::ng-deep .mat-form-field-underline {
+  background-color: initial;
+}
