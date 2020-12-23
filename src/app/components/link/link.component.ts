@@ -86,7 +86,7 @@ export class LinkComponent implements OnInit {
       const data = [];
 
       calls.forEach((fCall) => {
-        labels.push(fCall.hour + ':00 Uhr');
+        labels.push(fCall.hour + ' Uhr');
         data.push(+fCall.calls);
       });
 
@@ -113,13 +113,9 @@ export class LinkComponent implements OnInit {
               },
               ticks: {
                 fontColor: 'white',
+                stepSize: 1
               },
-              scaleLabel: {
-                display: true,
-                labelString: 'Aufrufe',
-                fontSize: 20,
-                padding: 10,
-              }
+              scaleLabel: {}
             }],
             xAxes: [{
               gridLines: {
@@ -130,7 +126,7 @@ export class LinkComponent implements OnInit {
               },
               scaleLabel: {
                 display: true,
-                labelString: 'Uhrzeit',
+                labelString: 'Aufrufe der letzten 24 Stunden',
                 fontSize: 20,
                 padding: 10,
               },

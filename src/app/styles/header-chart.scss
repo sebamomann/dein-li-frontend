@@ -46,8 +46,32 @@
       }
     }
   }
+}
 
-  .statistic-information {
-    display: flex;
+@media all and (max-width: 1024px) {
+  .header-statistic {
+    .statistic-chart-wrapper {
+      canvas {
+      }
+
+      .statistic-information {
+        padding: 16px 0 50px;
+
+        & > div {
+          padding: 16px;
+
+          & > span {
+            &:first-child {
+              font-size: 1.75em;
+              margin: 16px;
+            }
+
+            &:nth-child(2) {
+              color: gray;
+            }
+          }
+        }
+      }
+    }
   }
 }
