@@ -1,11 +1,14 @@
 @import "src/app/styles/variables";
 
+$padding: 16px;
+
 .form {
   color: black;
+  padding: $padding;
 
   &.float {
     text-align: center;
-    width: 50%;
+    width: calc(50% - #{$padding} * 2);
     max-width: 500px;
     position: absolute;
     top: 50%;
@@ -19,6 +22,15 @@
 
     mat-horizontal-stepper {
       background-color: white;
+    }
+  }
+}
+
+@media all and (max-width: 1024px) {
+  .form {
+    &.float {
+      width: calc(95% - #{$padding} * 2);
+      transform: translate(-50%, 0);
     }
   }
 }
