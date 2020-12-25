@@ -74,8 +74,8 @@ export class LinkService {
     );
   }
 
-  public loadLinks(): Observable<ILink[]> {
-    const url = `${environment.API_URL}link/all`;
+  public loadLinks(orderBy = 'iat', order = 'DESC'): Observable<ILink[]> {
+    const url = `${environment.API_URL}link/all?order_by=${orderBy}&order=${order}`;
 
     const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
 

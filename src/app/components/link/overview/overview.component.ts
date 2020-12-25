@@ -12,6 +12,8 @@ import {ToolbarService} from '../../../services/toolbar.service';
 })
 export class OverviewComponent implements OnInit {
   public $links: Observable<ILink[]>;
+  public selected = 'iat';
+  public order = 'DESC';
 
   constructor(private linkService: LinkService, private router: Router,
               private toolbarService: ToolbarService) {
@@ -25,5 +27,15 @@ export class OverviewComponent implements OnInit {
 
   public redirectToLink(link: ILink) {
     this.router.navigate(['/link'], {queryParams: {l: link.short}}).then(() => '');
+  }
+
+  public changedOrder() {
+    this.order = this.order === 'ASC' ? 'DESC' : 'ASC';
+
+    this.changedOrderBy();
+  }
+
+  public changedOrderBy() {
+    this.$links = this.linkService.loadLinks(this.selected, this.order);
   }
 }

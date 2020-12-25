@@ -6,6 +6,7 @@ import {SuccessfulCreationDialogComponent} from '../../../dialogs/successful-cre
 import {HexagonLoaderModule} from '../../../html-templates/hexagon-loader/hexagon-loader.module';
 import {AppModule} from '../../../app.module';
 import {TextPipesModule} from '../../../pipes/text-pipes.module';
+import {MatIconModule, MatSelectModule} from '@angular/material';
 
 const routes: Routes = [
   {
@@ -22,6 +23,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     HexagonLoaderModule,
     TextPipesModule,
+    MatSelectModule,
+    MatIconModule,
   ]
 })
 export class OverviewModule {

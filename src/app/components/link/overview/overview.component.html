@@ -1,10 +1,21 @@
 <main>
+  <div class="header">
+    <mat-select [(value)]="selected" (valueChange)="changedOrderBy()">
+      <mat-option value="iat">Erstelldatum</mat-option>
+      <mat-option value="calls">Aufrufe gesamt</mat-option>
+      <mat-option value="calls_version">Aufrufe aktuelle Version</mat-option>
+    </mat-select>
+    <mat-icon (click)="changedOrder()">keyboard_arrow_down</mat-icon>
+  </div>
+
   <div class="link-list" *ngIf="$links | async let links; else loading">
     <ng-container *ngFor="let link of links">
       <div class="card-block"
            (click)="redirectToLink(link)">
         <span>{{link.short}}</span>
         <span>{{link.original | truncate: [50, '...']}}</span>
+        <span *ngIf="link.nrOfCalls"
+              class="nrOfCalls">Aufrufe: {{link.nrOfCalls }}</span>
         <span class="date">{{link.iat | date : 'dd.MM.yyyy'}}</span>
       </div>
     </ng-container>

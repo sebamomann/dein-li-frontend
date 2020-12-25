@@ -31,7 +31,8 @@
 
       &:nth-child(2) {
         font-size: 0.75em;
-        margin-top: 25px;
+        margin-top: 15px;
+        margin-bottom: 10px;
         color: lightgray;
         font-style: italic;
         line-break: anywhere;
@@ -41,7 +42,46 @@
         bottom: 5px;
         right: 5px;
       }
+
+      &.nrOfCalls {
+        color: gray;
+        font-size: 0.75em;
+        font-style: italic;
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+      }
     }
+  }
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr minmax(25%, auto);
+  width: 95%;
+  margin: 0 auto 15px;
+
+  .mat-select {
+    align-self: center;
+    padding: 5px;
+
+    ::ng-deep .mat-select-value {
+      color: white;
+    }
+
+    ::ng-deep .mat-select-arrow {
+      color: white;
+    }
+  }
+
+  mat-icon {
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+    float: right;
+    color: white;
+    justify-self: right;
+    @include md-icon-size(30px);
   }
 }
 
@@ -62,8 +102,8 @@
         }
 
         &:nth-child(2) {
-          margin-top: 16px;
-          margin-bottom: 5px;
+          margin-top: 10px;
+          margin-bottom: 10px;
         }
       }
     }
