@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
     });
 
     this.$totalStats = this.linkService.loadLinkStats('all');
-  }l
+  }
 
   public loadChart() {
     this.$totalStats.subscribe((totalStats) => {

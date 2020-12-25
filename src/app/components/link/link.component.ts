@@ -48,12 +48,6 @@ export class LinkComponent implements OnInit {
               private dialog: MatDialog, private snackBar: MatSnackBar,
               private router: Router, private toolbarService: ToolbarService) {
     this.route.queryParams.subscribe(params => {
-      if (params.l === undefined) {
-        this.router.navigate(['/link/overview'], {
-          skipLocationChange: true,
-          queryParamsHandling: 'preserve'
-        });
-      }
       this.short = params.l;
     });
 

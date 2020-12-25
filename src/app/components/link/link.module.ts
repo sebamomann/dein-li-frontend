@@ -10,11 +10,6 @@ import {HexagonLoaderModule} from '../../html-templates/hexagon-loader/hexagon-l
 
 const routes: Routes = [
   {
-    path: 'overview',
-    loadChildren: './overview/overview.module#OverviewModule',
-    canActivate: [AuthGuard]
-  },
-  {
     path: '',
     component: LinkComponent,
     canActivate: [AuthGuard]
@@ -23,16 +18,16 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [LinkComponent],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        MatIconModule,
-        MatDialogModule,
-        MatSnackBarModule,
-        AddVersionDialogModule,
-        HexagonLoaderModule,
-        MatExpansionModule
-    ],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    MatIconModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    AddVersionDialogModule,
+    HexagonLoaderModule,
+    MatExpansionModule
+  ],
   entryComponents: [
     AddVersionDialogComponent
   ]
