@@ -6,8 +6,11 @@
         -->{{link.short}}
       </span>
       <span class="original">{{link.original}}</span>
+      <button mat-raised-button
+              (click)="openLinkInNewTab(link.original)">
+        Öffnen
+      </button>
       <span class="date">{{link.iat | date: "dd.MM.yyy HH:MM:ss"}}</span>
-      <span></span>
     </div>
   </div>
 </main>

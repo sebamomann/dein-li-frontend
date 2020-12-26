@@ -29,4 +29,8 @@ export class PreviewComponent implements OnInit {
     this.$link = this.linkService.loadLinkByShort(this.short);
     this.$linkStats = this.linkService.loadLinkStats(this.short, true);
   }
+
+  openLinkInNewTab(original: any) {
+    window.open(original, '_blank');
+  }
 }

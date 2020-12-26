@@ -8,6 +8,7 @@
   max-width: calc(350px - 2 * 16px);
   margin: 0 auto;
   position: relative;
+  line-break: anywhere;
 
   & > span {
     text-align: center;
@@ -27,5 +28,16 @@
       position: relative;
       bottom: 0;
     }
+  }
+
+  button {
+    margin: 0 auto 25px;
+    display: block;
+  }
+}
+
+@media all and (max-width: 1024px) {
+  .preview-wrapper {
+    max-width: calc(500px - 2 * 16px);
   }
 }
