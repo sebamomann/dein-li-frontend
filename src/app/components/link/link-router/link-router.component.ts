@@ -16,13 +16,23 @@ export class LinkRouterComponent implements OnInit {
           queryParamsHandling: 'preserve'
         });
       } else {
-        this.router.navigate(['/link/specific'], {
-          skipLocationChange: true,
-          queryParamsHandling: 'preserve',
-          queryParams: {
-            l: params.l
-          }
-        });
+        if (params.type === 'preview') {
+          this.router.navigate(['/link/preview'], {
+            skipLocationChange: true,
+            queryParamsHandling: 'preserve',
+            queryParams: {
+              l: params.l
+            }
+          });
+        } else {
+          this.router.navigate(['/link/specific'], {
+            skipLocationChange: true,
+            queryParamsHandling: 'preserve',
+            queryParams: {
+              l: params.l
+            }
+          });
+        }
       }
     });
   }

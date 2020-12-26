@@ -16,9 +16,12 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'preview',
+    loadChildren: '../preview/preview.module#PreviewModule',
+  },
+  {
     path: '',
     component: LinkRouterComponent,
-    canActivate: [AuthGuard]
   },
 ];
 
