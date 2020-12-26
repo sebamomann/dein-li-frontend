@@ -1,5 +1,6 @@
 @import "src/app/styles/header-chart";
 @import "src/app/styles/variables";
+@import "src/app/styles/link";
 
 .main-statistic {
   .header-information-wrapper {
@@ -55,21 +56,6 @@
             mat-panel-title {
               display: grid;
               grid-template-columns: auto 1fr;
-
-              & > span {
-                width: 100%;
-                text-align: center;
-                font-size: 3em;
-                color: rgb(41, 118, 196);
-                font-weight: bold;
-
-                & > .baseUrl {
-                  font-size: 0.5em;
-                  color: lightgray;
-                  font-style: normal;
-                  vertical-align: middle;
-                }
-              }
 
               .copy-to-clipboard {
                 @include md-icon-size(1.75em);
@@ -243,18 +229,6 @@
               mat-panel-title {
                 display: grid;
                 grid-template-columns: auto 1fr;
-
-                & > span {
-                  font-size: 1.75em;
-
-                  & > .baseUrl {
-                    font-size: 0.75em;
-                    color: lightgray;
-                    font-style: normal;
-                    vertical-align: middle;
-                  }
-                }
-
 
                 .copy-to-clipboard {
                   @include md-icon-size(1.5em);

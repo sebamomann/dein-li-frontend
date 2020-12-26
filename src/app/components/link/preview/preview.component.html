@@ -1,7 +1,10 @@
 <main>
   <div *ngIf="$link | async let link; else loading">
     <div class="preview-wrapper">
-      <span><span class="baseUrl">{{baseUrl}}</span>{{link.short}}</span>
+      <span class="url-with-base"><!--
+        --><span class="baseUrl">{{baseUrl}}</span><!--
+        -->{{link.short}}
+      </span>
       <span class="original">{{link.original}}</span>
       <span class="date">{{link.iat | date: "dd.MM.yyy HH:MM:ss"}}</span>
       <span></span>

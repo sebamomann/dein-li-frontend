@@ -31,8 +31,8 @@
                   <mat-icon class="copy-to-clipboard"
                             (click)="copyLinkToClipboard(baseUrl + link.short, $event)">content_copy
                   </mat-icon>
-                  <span>
-                    <span class="baseUrl">{{baseUrl}}</span><!--
+                  <span class="url-with-base"><!--
+                    --><span class="baseUrl">{{baseUrl}}</span><!--
                     -->{{link.short}}</span>
                 </mat-panel-title>
               </mat-expansion-panel-header>

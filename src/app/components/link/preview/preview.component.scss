@@ -1,4 +1,5 @@
 @import "src/app/styles/variables";
+@import "src/app/styles/link";
 
 .preview-wrapper {
   background-color: $median-background;
@@ -11,21 +12,6 @@
   & > span {
     text-align: center;
     display: block;
-
-    &:first-child {
-      width: 100%;
-      text-align: center;
-      font-size: 3em;
-      color: rgb(41, 118, 196);
-      font-weight: bold;
-
-      & > .baseUrl {
-        font-size: 0.5em;
-        color: lightgray;
-        font-style: normal;
-        vertical-align: middle;
-      }
-    }
 
     &.original {
       font-style: italic;

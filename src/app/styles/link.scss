@@ -1,0 +1,24 @@
+.url-with-base {
+  width: 100%;
+  text-align: center;
+  font-size: 3em;
+  color: rgb(41, 118, 196);
+  font-weight: bold;
+
+  & > .baseUrl {
+    font-size: 0.5em;
+    color: lightgray;
+    font-style: normal;
+    vertical-align: middle;
+  }
+}
+
+@media all and (max-width: 1024px) {
+  .url-with-base {
+    font-size: 1.75em;
+
+    & > .baseUrl {
+      font-size: 0.75em;
+    }
+  }
+}
