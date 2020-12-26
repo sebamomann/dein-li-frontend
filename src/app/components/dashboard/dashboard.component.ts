@@ -88,6 +88,7 @@ export class DashboardComponent implements OnInit {
               ticks: {
                 fontColor: 'white',
                 stepSize: 1,
+                beginAtZero: true
               },
               scaleLabel: {}
             }],

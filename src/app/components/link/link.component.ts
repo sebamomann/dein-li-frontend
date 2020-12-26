@@ -102,7 +102,8 @@ export class LinkComponent implements OnInit {
               },
               ticks: {
                 fontColor: 'white',
-                stepSize: 1
+                stepSize: 1,
+                beginAtZero: true
               },
               scaleLabel: {}
             }],
