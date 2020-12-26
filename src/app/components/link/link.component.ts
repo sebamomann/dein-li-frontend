@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChildren} from '@angular/core';
 import {ILink} from '../../models/ILink.model';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {LinkService} from '../../services/link.service';
 import {Observable} from 'rxjs';
 import {ILinkStats} from '../../models/ILinkStats.model';
@@ -10,7 +10,6 @@ import {environment} from '../../../environments/environment';
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {ToolbarService} from '../../services/toolbar.service';
 
 export const fadeAnimation = trigger('listAnimation', [
   transition('* <=> *', [
@@ -32,8 +31,9 @@ export const fadeAnimation = trigger('listAnimation', [
 })
 export class LinkComponent implements OnInit {
   public $link: Observable<ILink>;
-  public $linkVersions: Observable<ILink[]>;
   public $linkStats: Observable<ILinkStats>;
+  public $linkVersions: Observable<ILink[]>;
+
   public short: string;
   public chart: any;
   public baseUrl = environment.API_URL.replace('https://', '').replace('http://', '');
@@ -41,17 +41,12 @@ export class LinkComponent implements OnInit {
   public monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
     'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
   ];
-  public lastMonth: string;
-  public lastDay: number;
 
   constructor(private route: ActivatedRoute, private linkService: LinkService,
-              private dialog: MatDialog, private snackBar: MatSnackBar,
-              private router: Router, private toolbarService: ToolbarService) {
+              private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.route.queryParams.subscribe(params => {
       this.short = params.l;
     });
-
-    this.toolbarService.setTitle('Aufrufe Letzte 24 Stunden');
   }
 
   @ViewChildren('canvas') set content(content: ElementRef) {

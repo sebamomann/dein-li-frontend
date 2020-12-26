@@ -1,0 +1,45 @@
+@import "src/app/styles/variables";
+
+.preview-wrapper {
+  background-color: $median-background;
+  padding: 16px;
+  border-radius: 8px;
+  max-width: calc(350px - 2 * 16px);
+  margin: 0 auto;
+  position: relative;
+
+  & > span {
+    text-align: center;
+    display: block;
+
+    &:first-child {
+      width: 100%;
+      text-align: center;
+      font-size: 3em;
+      color: rgb(41, 118, 196);
+      font-weight: bold;
+
+      & > .baseUrl {
+        font-size: 0.5em;
+        color: lightgray;
+        font-style: normal;
+        vertical-align: middle;
+      }
+    }
+
+    &.original {
+      font-style: italic;
+      margin: 10px 0 25px;
+    }
+
+    &.date {
+      align-self: center;
+      color: gray;
+      font-size: 0.75em;
+      font-style: italic;
+      text-align: right;
+      position: relative;
+      bottom: 0;
+    }
+  }
+}

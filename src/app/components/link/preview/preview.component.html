@@ -1,1 +1,14 @@
-<p>preview works!</p>
+<main>
+  <div *ngIf="$link | async let link; else loading">
+    <div class="preview-wrapper">
+      <span><span class="baseUrl">{{baseUrl}}</span>{{link.short}}</span>
+      <span class="original">{{link.original}}</span>
+      <span class="date">{{link.iat | date: "dd.MM.yyy HH:MM:ss"}}</span>
+      <span></span>
+    </div>
+  </div>
+</main>
+
+<ng-template #loading>
+  <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
+</ng-template>
