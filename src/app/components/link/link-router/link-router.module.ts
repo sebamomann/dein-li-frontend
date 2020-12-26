@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {LinkRouterComponent} from './link-router.component';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from '../../../_helper/auth.gaurd';
+import {HexagonLoaderModule} from '../../../html-templates/hexagon-loader/hexagon-loader.module';
 
 const routes: Routes = [
   {
@@ -29,7 +30,8 @@ const routes: Routes = [
   declarations: [LinkRouterComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    HexagonLoaderModule
   ]
 })
 export class LinkRouterModule {
