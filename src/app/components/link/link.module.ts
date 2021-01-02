@@ -8,6 +8,7 @@ import {AddVersionDialogModule} from '../../dialogs/add-version-dialog/add-versi
 import {AuthGuard} from '../../_helper/auth.gaurd';
 import {HexagonLoaderModule} from '../../html-templates/hexagon-loader/hexagon-loader.module';
 import {ChartFilterModule} from '../settings/chart-filter/chart-filter.module';
+import {BasicCallChartModule} from '../charts/basic-call-chart/basic-call-chart.module';
 
 const routes: Routes = [
   {
@@ -29,7 +30,8 @@ const routes: Routes = [
     HexagonLoaderModule,
     MatExpansionModule,
     MatInputModule,
-    ChartFilterModule
+    ChartFilterModule,
+    BasicCallChartModule
   ],
   entryComponents: [
     AddVersionDialogComponent

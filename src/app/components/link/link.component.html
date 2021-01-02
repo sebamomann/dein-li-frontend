@@ -2,22 +2,7 @@
   <div class="header-statistic">
     <app-chart-filter (update)="filterUpdated($event)"></app-chart-filter>
 
-    <div *ngIf="$linkStats | async let linkStats; else loading"
-         class="statistic-chart-wrapper">
-      <div class="statistic-chart">
-        <canvas id="canvas" width="100%" height="30vh"> {{chart}} </canvas>
-      </div>
-      <div class="statistic-information">
-        <div>
-          <span>{{linkStats.total}}</span>
-          <span>Aufrufe Gesamt</span>
-        </div>
-        <div>
-          <span>{{linkStats.distinctCalls}}</span>
-          <span>Geräte Gesamt</span>
-        </div>
-      </div>
-    </div>
+    <app-basic-call-chart [short]="short" [chartFilter]="chartFilter"></app-basic-call-chart>
   </div>
 </div>
 <main>

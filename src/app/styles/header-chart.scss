@@ -2,46 +2,46 @@
   & > div {
     width: 100%;
   }
+}
 
-  .statistic-chart-wrapper {
+.statistic-chart-wrapper {
+  width: 100%;
+  max-width: 1275px;
+  height: 100%;
+  margin: 0 auto;
+
+  .statistic-chart {
+    height: 30vh;
     width: 100%;
-    max-width: 1275px;
-    height: 100%;
-    margin: 0 auto;
 
-    .statistic-chart {
-      height: 30vh;
+    canvas {
       width: 100%;
-
-      canvas {
-        width: 100%;
-      }
     }
+  }
 
-    .statistic-information {
-      padding: 25px 0 50px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      justify-content: center;
+  .statistic-information {
+    padding: 25px 0 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
 
-      & > div {
-        text-align: center;
-        padding: 10px;
+    & > div {
+      text-align: center;
+      padding: 10px;
 
-        & > span {
-          color: white;
-          display: block;
+      & > span {
+        color: white;
+        display: block;
 
-          &:first-child {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin: 25px;
-          }
+        &:first-child {
+          font-size: 2.5em;
+          font-weight: bold;
+          margin: 25px;
+        }
 
-          &:nth-child(2) {
-            color: gray;
-          }
+        &:nth-child(2) {
+          color: gray;
         }
       }
     }
@@ -49,26 +49,24 @@
 }
 
 @media all and (max-width: 1024px) {
-  .header-statistic {
-    .statistic-chart-wrapper {
-      canvas {
-      }
+  .statistic-chart-wrapper {
+    canvas {
+    }
 
-      .statistic-information {
-        padding: 16px 0 50px;
+    .statistic-information {
+      padding: 16px 0 50px;
 
-        & > div {
-          padding: 16px;
+      & > div {
+        padding: 16px;
 
-          & > span {
-            &:first-child {
-              font-size: 1.75em;
-              margin: 16px;
-            }
+        & > span {
+          &:first-child {
+            font-size: 1.75em;
+            margin: 16px;
+          }
 
-            &:nth-child(2) {
-              color: gray;
-            }
+          &:nth-child(2) {
+            color: gray;
           }
         }
       }
