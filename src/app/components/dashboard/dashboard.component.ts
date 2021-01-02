@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
       link: new FormControl('', [Validators.required]),
     });
 
-    this.$totalStats = this.linkService.loadLinkStats('all');
+    this.$totalStats = this.linkService.loadLinkStats('all', false, 'hours', '', '');
   }
 
   public loadChart() {

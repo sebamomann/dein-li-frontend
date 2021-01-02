@@ -44,7 +44,7 @@ export class LinkService {
     );
   }
 
-  loadLinkStats(short?: string, preview: boolean = false) {
+  loadLinkStats(short: string, preview: boolean, interval: string, start: string, end) {
     let url;
 
     if (preview) {
@@ -52,6 +52,8 @@ export class LinkService {
     } else {
       url = `${environment.API_URL}link/${short}/history`;
     }
+
+    url = `${url}?interval=${interval}&start=${start}&end=${end}`;
 
     const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
 

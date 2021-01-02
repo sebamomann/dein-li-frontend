@@ -44,6 +44,10 @@ export class LinkComponent implements OnInit {
     'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
   ];
 
+  public interval = 'days';
+  public start = '2020-12-01T13:00';
+  public end = '2020-12-25T13:00';
+
   constructor(private route: ActivatedRoute, private linkService: LinkService,
               private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.route.queryParams.subscribe(params => {
@@ -60,20 +64,57 @@ export class LinkComponent implements OnInit {
   ngOnInit() {
     this.$link = this.linkService.loadLinkByShort(this.short);
     this.$linkVersions = this.linkService.loadLinkVersions(this.short);
-    this.$linkStats = this.linkService.loadLinkStats(this.short);
+    this.$linkStats = this.linkService.loadLinkStats(this.short, false, this.interval, this.start, this.end);
   }
 
   public loadChart() {
     this.$linkStats.subscribe((sLinkStats) => {
+      const calls = sLinkStats.calls;
 
-      const d = new Date();
-      const currentHours = d.getHours();
+      let formatString = 'YYYY-MM-DD';
+      let formatStringToBe = 'YYYY.MM.DD';
 
-      let calls = sLinkStats.calls;
+      switch (this.interval) {
+        case 'minutes':
+          formatString = 'YYYY-MM-DDTHH:mm';
+          formatStringToBe = 'YYYY.MM.DD, HH:mm';
+          break;
+        case 'hours':
+          formatString = 'YYYY-MM-DDTHH';
+          formatStringToBe = 'YYYY.MM.DD, HH';
+          break;
+        case 'days':
+          formatString = 'YYYY-MM-DD';
+          formatStringToBe = 'YYYY.MM.DD';
+          break;
+        case 'months':
+          formatString = 'YYYY-MM';
+          formatStringToBe = 'YYYY.MM';
+          break;
+      }
 
-      const formatString = 'YYYY-MM-DDTHH:mm:ss';
-      const formatStringToBe = 'YYYY.MM.DD, HH:mm:ss';
-      const interval = 'hours';
+      const interval = this.interval;
+
+
+      if (calls.length > 0) {
+        const pre = moment(calls[0].iat, formatString);
+        const start = moment(this.start, formatString);
+
+        if (!pre.isSameOrBefore(start)) {
+          calls.splice(0, 0, {iat: start.format(formatString), count: 0});
+        }
+
+        const post = moment(calls[0].iat, formatString);
+        const end = moment(this.end, formatString);
+
+        if (!post.isSameOrAfter(end)) {
+          calls.push({iat: end.format(formatString), count: 0});
+        }
+      }
+
+      console.log(calls);
+
+      // return;
 
       for (let i = 0; i < calls.length; i++) {
         if (i + 1 < calls.length) {
@@ -89,8 +130,6 @@ export class LinkComponent implements OnInit {
           }
         }
       }
-
-      calls = [...calls.slice(currentHours + 1), ...calls.slice(0, currentHours + 1)];
 
       const labels = [];
       const data = [];
@@ -195,5 +234,9 @@ export class LinkComponent implements OnInit {
       duration: 2000,
       panelClass: 'snackbar-default'
     });
+  }
+
+  public changedInterval() {
+    this.$linkStats = this.linkService.loadLinkStats(this.short, false, this.interval, this.start, this.end);
   }
 }
