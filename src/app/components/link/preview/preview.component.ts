@@ -27,7 +27,7 @@ export class PreviewComponent implements OnInit {
 
   ngOnInit() {
     this.$link = this.linkService.loadLinkByShort(this.short);
-    this.$linkStats = this.linkService.loadLinkStats(this.short, true, undefined, '', '');
+    this.$linkStats = this.linkService.loadLinkStats(this.short, true, undefined);
   }
 
   openLinkInNewTab(original: any) {
