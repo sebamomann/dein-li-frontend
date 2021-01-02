@@ -1,0 +1,34 @@
+<div class="chart-filter-wrapper">
+
+  <mat-select class="interval-select"
+    [(value)]="interval"
+              (valueChange)="changedFilter()">
+    <mat-option value="minutes">Minuten</mat-option>
+    <mat-option value="hours">Stunden</mat-option>
+    <mat-option value="days">Tage</mat-option>
+    <mat-option value="months">Monate</mat-option>
+  </mat-select>
+
+  <mat-form-field class="">
+    <label for="dateStart">
+      <input id="dateStart"
+             [(ngModel)]="start"
+             (change)="changedFilter()"
+             placeholder="Datum"
+             type="datetime-local"
+             matInput
+             required>
+    </label>
+  </mat-form-field>
+  <mat-form-field class="">
+    <label for="dateEnd">
+      <input id="dateEnd"
+             [(ngModel)]="end"
+             (change)="changedFilter()"
+             placeholder="Datum"
+             type="datetime-local"
+             matInput
+             required>
+    </label>
+  </mat-form-field>
+</div>

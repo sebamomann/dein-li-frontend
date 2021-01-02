@@ -1,0 +1,57 @@
+.chart-filter-wrapper {
+  width: 100%;
+  max-width: 1275px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  color: white;
+  margin: 0 auto 50px;
+  align-items: center;
+  grid-gap: 10%;
+
+  .mat-select {
+    align-self: center;
+
+    ::ng-deep .mat-select-value {
+      color: white;
+    }
+
+    ::ng-deep .mat-select-arrow {
+      color: white;
+    }
+  }
+
+  ::ng-deep .mat-form-field .mat-form-field-label {
+    color: lightgray;
+  }
+
+  ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    color: white;
+  }
+
+  ::ng-deep .mat-form-field-underline .mat-form-field-ripple {
+    background-color: lightgray;
+  }
+
+  ::ng-deep .mat-form-field-underline {
+    background-color: lightgray;
+  }
+
+  ::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+}
+
+@media all and (max-width: 1024px) {
+  .chart-filter-wrapper {
+    position: relative;
+    width: 95%;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 0 10px;
+
+    .interval-select {
+      grid-column-start: 1;
+      grid-column-end: 3;
+      margin-bottom: 16px;
+    }
+  }
+}

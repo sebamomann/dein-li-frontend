@@ -5,6 +5,7 @@ import {catchError, map} from 'rxjs/operators';
 import {ILink} from '../models/ILink.model';
 import {Observable, of} from 'rxjs';
 import {ILinkStats} from '../models/ILinkStats.model';
+import {IChartFilter} from '../models/IChartFilter';
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,7 @@ export class LinkService {
     );
   }
 
-  loadLinkStats(short: string, preview: boolean, interval: string, start: string, end) {
+  loadLinkStats(short: string, preview: boolean, chartFilter: IChartFilter) {
     let url;
 
     if (preview) {
@@ -53,7 +54,7 @@ export class LinkService {
       url = `${environment.API_URL}link/${short}/history`;
     }
 
-    url = `${url}?interval=${interval}&start=${start}&end=${end}`;
+    url = `${url}?interval=${chartFilter.interval}&start=${chartFilter.start}&end=${chartFilter.end}`;
 
     const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
 

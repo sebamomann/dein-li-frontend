@@ -1,39 +1,9 @@
 <div class="header-statistic-wrapper">
   <div class="header-statistic">
+    <app-chart-filter (update)="filterUpdated($event)"></app-chart-filter>
+
     <div *ngIf="$linkStats | async let linkStats; else loading"
          class="statistic-chart-wrapper">
-
-      <mat-select [(value)]="interval" (valueChange)="changedInterval()">
-        <mat-option value="minutes">Minuten</mat-option>
-        <mat-option value="hours">Stunden</mat-option>
-        <mat-option value="days">Tage</mat-option>
-        <mat-option value="months">Monate</mat-option>
-      </mat-select>
-
-      <mat-form-field class="example-full-width">
-        <label for="dateStart">
-          <input id="dateStart"
-                 [(ngModel)]="start"
-                 matInput
-                 placeholder="Datum"
-                 required
-                 (change)="changedInterval()"
-                 type="datetime-local">
-        </label>
-      </mat-form-field>
-
-      <mat-form-field class="example-full-width">
-        <label for="dateEnd">
-          <input id="dateEnd"
-                 [(ngModel)]="end"
-                 matInput
-                 placeholder="Datum"
-                 required
-                 (change)="changedInterval()"
-                 type="datetime-local">
-        </label>
-      </mat-form-field>
-
       <div class="statistic-chart">
         <canvas id="canvas" width="100%" height="30vh"> {{chart}} </canvas>
       </div>
