@@ -1,13 +1,17 @@
-import {Component, ElementRef, OnInit, ViewChildren} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ILinkStats} from '../../models/ILinkStats.model';
-import {Chart} from 'chart.js';
 import {LinkService} from '../../services/link.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
 import {MatDialog} from '@angular/material';
 import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.component';
 import {ToolbarService} from '../../services/toolbar.service';
+import {IChartFilter} from '../../models/IChartFilter';
+// @ts-ignore
+import moment from 'moment';
+
+moment.locale('de');
 
 // @ts-ignore
 const validUrl = require('valid-url');
@@ -24,18 +28,24 @@ export class DashboardComponent implements OnInit {
   public event: FormGroup;
   public userIsLoggedIn: any;
 
+  public chartFilter: IChartFilter;
+
   constructor(public linkService: LinkService, private formBuilder: FormBuilder,
               private authService: AuthenticationService, private dialog: MatDialog,
               private toolbarService: ToolbarService) {
     this.userIsLoggedIn = this.authService.userIsLoggedIn();
 
-    this.toolbarService.setTitle('Home');
-  }
+    const d = new Date();
+    d.setDate(d.getDate() - 1);
 
-  @ViewChildren('canvas') set content(content: ElementRef) {
-    if (content) {
-      this.loadChart();
-    }
+
+    this.chartFilter = {
+      interval: 'hours',
+      start: moment(d).format('YYYY-MM-DDTHH:mm'),
+      end: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
+    };
+
+    this.toolbarService.setTitle('Home');
   }
 
   ngOnInit() {
@@ -46,71 +56,6 @@ export class DashboardComponent implements OnInit {
     this.$totalStats = this.linkService.loadLinkStats('all', false, {interval: 'hours', start: undefined, end: undefined});
   }
 
-  public loadChart() {
-    this.$totalStats.subscribe((totalStats) => {
-
-      const d = new Date();
-      const currentHours = d.getHours();
-
-      let calls = totalStats.calls;
-
-      calls = [...calls.slice(currentHours + 1), ...calls.slice(0, currentHours + 1)];
-
-      const labels = [];
-      const data = [];
-
-      calls.forEach((fCall) => {
-        labels.push(fCall.hour + ' Uhr');
-        data.push(+fCall.calls);
-      });
-
-      this.chart = new Chart('canvas', {
-        type: 'line',
-        data: {
-          labels,
-          datasets: [{
-            data,
-            borderColor: '#2976c4',
-            fill: false
-          }],
-        },
-        options: {
-          legend: {
-            display: false
-          },
-          maintainAspectRatio: false,
-          scales: {
-            yAxes: [{
-              display: true,
-              gridLines: {
-                color: '#3e3e3e'
-              },
-              ticks: {
-                fontColor: 'white',
-                stepSize: 1,
-                beginAtZero: true
-              },
-              scaleLabel: {}
-            }],
-            xAxes: [{
-              gridLines: {
-                color: '#3e3e3e'
-              },
-              ticks: {
-                fontColor: 'white',
-              },
-              scaleLabel: {
-                display: true,
-                labelString: 'Aufrufe der Letzten 24 Stunden',
-                fontSize: 20,
-                padding: 10,
-              },
-            }]
-          },
-        }
-      });
-    });
-  }
 
   public getLinkErrorMessage(): string {
     if (this.get('link').hasError('invalid')) {
@@ -137,6 +82,10 @@ export class DashboardComponent implements OnInit {
         data: sResponse,
       });
     });
+  }
+
+  public filterUpdated(filter: IChartFilter) {
+    this.chartFilter = filter;
   }
 
   private get(str: string) {

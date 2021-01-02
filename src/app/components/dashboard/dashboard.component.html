@@ -1,21 +1,8 @@
 <div class="header-statistic-wrapper">
   <div class="header-statistic">
-    <div *ngIf="$totalStats | async let totalStats"
-         class="statistic-chart-wrapper">
-      <div class="statistic-chart">
-        <canvas id="canvas" width="100%" height="30vh"> {{chart}} </canvas>
-      </div>
-      <!--      <div class="statistic-information">-->
-      <!--        <div>-->
-      <!--          <span>{{totalStats.total}}</span>-->
-      <!--          <span>Aufrufe Gesamt</span>-->
-      <!--        </div>-->
-      <!--        <div>-->
-      <!--          <span>{{totalStats.distinctCalls}}</span>-->
-      <!--          <span>Geräte Gesamt</span>-->
-      <!--        </div>-->
-      <!--      </div>-->
-    </div>
+    <app-chart-filter (update)="filterUpdated($event)"></app-chart-filter>
+
+    <app-basic-call-chart [short]="'all'" [chartFilter]="chartFilter"></app-basic-call-chart>
   </div>
 </div>
 

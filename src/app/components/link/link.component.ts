@@ -1,15 +1,13 @@
-import {Component, ElementRef, OnInit, ViewChildren} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ILink} from '../../models/ILink.model';
 import {ActivatedRoute} from '@angular/router';
 import {LinkService} from '../../services/link.service';
 import {Observable} from 'rxjs';
-import {ILinkStats} from '../../models/ILinkStats.model';
 import {environment} from '../../../environments/environment';
 
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import {MatDialog, MatSnackBar} from '@angular/material';
-import {Chart} from 'chart.js';
 // @ts-ignore
 import moment from 'moment';
 import {IChartFilter} from '../../models/IChartFilter';
@@ -36,7 +34,6 @@ export const fadeAnimation = trigger('listAnimation', [
 })
 export class LinkComponent implements OnInit {
   public $link: Observable<ILink>;
-  public $linkStats: Observable<ILinkStats>;
   public $linkVersions: Observable<ILink[]>;
 
   public short: string;
@@ -121,9 +118,7 @@ export class LinkComponent implements OnInit {
     });
   }
 
-  filterUpdated(filter: IChartFilter) {
+  public filterUpdated(filter: IChartFilter) {
     this.chartFilter = filter;
-
-    this.$linkStats = this.linkService.loadLinkStats(this.short, false, filter);
   }
 }
