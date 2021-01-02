@@ -4,12 +4,14 @@ import {ActivatedRoute} from '@angular/router';
 import {LinkService} from '../../services/link.service';
 import {Observable} from 'rxjs';
 import {ILinkStats} from '../../models/ILinkStats.model';
-import {Chart} from 'chart.js';
 import {environment} from '../../../environments/environment';
 
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import {MatDialog, MatSnackBar} from '@angular/material';
+import {Chart} from 'chart.js';
+// @ts-ignore
+import moment from 'moment';
 
 export const fadeAnimation = trigger('listAnimation', [
   transition('* <=> *', [
@@ -69,14 +71,33 @@ export class LinkComponent implements OnInit {
 
       let calls = sLinkStats.calls;
 
+      const formatString = 'YYYY-MM-DDTHH:mm:ss';
+      const formatStringToBe = 'YYYY.MM.DD, HH:mm:ss';
+      const interval = 'hours';
+
+      for (let i = 0; i < calls.length; i++) {
+        if (i + 1 < calls.length) {
+          const date1 = moment(calls[i].iat, formatString);
+          const date2 = moment(calls[i + 1].iat, formatString);
+
+          calls[i].iat = date1.format(formatStringToBe);
+          calls[i + 1].iat = date2.format(formatStringToBe);
+
+          if (!date1.add(1, interval).isSame(date2)) {
+            const obj = {iat: date1.format(formatStringToBe), count: 0};
+            calls.splice(i + 1, 0, obj);
+          }
+        }
+      }
+
       calls = [...calls.slice(currentHours + 1), ...calls.slice(0, currentHours + 1)];
 
       const labels = [];
       const data = [];
 
       calls.forEach((fCall) => {
-        labels.push(fCall.hour + ' Uhr');
-        data.push(+fCall.calls);
+        labels.push(fCall.iat);
+        data.push(+fCall.count);
       });
 
       this.chart = new Chart('canvas', {
