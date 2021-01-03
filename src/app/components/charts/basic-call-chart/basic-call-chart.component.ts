@@ -69,6 +69,7 @@ export class BasicCallChartComponent implements OnInit, OnChanges {
         const start = moment(this.chartFilter.start, formatString);
 
         if (!pre.isSameOrBefore(start)) {
+          console.log('ADD PRE');
           calls.splice(0, 0, {iat: start.format(formatString), count: 0});
         }
 
@@ -76,14 +77,22 @@ export class BasicCallChartComponent implements OnInit, OnChanges {
         const end = moment(this.chartFilter.end, formatString);
 
         if (!post.isSameOrAfter(end)) {
+          console.log('ADD POST');
           calls.push({iat: end.format(formatString), count: 0});
         }
       }
 
       for (let i = 0; i < calls.length; i++) {
         if (i + 1 < calls.length) {
+
+          if (i > 500) {
+            console.log('FAILURE');
+            break;
+          }
+
           const date1 = moment(calls[i].iat, formatString);
           const date2 = moment(calls[i + 1].iat, formatString);
+
 
           calls[i].iat = date1.format(formatString);
           calls[i + 1].iat = date2.format(formatString);

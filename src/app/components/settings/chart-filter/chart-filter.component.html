@@ -3,10 +3,7 @@
   <mat-select class="interval-select"
     [(value)]="interval"
               (valueChange)="changedFilter()">
-    <mat-option value="minutes">Minuten</mat-option>
-    <mat-option value="hours">Stunden</mat-option>
-    <mat-option value="days">Tage</mat-option>
-    <mat-option value="months">Monate</mat-option>
+    <mat-option *ngFor="let option of options" [value]="option.value">{{option.text}}</mat-option>
   </mat-select>
 
   <mat-form-field class="">
