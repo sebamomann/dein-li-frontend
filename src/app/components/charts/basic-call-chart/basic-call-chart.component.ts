@@ -37,7 +37,7 @@ export class BasicCallChartComponent implements OnInit, OnChanges {
 
   public loadChart() {
     this.linkStats$.subscribe((sLinkStats) => {
-      const calls = sLinkStats.calls;
+      let calls = sLinkStats.calls;
 
       let formatString = 'YYYY-MM-DD';
       let formatStringToBe = 'YYYY.MM.DD';
@@ -60,6 +60,11 @@ export class BasicCallChartComponent implements OnInit, OnChanges {
           formatStringToBe = 'MMM YY';
           break;
       }
+
+      calls = calls.map((mCall) => {
+        mCall.iat = moment(mCall.iat).format(formatString);
+        return mCall;
+      });
 
       const interval = this.chartFilter.interval;
 
