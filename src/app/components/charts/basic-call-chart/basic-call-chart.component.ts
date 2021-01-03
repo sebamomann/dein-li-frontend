@@ -72,7 +72,7 @@ export class BasicCallChartComponent implements OnInit, OnChanges {
           calls.splice(0, 0, {iat: start.format(formatString), count: 0});
         }
 
-        const post = moment(calls[0].iat, formatString);
+        const post = moment(calls[calls.length - 1].iat, formatString);
         const end = moment(this.chartFilter.end, formatString);
 
         if (!post.isSameOrAfter(end)) {
