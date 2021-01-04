@@ -151,6 +151,9 @@ export class BasicCallChartComponent implements OnInit, OnChanges {
             console.log('ADD POST');
             calls.push({iat: end.format(formatString), count: 0});
           }
+        } else {
+          calls[0] = {iat: moment(this.chartFilter.start, formatString), count: 0};
+          calls[1] = {iat: moment(this.chartFilter.end, formatString), count: 0};
         }
 
         for (let i = 0; i < calls.length; i++) {
