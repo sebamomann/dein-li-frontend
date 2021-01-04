@@ -22,6 +22,8 @@ export class ChartFilterComponent implements OnInit {
   public end = moment(new Date()).format('YYYY-MM-DDTHH:mm');
   public defaultOptions: { value: string, text: string }[];
   public options: { value: string, text: string }[];
+  public updateInterval = 15;
+  private timeInterval: any;
 
   constructor(private readonly snackBar: MatSnackBar) {
     if (this.chartFilter) {
@@ -74,10 +76,13 @@ export class ChartFilterComponent implements OnInit {
     if (index < minPossIndex) {
       console.log('INDEX ' + index + ' NOT POSSIBLE, REPLACE BY ' + minPossIndex);
 
-      this.snackBar.open(`'${this.defaultOptions[index].text}' nicht möglich als Intervall. Ersetzt durch '${this.defaultOptions[minPossIndex].text}'`, null, {
-        duration: 2000,
-        panelClass: 'snackbar-default'
-      });
+      this.snackBar.open(
+        `'${this.defaultOptions[index].text}' nicht möglich als Intervall. Ersetzt durch '${this.defaultOptions[minPossIndex].text}'`,
+        null,
+        {
+          duration: 2000,
+          panelClass: 'snackbar-default'
+        });
 
       this.interval = this.intervals[minPossIndex];
     }
@@ -87,5 +92,24 @@ export class ChartFilterComponent implements OnInit {
       start: this.start,
       end: this.end,
     });
+  }
+
+  toggleAutoUpdate() {
+    if (this.timeInterval) {
+      clearInterval(this.timeInterval);
+    } else {
+      clearInterval(this.timeInterval);
+      this.changedUpdateInterval();
+    }
+  }
+
+  changedUpdateInterval() {
+    this.changedFilter();
+
+    clearInterval(this.timeInterval);
+
+    this.timeInterval = setInterval(() => {
+      this.changedFilter();
+    }, this.updateInterval * 1000);
   }
 }

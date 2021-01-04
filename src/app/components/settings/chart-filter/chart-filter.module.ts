@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartFilterComponent } from './chart-filter.component';
-import {MatInputModule, MatSelectModule} from '@angular/material';
+import {MatCheckboxModule, MatInputModule, MatSelectModule} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 
 
@@ -11,11 +11,12 @@ import {FormsModule} from '@angular/forms';
   exports: [
     ChartFilterComponent
   ],
-  imports: [
-    CommonModule,
-    MatSelectModule,
-    FormsModule,
-    MatInputModule
-  ]
+    imports: [
+        CommonModule,
+        MatSelectModule,
+        FormsModule,
+        MatInputModule,
+        MatCheckboxModule
+    ]
 })
 export class ChartFilterModule { }

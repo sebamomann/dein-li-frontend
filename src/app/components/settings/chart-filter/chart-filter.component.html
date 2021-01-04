@@ -1,7 +1,19 @@
 <div class="chart-filter-wrapper">
 
+  <mat-checkbox (click)="toggleAutoUpdate()">Live Update</mat-checkbox>
+
   <mat-select class="interval-select"
-    [(value)]="interval"
+              [(value)]="updateInterval"
+              (valueChange)="changedUpdateInterval()">
+    <mat-option [value]="15">15 Sekunden</mat-option>
+    <mat-option [value]="30">30 Sekunden</mat-option>
+    <mat-option [value]="60">1 Minute</mat-option>
+    <mat-option [value]="300">5 Minuten</mat-option>
+    <mat-option [value]="9000">15 Minuten</mat-option>
+  </mat-select>
+
+  <mat-select class="interval-select"
+              [(value)]="interval"
               (valueChange)="changedFilter()">
     <mat-option *ngFor="let option of options" [value]="option.value">{{option.text}}</mat-option>
   </mat-select>
