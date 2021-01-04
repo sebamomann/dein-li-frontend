@@ -1,6 +1,8 @@
+import {ICall} from './ICall';
+
 export interface ILinkStats {
   total: number;
   distinctCalls: number;
-  calls: any[];
+  calls: ICall[];
   format: string;
 }
