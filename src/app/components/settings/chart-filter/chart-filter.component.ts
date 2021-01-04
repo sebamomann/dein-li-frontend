@@ -23,6 +23,7 @@ export class ChartFilterComponent implements OnInit {
   public defaultOptions: { value: string, text: string }[];
   public options: { value: string, text: string }[];
   public updateInterval = 15;
+  defaultUpdateInterval = 'last_day';
   private timeInterval: any;
 
   constructor(private readonly snackBar: MatSnackBar) {
@@ -61,30 +62,52 @@ export class ChartFilterComponent implements OnInit {
   }
 
   changedFilter() {
-    const index = this.intervals.indexOf(this.interval);
+    if (this.defaultUpdateInterval === 'custom') {
+      const index = this.intervals.indexOf(this.interval);
 
-    const duration = moment.duration(moment(this.end).diff(moment(this.start)));
+      const duration = moment.duration(moment(this.end).diff(moment(this.start)));
 
-    const nrOfPointsMin = duration.asMinutes();
-    const nrOfPointsHour = duration.asHours();
-    const nrOfPointsDays = duration.asDays();
+      const nrOfPointsMin = duration.asMinutes();
+      const nrOfPointsHour = duration.asHours();
+      const nrOfPointsDays = duration.asDays();
 
-    const minPossIndex = nrOfPointsMin < 500 ? 0 : (nrOfPointsHour < 500 ? 1 : (nrOfPointsDays < 500 ? 2 : 3));
+      const minPossIndex = nrOfPointsMin < 500 ? 0 : (nrOfPointsHour < 500 ? 1 : (nrOfPointsDays < 500 ? 2 : 3));
 
-    this.options = this.defaultOptions.slice(minPossIndex, this.defaultOptions.length);
+      this.options = this.defaultOptions.slice(minPossIndex, this.defaultOptions.length);
 
-    if (index < minPossIndex) {
-      console.log('INDEX ' + index + ' NOT POSSIBLE, REPLACE BY ' + minPossIndex);
+      if (index < minPossIndex) {
+        console.log('INDEX ' + index + ' NOT POSSIBLE, REPLACE BY ' + minPossIndex);
 
-      this.snackBar.open(
-        `'${this.defaultOptions[index].text}' nicht möglich als Intervall. Ersetzt durch '${this.defaultOptions[minPossIndex].text}'`,
-        null,
-        {
-          duration: 2000,
-          panelClass: 'snackbar-default'
-        });
+        this.snackBar.open(
+          `'${this.defaultOptions[index].text}' nicht möglich als Intervall. Ersetzt durch '${this.defaultOptions[minPossIndex].text}'`,
+          null,
+          {
+            duration: 2000,
+            panelClass: 'snackbar-default'
+          });
 
-      this.interval = this.intervals[minPossIndex];
+        this.interval = this.intervals[minPossIndex];
+      }
+    } else if (this.defaultUpdateInterval === 'last_15_minutes') {
+      const date = moment();
+      this.end = date.format('YYYY-MM-DDTHH:mm');
+      this.start = date.subtract(15, 'minutes').format('YYYY-MM-DDTHH:mm');
+      this.interval = 'minutes';
+    } else if (this.defaultUpdateInterval === 'last_hour') {
+      const date = moment();
+      this.end = date.format('YYYY-MM-DDTHH:mm');
+      this.start = date.subtract(1, 'hours').format('YYYY-MM-DDTHH:mm');
+      this.interval = 'minutes';
+    } else if (this.defaultUpdateInterval === 'last_12_hours') {
+      const date = moment();
+      this.end = date.format('YYYY-MM-DDTHH:mm');
+      this.start = date.subtract(12, 'hours').format('YYYY-MM-DDTHH:mm');
+      this.interval = 'hours';
+    } else if (this.defaultUpdateInterval === 'last_day') {
+      const date = moment();
+      this.end = date.format('YYYY-MM-DDTHH:mm');
+      this.start = date.subtract(24, 'hours').format('YYYY-MM-DDTHH:mm');
+      this.interval = 'hours';
     }
 
     this.update.emit({

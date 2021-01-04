@@ -2,7 +2,7 @@
 
   <mat-checkbox (click)="toggleAutoUpdate()">Live Update</mat-checkbox>
 
-  <mat-select class="interval-select"
+  <mat-select class="update-interval-select"
               [(value)]="updateInterval"
               (valueChange)="changedUpdateInterval()">
     <mat-option [value]="15">15 Sekunden</mat-option>
@@ -12,32 +12,44 @@
     <mat-option [value]="9000">15 Minuten</mat-option>
   </mat-select>
 
-  <mat-select class="interval-select"
-              [(value)]="interval"
-              (valueChange)="changedFilter()">
-    <mat-option *ngFor="let option of options" [value]="option.value">{{option.text}}</mat-option>
+  <mat-select class="default-update-interval-select"
+              [(value)]="defaultUpdateInterval"
+              (valueChange)="changedUpdateInterval()">
+    <mat-option [value]="'custom'">Benutzerdefiniert</mat-option>
+    <mat-option [value]="'last_15_minutes'">Letzte 15 Minuten</mat-option>
+    <mat-option [value]="'last_hour'">Letzte Stunde</mat-option>
+    <mat-option [value]="'last_12_hours'">Letzte 12 Stunden</mat-option>
+    <mat-option [value]="'last_day'">Letzte 24 Stunden</mat-option>
   </mat-select>
 
-  <mat-form-field class="">
-    <label for="dateStart">
-      <input id="dateStart"
-             [(ngModel)]="start"
-             (change)="changedFilter()"
-             placeholder="Datum"
-             type="datetime-local"
-             matInput
-             required>
-    </label>
-  </mat-form-field>
-  <mat-form-field class="">
-    <label for="dateEnd">
-      <input id="dateEnd"
-             [(ngModel)]="end"
-             (change)="changedFilter()"
-             placeholder="Datum"
-             type="datetime-local"
-             matInput
-             required>
-    </label>
-  </mat-form-field>
+  <ng-container *ngIf="defaultUpdateInterval == 'custom'">
+    <mat-select class="interval-select"
+                [(value)]="interval"
+                (valueChange)="changedFilter()">
+      <mat-option *ngFor="let option of options" [value]="option.value">{{option.text}}</mat-option>
+    </mat-select>
+
+    <mat-form-field class="">
+      <label for="dateStart">
+        <input id="dateStart"
+               [(ngModel)]="start"
+               (change)="changedFilter()"
+               placeholder="Datum"
+               type="datetime-local"
+               matInput
+               required>
+      </label>
+    </mat-form-field>
+    <mat-form-field class="">
+      <label for="dateEnd">
+        <input id="dateEnd"
+               [(ngModel)]="end"
+               (change)="changedFilter()"
+               placeholder="Datum"
+               type="datetime-local"
+               matInput
+               required>
+      </label>
+    </mat-form-field>
+  </ng-container>
 </div>
