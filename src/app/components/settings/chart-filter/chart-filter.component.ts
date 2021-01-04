@@ -88,26 +88,23 @@ export class ChartFilterComponent implements OnInit {
 
         this.interval = this.intervals[minPossIndex];
       }
-    } else if (this.defaultUpdateInterval === 'last_15_minutes') {
+    } else {
       const date = moment();
       this.end = date.format('YYYY-MM-DDTHH:mm');
-      this.start = date.subtract(15, 'minutes').format('YYYY-MM-DDTHH:mm');
-      this.interval = 'minutes';
-    } else if (this.defaultUpdateInterval === 'last_hour') {
-      const date = moment();
-      this.end = date.format('YYYY-MM-DDTHH:mm');
-      this.start = date.subtract(1, 'hours').format('YYYY-MM-DDTHH:mm');
-      this.interval = 'minutes';
-    } else if (this.defaultUpdateInterval === 'last_12_hours') {
-      const date = moment();
-      this.end = date.format('YYYY-MM-DDTHH:mm');
-      this.start = date.subtract(12, 'hours').format('YYYY-MM-DDTHH:mm');
-      this.interval = 'hours';
-    } else if (this.defaultUpdateInterval === 'last_day') {
-      const date = moment();
-      this.end = date.format('YYYY-MM-DDTHH:mm');
-      this.start = date.subtract(24, 'hours').format('YYYY-MM-DDTHH:mm');
-      this.interval = 'hours';
+
+      if (this.defaultUpdateInterval === 'last_15_minutes') {
+        this.start = date.subtract(15, 'minutes').format('YYYY-MM-DDTHH:mm');
+        this.interval = 'minutes';
+      } else if (this.defaultUpdateInterval === 'last_hour') {
+        this.start = date.subtract(1, 'hours').format('YYYY-MM-DDTHH:mm');
+        this.interval = 'minutes';
+      } else if (this.defaultUpdateInterval === 'last_12_hours') {
+        this.start = date.subtract(12, 'hours').format('YYYY-MM-DDTHH:mm');
+        this.interval = 'hours';
+      } else if (this.defaultUpdateInterval === 'last_day') {
+        this.start = date.subtract(24, 'hours').format('YYYY-MM-DDTHH:mm');
+        this.interval = 'hours';
+      }
     }
 
     this.update.emit({
