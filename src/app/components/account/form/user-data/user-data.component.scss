@@ -1,0 +1,36 @@
+@import "src/app/styles/form";
+@import "src/app/styles/mat-card";
+
+mat-form-field {
+  width: 100%;
+}
+
+.additional-information {
+  text-align: left;
+  margin-top: 8px;
+}
+
+mat-card-actions {
+  margin: 25px 0 0 0;
+
+  &.double {
+    display: grid;
+    grid-template-columns: minmax(auto, 1fr) auto;
+
+    &.fill {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    & > div {
+      & > button {
+        margin: 0;
+        display: block;
+
+        &.left {
+          padding: 0;
+          text-align: left;
+        }
+      }
+    }
+  }
+}

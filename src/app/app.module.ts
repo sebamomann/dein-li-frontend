@@ -9,6 +9,7 @@ import {AuthInterceptor} from './_helper/interceptor/authentication.interceptor'
 import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import {MatIconModule, MatToolbarModule} from '@angular/material';
+import {WINDOW_PROVIDERS} from './provider/window.provider';
 
 registerLocaleData(localeDe);
 
@@ -25,6 +26,7 @@ registerLocaleData(localeDe);
     MatIconModule
   ],
   providers: [
+    WINDOW_PROVIDERS,
     {
       multi: true,
       provide: HTTP_INTERCEPTORS,
