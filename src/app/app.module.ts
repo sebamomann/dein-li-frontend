@@ -10,12 +10,14 @@ import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import {MatIconModule, MatToolbarModule} from '@angular/material';
 import {WINDOW_PROVIDERS} from './provider/window.provider';
+import { ImpressumComponent } from './components/impressum/impressum.component';
 
 registerLocaleData(localeDe);
 
 @NgModule({
   declarations: [
     AppComponent,
+    ImpressumComponent,
   ],
   imports: [
     BrowserModule,
