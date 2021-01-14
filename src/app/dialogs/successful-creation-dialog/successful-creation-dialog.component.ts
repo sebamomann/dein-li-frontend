@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
 import {ILink} from '../../models/ILink.model';
 import {environment} from '../../../environments/environment';
+import {AuthenticationService} from '../../services/authentication.service';
 
 @Component({
   selector: 'app-successful-creation-dialog',
@@ -10,9 +11,10 @@ import {environment} from '../../../environments/environment';
 })
 export class SuccessfulCreationDialogComponent implements OnInit {
   public completeUrl: any;
+  userIsLoggedIn: any = this.authenticationService.userIsLoggedIn();
 
   constructor(@Inject(MAT_DIALOG_DATA) public link: ILink, private snackBar: MatSnackBar,
-              private dialogRef: MatDialogRef<SuccessfulCreationDialogComponent>) {
+              private dialogRef: MatDialogRef<SuccessfulCreationDialogComponent>, private authenticationService: AuthenticationService) {
     this.completeUrl = environment.API_URL + link.short;
   }
 
