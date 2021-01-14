@@ -10,6 +10,8 @@ import {ToolbarService} from '../../services/toolbar.service';
 import {IChartFilter} from '../../models/IChartFilter';
 // @ts-ignore
 import moment from 'moment';
+import {environment} from '../../../environments/environment';
+import {HttpErrorResponse} from '@angular/common/http';
 
 moment.locale('de');
 
@@ -29,6 +31,8 @@ export class DashboardComponent implements OnInit {
   public userIsLoggedIn: any;
 
   public chartFilter: IChartFilter;
+
+  public baseUrl = environment.API_URL.replace('https://', '').replace('http://', '');
 
   constructor(public linkService: LinkService, private formBuilder: FormBuilder,
               private authService: AuthenticationService, private dialog: MatDialog,
@@ -51,6 +55,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.event = this.formBuilder.group({
       link: new FormControl('', [Validators.required]),
+      short: new FormControl({value: '', disabled: !this.userIsLoggedIn}, [Validators.minLength(3)]),
     });
 
     this.$totalStats = this.linkService.loadLinkStats('all', false, {interval: 'hours', start: undefined, end: undefined});
@@ -65,30 +70,52 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  public getShortErrorMessage(): string {
+    if (this.get('short').hasError('inUse')) {
+      return 'Dieser Kurzlink ist bereits vergeben';
+    } else if (this.get('short').hasError('minlength')) {
+      return 'Der Kurzlink muss mindestens 3 Zeichen lang sein';
+    }
+  }
+
   saveFnc() {
     const link = this.get('link').value;
+    const short = this.get('short').value;
 
     if (!validUrl.isUri(link)) {
       this.get('link').setErrors({invalid: true});
       return;
     }
 
-    this.linkService.create(link).subscribe((sResponse) => {
-      const dialogRef = this.dialog.open(SuccessfulCreationDialogComponent, {
-        id: 'successful-creation-dialog',
-        width: '80%',
-        maxWidth: '500px',
-        height: 'auto',
-        data: sResponse,
-      });
-    });
+    if (!this.event.valid) {
+      return;
+    }
+
+    this.linkService.create(link, short)
+      .subscribe(
+        (sResponse) => {
+          if (sResponse instanceof HttpErrorResponse) {
+            this.event.get('short').setErrors({inUse: true});
+          } else {
+            const dialogRef = this.dialog.open(SuccessfulCreationDialogComponent, {
+              id: 'successful-creation-dialog',
+              width: '80%',
+              maxWidth: '500px',
+              height: 'auto',
+              data: sResponse,
+            });
+          }
+        },
+        () => {
+          console.log(123);
+        });
   }
 
   public filterUpdated(filter: IChartFilter) {
     this.chartFilter = filter;
   }
 
-  private get(str: string) {
+  public get(str: string) {
     return this.event.get(str);
   }
 }

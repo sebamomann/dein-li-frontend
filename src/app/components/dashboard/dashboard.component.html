@@ -26,6 +26,23 @@
         <mat-icon>settings</mat-icon>
         Los!
       </button>
+      <div class="short">
+        <mat-form-field>
+          <label for="short">
+            <input formControlName="short"
+                   id="short"
+                   placeholder="Eigener Kurzlink (z.B. 'meinLink')"
+                   matInput>
+          </label>
+          <mat-error>{{getShortErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <div *ngIf="!userIsLoggedIn">
+          Nur für angemeldete Benutzer. Logge dich ein, um deinen Gewünschten Kurzink anzugeben.
+        </div>
+        <div *ngIf="userIsLoggedIn">
+          {{baseUrl + (get("short").value ? get("short").value : 'meinLink')}}
+        </div>
+      </div>
     </form>
     <p>Dein Link ist nach der Generierung sofot gültig. Du kannst ihn direkt teilen.</p>
   </div>

@@ -67,6 +67,13 @@ main {
 
     ::ng-deep .mat-form-field .mat-form-field-label {
     }
+
+    & .short {
+      display: grid;
+      grid-gap: 50px;
+      grid-template-columns: 2fr 1fr;
+      align-items: center;
+    }
   }
 
   .link-management {
@@ -114,6 +121,14 @@ main {
 
           mat-icon {
             @include md-icon-size(25px);
+          }
+        }
+
+        & .short {
+          display: block;
+
+          & * {
+            width: 100%;
           }
         }
       }
