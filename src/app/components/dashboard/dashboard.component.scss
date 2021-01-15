@@ -81,6 +81,7 @@ main {
     display: grid;
     grid-gap: 10px;
     grid-template-rows: 1fr 1fr auto;
+    align-items: start;
 
     button {
       width: 100%;
