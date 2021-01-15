@@ -54,6 +54,8 @@ export class LinkService {
       url = `${environment.API_URL}link/${short}/history`;
     }
 
+    chartFilter.end.setTime(chartFilter.end.getTime() + 1000 * 60);
+
     url = `${url}?interval=${chartFilter.interval}&start=${chartFilter.start}&end=${chartFilter.end}`;
 
     const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
