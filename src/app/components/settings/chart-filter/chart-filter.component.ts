@@ -24,7 +24,9 @@ export class ChartFilterComponent implements OnInit {
   public options: { value: string, text: string }[];
   public updateInterval = 15;
   defaultUpdateInterval = 'last_day';
-  private timeInterval: any;
+  public barPercentage: number;
+  public  timeInterval: any;
+  public  timeIntervalBar: any;
 
   constructor(private readonly snackBar: MatSnackBar) {
     if (this.chartFilter) {
@@ -116,9 +118,14 @@ export class ChartFilterComponent implements OnInit {
 
   toggleAutoUpdate() {
     if (this.timeInterval) {
+      clearInterval(this.timeIntervalBar);
       clearInterval(this.timeInterval);
+      this.timeInterval = undefined;
     } else {
       clearInterval(this.timeInterval);
+      clearInterval(this.timeIntervalBar);
+      this.barPercentage = 0;
+
       this.changedUpdateInterval();
     }
   }
@@ -126,10 +133,21 @@ export class ChartFilterComponent implements OnInit {
   changedUpdateInterval() {
     this.changedFilter();
 
+    let millis = 0;
+
     clearInterval(this.timeInterval);
+    clearInterval(this.timeIntervalBar);
 
     this.timeInterval = setInterval(() => {
       this.changedFilter();
+      millis = 0;
     }, this.updateInterval * 1000);
+
+    this.timeIntervalBar = setInterval(() => {
+      const total = this.updateInterval * 1000;
+      millis += 100;
+
+      this.barPercentage = millis / total * 100;
+    }, 100);
   }
 }
