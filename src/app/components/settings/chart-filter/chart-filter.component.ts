@@ -25,8 +25,9 @@ export class ChartFilterComponent implements OnInit {
   public updateInterval = 15;
   defaultUpdateInterval = 'last_day';
   public barPercentage: number;
-  public  timeInterval: any;
-  public  timeIntervalBar: any;
+  public timeInterval: any;
+  public timeIntervalBar: any;
+  public liveUpdate = false;
 
   constructor(private readonly snackBar: MatSnackBar) {
     if (this.chartFilter) {
@@ -117,11 +118,13 @@ export class ChartFilterComponent implements OnInit {
   }
 
   toggleAutoUpdate() {
-    if (this.timeInterval) {
+    if (this.liveUpdate) {
       clearInterval(this.timeIntervalBar);
       clearInterval(this.timeInterval);
       this.timeInterval = undefined;
+      this.liveUpdate = false;
     } else {
+      this.liveUpdate = true;
       clearInterval(this.timeInterval);
       clearInterval(this.timeIntervalBar);
       this.barPercentage = 0;
@@ -135,19 +138,21 @@ export class ChartFilterComponent implements OnInit {
 
     let millis = 0;
 
-    clearInterval(this.timeInterval);
-    clearInterval(this.timeIntervalBar);
+    if (this.liveUpdate) {
+      clearInterval(this.timeInterval);
+      clearInterval(this.timeIntervalBar);
 
-    this.timeInterval = setInterval(() => {
-      this.changedFilter();
-      millis = 0;
-    }, this.updateInterval * 1000);
+      this.timeInterval = setInterval(() => {
+        this.changedFilter();
+        millis = 0;
+      }, this.updateInterval * 1000);
 
-    this.timeIntervalBar = setInterval(() => {
-      const total = this.updateInterval * 1000;
-      millis += 100;
+      this.timeIntervalBar = setInterval(() => {
+        const total = this.updateInterval * 1000;
+        millis += 100;
 
-      this.barPercentage = millis / total * 100;
-    }, 100);
+        this.barPercentage = millis / total * 100;
+      }, 100);
+    }
   }
 }
