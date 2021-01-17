@@ -20,6 +20,11 @@ export class RedirectComponent implements OnInit {
           skipLocationChange: true,
           queryParamsHandling: 'preserve'
         });
+      } else if (params.error === 'threat') {
+        this.router.navigate(['/redirect/threat'], {
+          skipLocationChange: true,
+          queryParamsHandling: 'preserve'
+        });
       } else {
         this.router.navigate(['/redirect/unknown'], {
           skipLocationChange: true,

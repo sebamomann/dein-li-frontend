@@ -1,16 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ILink} from '../../../models/ILink.model';
+import {environment} from '../../../../environments/environment';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LinkService} from '../../../services/link.service';
-import {environment} from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-preview',
-  templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.scss']
+  selector: 'app-threat',
+  templateUrl: './threat.component.html',
+  styleUrls: ['./threat.component.scss']
 })
-export class PreviewComponent implements OnInit {
+export class ThreatComponent implements OnInit {
   public $link: Observable<ILink>;
 
   public short: string;
@@ -19,7 +19,7 @@ export class PreviewComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router,
               private linkService: LinkService) {
     this.route.queryParams.subscribe(params => {
-      this.short = params.l;
+      this.short = params.short;
     });
   }
 

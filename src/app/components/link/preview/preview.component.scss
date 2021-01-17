@@ -5,7 +5,8 @@
   background-color: $median-background;
   padding: 16px;
   border-radius: 8px;
-  max-width: calc(350px - 2 * 16px);
+  width: fit-content;
+  max-width: calc(700px - 2 * 16px);
   margin: 0 auto;
   position: relative;
   line-break: anywhere;
@@ -38,6 +39,7 @@
 
 @media all and (max-width: 1024px) {
   .preview-wrapper {
+    width: calc(90% - 2 * 16px);
     max-width: calc(500px - 2 * 16px);
   }
 }

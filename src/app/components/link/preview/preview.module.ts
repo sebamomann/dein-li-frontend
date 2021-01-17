@@ -14,6 +14,9 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [PreviewComponent],
+  exports: [
+    PreviewComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),

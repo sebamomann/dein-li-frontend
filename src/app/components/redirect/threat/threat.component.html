@@ -1,0 +1,25 @@
+<mat-card class="float solo-notification">
+  <mat-card-content>
+    <img src="assets/img/404.svg" alt="">
+    <div>
+      <h2>ACHTUNG!</h2>
+      <p>Dieser Link ist als potentiell gefährlich eingestuft. Bitte überprüfe zunächst die unten angezeigte
+        Weiterleitungs URL. Bei Zweifeln kontaktiere bitte den Ersteller dieses Links.</p>
+    </div>
+
+    <div *ngIf="$link | async let link; else loading"
+         class="threat-analysis-wrapper">
+      <div class="preview-wrapper">
+        <span class="original">{{link.original}}</span>
+        <button mat-raised-button
+                (click)="openLinkInNewTab(link.original)">
+          Trotzdem öffnen
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ng-template #loading>
+  <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
+</ng-template>
