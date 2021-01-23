@@ -4,6 +4,7 @@ import {PreviewComponent} from './preview.component';
 import {RouterModule, Routes} from '@angular/router';
 import {HexagonLoaderModule} from '../../../html-templates/hexagon-loader/hexagon-loader.module';
 import {MatButtonModule} from '@angular/material';
+import {ReportBlockModule} from '../report-block/report-block.module';
 
 const routes: Routes = [
   {
@@ -17,12 +18,13 @@ const routes: Routes = [
   exports: [
     PreviewComponent
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    HexagonLoaderModule,
-    MatButtonModule,
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        HexagonLoaderModule,
+        MatButtonModule,
+        ReportBlockModule,
+    ]
 })
 export class PreviewModule {
 }

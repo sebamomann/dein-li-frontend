@@ -1,15 +1,23 @@
 <main>
   <div *ngIf="$link | async let link; else loading">
     <div class="preview-wrapper">
+      <h2 class="title">
+        Vorschau
+      </h2>
+
       <span class="url-with-base"><!--
         --><span class="baseUrl">{{baseUrl}}</span><!--
         -->{{link.short}}
       </span>
       <span class="original">{{link.original}}</span>
+
+      <app-report-block [short]="link.short"></app-report-block>
+
       <button mat-raised-button
               (click)="openLinkInNewTab(link.original)">
         Öffnen
       </button>
+
       <span class="date">{{link.iat | date: "dd.MM.yyy HH:MM:ss"}}</span>
     </div>
   </div>

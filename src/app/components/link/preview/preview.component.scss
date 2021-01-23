@@ -11,6 +11,11 @@
   position: relative;
   line-break: anywhere;
 
+  app-report-block {
+    display: block;
+    margin-bottom: 25px;
+  }
+
   & > span {
     text-align: center;
     display: block;

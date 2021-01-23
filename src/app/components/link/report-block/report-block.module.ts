@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ReportBlockComponent} from './report-block.component';
-import {MatIconModule} from '@angular/material';
+import {MatIconModule, MatSnackBarModule} from '@angular/material';
 import {ReportDialogModule} from '../../../dialogs/report-dialog/report-dialog.module';
 
 @NgModule({
@@ -9,7 +9,8 @@ import {ReportDialogModule} from '../../../dialogs/report-dialog/report-dialog.m
   imports: [
     CommonModule,
     MatIconModule,
-    ReportDialogModule
+    ReportDialogModule,
+    MatSnackBarModule
   ],
   exports: [
     ReportBlockComponent
