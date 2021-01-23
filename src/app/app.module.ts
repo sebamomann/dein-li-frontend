@@ -8,11 +8,12 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './_helper/interceptor/authentication.interceptor';
 import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
-import {MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatMenuModule, MatSnackBar, MatSnackBarModule, MatToolbarModule} from '@angular/material';
 import {WINDOW_PROVIDERS} from './provider/window.provider';
 import { ImpressumComponent } from './components/impressum/impressum.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import {ServiceWorkerModule, SwUpdate} from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import {switchMap} from 'rxjs/operators';
 
 registerLocaleData(localeDe);
 
@@ -30,7 +31,8 @@ registerLocaleData(localeDe);
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    MatSnackBarModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: true, registrationStrategy: 'registerImmediately'}),
   ],
   providers: [
     WINDOW_PROVIDERS,
@@ -46,11 +48,10 @@ registerLocaleData(localeDe);
 })
 export class AppModule {
   constructor(swUpdate: SwUpdate, snackbar: MatSnackBar) {
-    const version = require('package.json').version;
 
     swUpdate.available.pipe(
       // tslint:disable-next-line
-      switchMap((notes) => snackbar.open('Neue Version verfügbar - ' + version, 'Neu laden').onAction())
+      switchMap((notes) => snackbar.open('Neue Version verfügbar', 'Neu laden').onAction())
     ).subscribe(() => window.location.reload());
   }
 }
