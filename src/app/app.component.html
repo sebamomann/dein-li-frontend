@@ -3,12 +3,29 @@
     <div class="toolbar-wrapper">
       <div>
         <mat-icon [routerLink]="['/']">home</mat-icon>
-        <mat-icon [routerLink]="['/link']">view_module</mat-icon>
       </div>
       <h2 class="title">
         {{title}}
       </h2>
+      <div *ngIf="userIsLoggedIn" class="account-menu-wrapper">
+        <span>{{username}}</span>
+        <mat-icon [matMenuTriggerFor]="menu">account_circle</mat-icon>
+        <mat-menu #menu="matMenu" xPosition="before">
+          <ng-container [ngTemplateOutlet]="loggedInMenu">
+          </ng-container>
+        </mat-menu>
+      </div>
+      <div *ngIf="!userIsLoggedIn">
+        <button mat-stroked-button
+                [routerLink]="['/account/register']">Registrieren
+        </button>
+        <button mat-raised-button
+                color="primary"
+                [routerLink]="['/account/login']">Anmelden
+        </button>
+      </div>
     </div>
+
   </mat-toolbar>
 
   <div class="main-wrapper">
@@ -16,3 +33,17 @@
   </div>
 </div>
 <footer><a href="/impressum">Impressum</a></footer>
+
+<ng-template #loggedInMenu>
+  <button mat-menu-item
+          [routerLink]="['/link']">
+    <mat-icon>link</mat-icon>
+    Meine Links
+  </button>
+  <button mat-menu-item
+          [routerLink]="['/account/logout']">
+    <mat-icon>logout</mat-icon>
+    Abmelden
+  </button>
+</ng-template>
+

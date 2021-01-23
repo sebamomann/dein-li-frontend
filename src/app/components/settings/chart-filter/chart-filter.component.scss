@@ -9,46 +9,56 @@
   grid-gap: 10%;
   font-size: 1.25em;
 
-  .mat-select {
-    align-self: center;
+  div {
+    span {
+      display: block;
+      color: lightgray;
+      margin-bottom: 8px;
+      font-size: 0.65em
+    }
 
-    ::ng-deep .mat-select-value {
+    .mat-select {
+      align-self: center;
+
+      ::ng-deep .mat-select-value {
+        color: white;
+      }
+
+      ::ng-deep .mat-select-arrow {
+        color: white;
+      }
+    }
+
+    ::ng-deep .mat-form-field .mat-form-field-label {
+      color: lightgray;
+    }
+
+    ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
       color: white;
     }
 
-    ::ng-deep .mat-select-arrow {
-      color: white;
-    }
-  }
-
-  ::ng-deep .mat-form-field .mat-form-field-label {
-    color: lightgray;
-  }
-
-  ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
-    color: white;
-  }
-
-  ::ng-deep .mat-form-field-underline .mat-form-field-ripple {
-    background-color: lightgray;
-  }
-
-  ::ng-deep .mat-form-field-underline {
-    background-color: lightgray;
-  }
-
-  ::-webkit-calendar-picker-indicator {
-    filter: invert(1);
-  }
-
-  .mat-checkbox {
-    ::ng-deep .mat-checkbox-frame {
-      border-color: rgba(255,255,255,0.5);
+    ::ng-deep .mat-form-field-underline .mat-form-field-ripple {
+      background-color: lightgray;
     }
 
-    mat-progress-spinner {
-      display: inline;
-      margin-left: 10px;
+    ::ng-deep .mat-form-field-underline {
+      background-color: lightgray;
+    }
+
+    ::-webkit-calendar-picker-indicator {
+      filter: invert(1);
+    }
+
+    .mat-checkbox {
+      ::ng-deep .mat-checkbox-frame {
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+
+      mat-progress-spinner {
+        display: inline;
+        margin-left: 10px;
+        vertical-align: middle;
+      }
     }
   }
 }

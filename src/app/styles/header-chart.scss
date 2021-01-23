@@ -22,7 +22,7 @@
   .statistic-information {
     padding: 25px 0 50px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     align-items: center;
     justify-content: center;
 
@@ -43,6 +43,10 @@
         &:nth-child(2) {
           color: gray;
         }
+      }
+
+      &.report-link-wrapper {
+        transform: scale(1.25);
       }
     }
   }

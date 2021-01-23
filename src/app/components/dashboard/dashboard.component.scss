@@ -28,7 +28,7 @@ main {
 
     form {
       display: grid;
-      grid-template-columns: 4fr 1fr;
+      grid-template-columns: 1fr auto;
       grid-gap: 10px;
       color: white;
 

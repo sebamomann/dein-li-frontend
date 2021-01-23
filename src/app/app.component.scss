@@ -15,16 +15,37 @@ mat-toolbar {
     width: 100%;
     align-items: center;
 
-    mat-icon {
-      @include md-icon-size(30px);
-      margin: 0 10px 0 0;
-      outline: none;
-    }
-
     .title {
       font-size: 1.5em;
       text-align: center;
       font-weight: bolder;
+    }
+
+    div {
+      mat-icon {
+        @include md-icon-size(35px);
+        margin: 0 10px 0 0;
+        outline: none;
+        vertical-align: top;
+      }
+
+      &:nth-of-type(2) {
+        text-align: right;
+
+        button {
+          margin-left: 10px;
+
+          &.mat-stroked-button {
+            border-color: $blue;
+          }
+        }
+      }
+
+      &.account-menu-wrapper {
+        span {
+          margin-right: 10px;
+        }
+      }
     }
   }
 }

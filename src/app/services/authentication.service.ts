@@ -9,14 +9,21 @@ import {Router, RouterStateSnapshot} from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
+  get currentUserSubject$(): BehaviorSubject<any> {
+    return this._currentUserSubject$;
+  }
+
+  set currentUserSubject$(value: BehaviorSubject<any>) {
+    this._currentUserSubject$ = value;
+  }
   public currentUser: Observable<any>;
-  private currentUserSubject$: BehaviorSubject<any>;
+  private _currentUserSubject$: BehaviorSubject<any>;
 
   constructor(private _http: HttpClient, private _router: Router) {
-    this.currentUserSubject$ = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject$.asObservable();
+    this._currentUserSubject$ = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this._currentUserSubject$.asObservable();
 
-    this.currentUserSubject$
+    this._currentUserSubject$
       .subscribe(() => {
         this._loginStatus$.next(this.userIsLoggedIn());
       });
@@ -39,7 +46,7 @@ export class AuthenticationService {
   }
 
   public get currentUserValue() {
-    return this.currentUserSubject$.value;
+    return this._currentUserSubject$.value;
   }
 
   public get accessToken() {
@@ -49,11 +56,11 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage and set current user to null
     localStorage.removeItem('currentUser');
-    this.currentUserSubject$.next(null);
+    this._currentUserSubject$.next(null);
   }
 
   setCurrentUser(user: IUser) {
-    this.currentUserSubject$.next(user);
+    this._currentUserSubject$.next(user);
     localStorage.setItem('currentUser', JSON.stringify(this.currentUserValue));
   }
 
@@ -90,7 +97,7 @@ export class AuthenticationService {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         // tslint:disable-next-line:prefer-const
         localStorage.setItem('currentUser', JSON.stringify(user));
-        this.currentUserSubject$.next(user);
+        this._currentUserSubject$.next(user);
 
         return user;
       }));

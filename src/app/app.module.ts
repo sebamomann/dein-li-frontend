@@ -8,7 +8,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './_helper/interceptor/authentication.interceptor';
 import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
-import {MatIconModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {WINDOW_PROVIDERS} from './provider/window.provider';
 import { ImpressumComponent } from './components/impressum/impressum.component';
 
@@ -25,7 +25,9 @@ registerLocaleData(localeDe);
     HttpClientModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule
   ],
   providers: [
     WINDOW_PROVIDERS,
