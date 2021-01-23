@@ -9,15 +9,7 @@ import {Router, RouterStateSnapshot} from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-  get currentUserSubject$(): BehaviorSubject<any> {
-    return this._currentUserSubject$;
-  }
-
-  set currentUserSubject$(value: BehaviorSubject<any>) {
-    this._currentUserSubject$ = value;
-  }
   public currentUser: Observable<any>;
-  private _currentUserSubject$: BehaviorSubject<any>;
 
   constructor(private _http: HttpClient, private _router: Router) {
     this._currentUserSubject$ = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
@@ -27,6 +19,16 @@ export class AuthenticationService {
       .subscribe(() => {
         this._loginStatus$.next(this.userIsLoggedIn());
       });
+  }
+
+  private _currentUserSubject$: BehaviorSubject<any>;
+
+  get currentUserSubject$(): BehaviorSubject<any> {
+    return this._currentUserSubject$;
+  }
+
+  set currentUserSubject$(value: BehaviorSubject<any>) {
+    this._currentUserSubject$ = value;
   }
 
   private _refreshing$ = new BehaviorSubject<boolean>(false);
@@ -97,6 +99,7 @@ export class AuthenticationService {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         // tslint:disable-next-line:prefer-const
         localStorage.setItem('currentUser', JSON.stringify(user));
+        this._loginStatus$.next(true);
         this._currentUserSubject$.next(user);
 
         return user;
@@ -130,7 +133,7 @@ export class AuthenticationService {
       );
   }
 
-  public userIsLoggedIn() {
+  public userIsLoggedIn(): boolean {
     return this.currentUserValue !== null;
   }
 

@@ -28,8 +28,8 @@ main {
 
     form {
       display: grid;
-      grid-template-columns: 1fr auto;
-      grid-gap: 10px;
+      grid-template-columns: 2fr 1fr auto;
+      grid-gap: 16px;
       color: white;
 
       button {
@@ -95,6 +95,24 @@ main {
 
       }
     }
+  }
+}
+
+.highlight {
+  animation: highlight 1s;
+}
+
+@keyframes highlight {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.025);
+    text-shadow: 0 0 5px red;
+  }
+  100% {
+    transform: scale(1);
+    text-shadow: none;
   }
 }
 

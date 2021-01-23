@@ -19,103 +19,115 @@ moment.locale('de');
 const validUrl = require('valid-url');
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
 
-  public chart;
-  public $totalStats: Observable<ILinkStats>;
-  public event: FormGroup;
-  public userIsLoggedIn: any;
+    public chart;
+    public $totalStats: Observable<ILinkStats>;
+    public event: FormGroup;
+    public userIsLoggedIn: boolean;
 
-  public chartFilter: IChartFilter;
+    public chartFilter: IChartFilter;
 
-  public baseUrl = environment.API_URL.replace('https://', '').replace('http://', '');
+    public baseUrl = environment.API_URL.replace('https://', '').replace('http://', '');
+    public highlightHint = false;
 
-  constructor(public linkService: LinkService, private formBuilder: FormBuilder,
-              private authService: AuthenticationService, private dialog: MatDialog,
-              private toolbarService: ToolbarService) {
-    this.userIsLoggedIn = this.authService.userIsLoggedIn();
+    constructor(public linkService: LinkService, private formBuilder: FormBuilder,
+                private authService: AuthenticationService, private dialog: MatDialog,
+                private toolbarService: ToolbarService) {
+        this.userIsLoggedIn = this.authService.userIsLoggedIn();
 
-    const d = new Date();
-    d.setDate(d.getDate() - 1);
+        const d = new Date();
+        d.setDate(d.getDate() - 1);
 
+        this.chartFilter = {
+            interval: 'hours',
+            start: moment(d).format('YYYY-MM-DDTHH:mm'),
+            end: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
+        };
 
-    this.chartFilter = {
-      interval: 'hours',
-      start: moment(d).format('YYYY-MM-DDTHH:mm'),
-      end: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
-    };
-
-    this.toolbarService.setTitle('Home');
-  }
-
-  ngOnInit() {
-    this.event = this.formBuilder.group({
-      link: new FormControl('', [Validators.required]),
-      short: new FormControl({value: '', disabled: !this.userIsLoggedIn}, [Validators.minLength(3)]),
-    });
-
-    this.$totalStats = this.linkService.loadLinkStats('all', false, {interval: 'hours', start: undefined, end: undefined});
-  }
-
-
-  public getLinkErrorMessage(): string {
-    if (this.get('link').hasError('invalid')) {
-      return 'Gebe einen gültigen Link ein ';
-    } else if (this.get('link').hasError('required')) {
-      return 'Bitte gebe einen Link ein';
-    }
-  }
-
-  public getShortErrorMessage(): string {
-    if (this.get('short').hasError('inUse')) {
-      return 'Dieser Kurzlink ist bereits vergeben';
-    } else if (this.get('short').hasError('minlength')) {
-      return 'Der Kurzlink muss mindestens 3 Zeichen lang sein';
-    }
-  }
-
-  saveFnc() {
-    const link = this.get('link').value;
-    const short = this.get('short').value;
-
-    if (!validUrl.isUri(link)) {
-      this.get('link').setErrors({invalid: true});
-      return;
+        this.toolbarService.setTitle('Home');
     }
 
-    if (!this.event.valid) {
-      return;
-    }
-
-    this.linkService.create(link, short)
-      .subscribe(
-        (sResponse) => {
-          if (sResponse instanceof HttpErrorResponse) {
-            this.event.get('short').setErrors({inUse: true});
-          } else {
-            const dialogRef = this.dialog.open(SuccessfulCreationDialogComponent, {
-              id: 'successful-creation-dialog',
-              width: '80%',
-              maxWidth: '500px',
-              height: 'auto',
-              data: sResponse,
-            });
-          }
-        },
-        () => {
-          console.log(123);
+    ngOnInit() {
+        this.event = this.formBuilder.group({
+            link: new FormControl('', [Validators.required]),
+            short: new FormControl({value: '', disabled: !this.userIsLoggedIn}, [Validators.minLength(3)]),
         });
-  }
 
-  public filterUpdated(filter: IChartFilter) {
-    this.chartFilter = filter;
-  }
+        this.$totalStats = this.linkService.loadLinkStats('all', false, {interval: 'hours', start: undefined, end: undefined});
+    }
 
-  public get(str: string) {
-    return this.event.get(str);
-  }
+
+    public getLinkErrorMessage(): string {
+        if (this.get('link').hasError('invalid')) {
+            return 'Gebe einen gültigen Link ein ';
+        } else if (this.get('link').hasError('required')) {
+            return 'Bitte gebe einen Link ein';
+        }
+    }
+
+    public getShortErrorMessage(): string {
+        if (this.get('short').hasError('inUse')) {
+            return 'Dieser Kurzlink ist bereits vergeben';
+        } else if (this.get('short').hasError('unprocessable')) {
+            return 'Invalide Zeichen';
+        } else if (this.get('short').hasError('minlength')) {
+            return 'Der Kurzlink muss mindestens 3 Zeichen lang sein';
+        }
+    }
+
+    public saveFnc() {
+        const link = this.get('link').value;
+        const short = this.get('short').value;
+
+        if (!validUrl.isUri(link)) {
+            this.get('link').setErrors({invalid: true});
+            return;
+        }
+
+        if (!this.event.valid) {
+            return;
+        }
+
+        this.linkService.create(link, short)
+            .subscribe(
+                (sResponse) => {
+                    if (sResponse instanceof HttpErrorResponse) {
+                        if (sResponse.status === 404) {
+                            this.event.get('short').setErrors({inUse: true});
+                        } else if (sResponse.status === 422) {
+                            this.event.get('short').setErrors({unprocessable: true});
+                        }
+                    } else {
+                        this.dialog.open(SuccessfulCreationDialogComponent, {
+                            id: 'successful-creation-dialog',
+                            width: '80%',
+                            maxWidth: '500px',
+                            height: 'auto',
+                            data: sResponse,
+                        });
+                    }
+                },
+                () => {
+                    console.log(123);
+                });
+    }
+
+    public filterUpdated(filter: IChartFilter) {
+        this.chartFilter = filter;
+    }
+
+    public get(str: string) {
+        return this.event.get(str);
+    }
+
+    public selectShort() {
+        this.highlightHint = false;
+
+        this.highlightHint = this.userIsLoggedIn === false;
+    }
 }

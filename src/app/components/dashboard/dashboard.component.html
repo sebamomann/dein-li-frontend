@@ -19,32 +19,31 @@
         </label>
         <mat-error>{{getLinkErrorMessage()}}</mat-error>
       </mat-form-field>
-      <button
-        (click)="saveFnc()"
-        color="primary"
-        mat-raised-button>
+
+      <mat-form-field (click)="selectShort()">
+        <mat-label>Eigener Kurzlink (z.B. 'meinLink')</mat-label>
+        <input formControlName="short"
+               id="short"
+               autocomplete="off"
+               matInput>
+        <mat-hint *ngIf="get('short').value">{{baseUrl}}{{get('short').value}}</mat-hint>
+        <mat-error>{{getShortErrorMessage()}}</mat-error>
+      </mat-form-field>
+
+      <button (click)="saveFnc()"
+              color="primary"
+              mat-raised-button>
         <mat-icon>settings</mat-icon>
         Los!
       </button>
-      <div class="short">
-        <mat-form-field>
-          <label for="short">
-            <input formControlName="short"
-                   id="short"
-                   placeholder="Eigener Kurzlink (z.B. 'meinLink')"
-                   matInput>
-          </label>
-          <mat-error>{{getShortErrorMessage()}}</mat-error>
-        </mat-form-field>
-        <div *ngIf="!userIsLoggedIn">
-          Nur für angemeldete Benutzer. Logge dich ein, um deinen Gewünschten Kurzink anzugeben.
-        </div>
-        <div *ngIf="userIsLoggedIn">
-          {{baseUrl + (get("short").value ? get("short").value : 'meinLink')}}
-        </div>
-      </div>
     </form>
-    <p>Dein Link ist nach der Generierung sofot gültig. Du kannst ihn direkt teilen.</p>
+    <p *ngIf="!userIsLoggedIn" [ngClass]="{'highlight' : highlightHint}">
+      Ein eigener Kurzlink ist nur für angemeldete Benutzer möglich. Logge dich ein, um deinen gewünschten Kurzlink
+      anzugeben.
+    </p>
+    <p>
+      Dein Link ist nach der Generierung sofot gültig. Du kannst ihn direkt teilen.
+    </p>
   </div>
   <div class="link-management" *ngIf="userIsLoggedIn">
     <h3>Deine Links</h3>
