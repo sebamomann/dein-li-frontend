@@ -104,7 +104,7 @@ export class LinkService {
     );
   }
 
-  create(original: string, short: string) {
+  public create(original: string, short: string) {
     const url = `${environment.API_URL}link`;
 
     const res = this.httpClient.post(url, {original, short}, {observe: 'response', reportProgress: true});
@@ -112,6 +112,21 @@ export class LinkService {
     return res.pipe(
       map(response => {
         return response.body as ILink;
+      }),
+      catchError((err) => {
+        return of(err);
+      })
+    );
+  }
+
+  public report(short: string) {
+    const url = `${environment.API_URL}report`;
+
+    const res = this.httpClient.post(url, {short}, {observe: 'response', reportProgress: true});
+
+    return res.pipe(
+      map(response => {
+        return response.body as any;
       }),
       catchError((err) => {
         return of(err);

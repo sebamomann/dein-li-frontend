@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Link melden</h1>
+
+<div mat-dialog-content
+     *ngIf="short">
+  <p>Bist du sicher, dass du den Link <span>{{baseUrl}}{{short}}</span> melden möchtest?</p>
+</div>
+
+<div mat-dialog-content
+     *ngIf="!short">
+  <p>Gebe hier den Kurzlink ein den du melden möchtest</p>
+  <form [formGroup]="event">
+    <mat-form-field>
+      <mat-label> Link zu melden</mat-label>
+      <label>
+        <input matInput formControlName="short">
+      </label>
+      <mat-error>{{getShortErrors()}}</mat-error>
+    </mat-form-field>
+  </form>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Abbrechen</button>
+  <button mat-button (click)="onYesClick()" cdkFocusInitial>Melden</button>
+</div>
+

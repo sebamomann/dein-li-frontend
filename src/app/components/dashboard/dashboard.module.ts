@@ -8,6 +8,7 @@ import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creati
 import {SuccessfulCreationDialogModule} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.module';
 import {ChartFilterModule} from '../settings/chart-filter/chart-filter.module';
 import {BasicCallChartModule} from '../charts/basic-call-chart/basic-call-chart.module';
+import {ReportBlockModule} from '../link/report-block/report-block.module';
 
 const routes: Routes = [
   {path: '', component: DashboardComponent},
@@ -26,7 +27,8 @@ const routes: Routes = [
     MatDialogModule,
     SuccessfulCreationDialogModule,
     ChartFilterModule,
-    BasicCallChartModule
+    BasicCallChartModule,
+    ReportBlockModule
   ],
   exports: [
     DashboardComponent
