@@ -83,7 +83,8 @@ export class BasicCallChartComponent implements OnInit, OnChanges {
             ticks: {
               fontColor: 'white',
               stepSize: 1,
-              beginAtZero: true
+              beginAtZero: true,
+              maxTicksLimit: 10
             },
             scaleLabel: {}
           }],
@@ -95,7 +96,7 @@ export class BasicCallChartComponent implements OnInit, OnChanges {
               fontColor: 'white',
               maxRotation: 90,
               minRotation: 0,
-              maxTicksLimit: (this.isSmallScreen ? 10 : 500)
+              maxTicksLimit: (this.isSmallScreen ? 10 : 50)
             },
             scaleLabel: {
               display: true,

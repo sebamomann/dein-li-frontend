@@ -53,33 +53,41 @@
   </div>
 
   <ng-container *ngIf="defaultUpdateInterval == 'custom'">
-    <mat-select class="interval-select"
-                [(value)]="interval"
-                (valueChange)="changedFilter()">
-      <mat-option *ngFor="let option of options" [value]="option.value">{{option.text}}</mat-option>
-    </mat-select>
+    <div>
+      <span>Darstellungsintervall</span>
+      <mat-select class="interval-select"
+                  [(value)]="interval"
+                  (valueChange)="changedFilter()">
+        <mat-option *ngFor="let option of options" [value]="option.value">{{option.text}}</mat-option>
+      </mat-select>
+    </div>
 
-    <mat-form-field class="">
-      <label for="dateStart">
-        <input id="dateStart"
-               [(ngModel)]="start"
-               (change)="changedFilter()"
-               placeholder="Datum"
-               type="datetime-local"
-               matInput
-               required>
-      </label>
-    </mat-form-field>
-    <mat-form-field class="">
-      <label for="dateEnd">
-        <input id="dateEnd"
-               [(ngModel)]="end"
-               (change)="changedFilter()"
-               placeholder="Datum"
-               type="datetime-local"
-               matInput
-               required>
-      </label>
-    </mat-form-field>
+    <div>
+      <mat-form-field class="">
+        <mat-label>Startdatum</mat-label>
+        <label for="dateStart">
+          <input id="dateStart"
+                 [(ngModel)]="start"
+                 (change)="changedFilter()"
+                 type="datetime-local"
+                 matInput
+                 required>
+        </label>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="">
+        <mat-label>Enddatum</mat-label>
+        <label for="dateEnd">
+          <input id="dateEnd"
+                 [(ngModel)]="end"
+                 (change)="changedFilter()"
+                 type="datetime-local"
+                 matInput
+                 required>
+        </label>
+      </mat-form-field>
+    </div>
   </ng-container>
 </ng-template>

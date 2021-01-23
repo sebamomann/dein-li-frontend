@@ -7,16 +7,21 @@
   grid-template-columns: 1fr 1fr 1fr;
   color: white;
   margin: 0 auto 50px;
-  align-items: center;
-  grid-gap: 10%;
-  font-size: 1.25em;
+  align-items: start;
+  grid-gap: 20% 10%;
+  font-size: 1.125em;
 
   div {
     span {
       display: block;
       color: lightgray;
       margin-bottom: 8px;
-      font-size: 0.65em
+      font-size: 0.75em;
+      font-weight: 200;
+    }
+
+    mat-form-field {
+      width: 100%;
     }
 
     .mat-select {
