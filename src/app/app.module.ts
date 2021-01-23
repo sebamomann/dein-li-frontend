@@ -11,6 +11,8 @@ import localeDe from '@angular/common/locales/de';
 import {MatButtonModule, MatIconModule, MatMenuModule, MatToolbarModule} from '@angular/material';
 import {WINDOW_PROVIDERS} from './provider/window.provider';
 import { ImpressumComponent } from './components/impressum/impressum.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 registerLocaleData(localeDe);
 
@@ -27,7 +29,8 @@ registerLocaleData(localeDe);
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,
-    MatButtonModule
+    MatButtonModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     WINDOW_PROVIDERS,
@@ -42,4 +45,12 @@ registerLocaleData(localeDe);
   bootstrap: [AppComponent]
 })
 export class AppModule {
+  constructor(swUpdate: SwUpdate, snackbar: MatSnackBar) {
+    const version = require('package.json').version;
+
+    swUpdate.available.pipe(
+      // tslint:disable-next-line
+      switchMap((notes) => snackbar.open('Neue Version verfügbar - ' + version, 'Neu laden').onAction())
+    ).subscribe(() => window.location.reload());
+  }
 }
