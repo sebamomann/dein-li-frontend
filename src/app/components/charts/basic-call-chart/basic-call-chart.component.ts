@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChildren} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChildren} from '@angular/core';
 import {IChartFilter} from '../../../models/IChartFilter';
 import {LinkService} from '../../../services/link.service';
 
@@ -16,7 +16,7 @@ moment.locale('de');
   templateUrl: './basic-call-chart.component.html',
   styleUrls: ['./basic-call-chart.component.scss']
 })
-export class BasicCallChartComponent implements OnInit, OnChanges {
+export class BasicCallChartComponent implements OnInit {
 
   @Input() short: string;
   @Input() chartFilter: IChartFilter;
