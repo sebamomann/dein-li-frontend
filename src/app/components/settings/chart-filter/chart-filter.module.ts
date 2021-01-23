@@ -1,7 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartFilterComponent } from './chart-filter.component';
-import {MatCheckboxModule, MatInputModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule} from '@angular/material';
+import {
+  MatCheckboxModule,
+  MatExpansionModule, MatIconModule,
+  MatInputModule,
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+  MatSelectModule
+} from '@angular/material';
 import {FormsModule} from '@angular/forms';
 
 
@@ -18,7 +25,9 @@ import {FormsModule} from '@angular/forms';
     MatInputModule,
     MatCheckboxModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatExpansionModule,
+    MatIconModule
   ]
 })
 export class ChartFilterModule { }

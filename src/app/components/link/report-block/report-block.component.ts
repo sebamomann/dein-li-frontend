@@ -21,7 +21,8 @@ export class ReportBlockComponent {
   openDialog(): void {
     const dialogRef = this.dialog.open(ReportDialogComponent, {
       maxWidth: '500px',
-      data: {short: this.short}
+      data: {short: this.short},
+      id: 'report-dialog'
     });
 
     dialogRef.afterClosed()

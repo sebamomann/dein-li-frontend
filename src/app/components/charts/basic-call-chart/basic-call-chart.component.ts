@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import {BehaviorSubject} from 'rxjs';
 import {ILinkStats} from '../../../models/ILinkStats.model';
 import {ChartDataParser} from '../../../_helper/chart-data.parser';
+import {BreakpointObserver} from '@angular/cdk/layout';
 
 moment.locale('de');
 
@@ -22,9 +23,16 @@ export class BasicCallChartComponent implements OnInit, OnChanges {
 
   public linkStats$$ = new BehaviorSubject<ILinkStats>(undefined);
   public chart;
+  private isSmallScreen: boolean;
 
 
-  constructor(private readonly linkService: LinkService) {
+  constructor(private readonly linkService: LinkService, private breakpointObserver: BreakpointObserver) {
+    this.breakpointObserver
+      .observe('(max-width: 1024px)')
+      .subscribe((val) => {
+        this.isSmallScreen = val.matches;
+        this.initializeChart();
+      });
   }
 
   @ViewChildren('canvas') set content(content: ElementRef) {
@@ -87,6 +95,7 @@ export class BasicCallChartComponent implements OnInit, OnChanges {
               fontColor: 'white',
               maxRotation: 90,
               minRotation: 0,
+              maxTicksLimit: (this.isSmallScreen ? 10 : 500)
             },
             scaleLabel: {
               display: true,

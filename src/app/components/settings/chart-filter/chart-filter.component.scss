@@ -1,3 +1,5 @@
+@import "src/app/styles/variables";
+
 .chart-filter-wrapper {
   width: 100%;
   max-width: 1275px;
@@ -64,11 +66,58 @@
 }
 
 @media all and (max-width: 1024px) {
+  ::ng-deep #report-dialog {
+    width: 95%;
+    margin: 0 auto;
+  }
+
   .chart-filter-wrapper {
     position: relative;
     width: 95%;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 0 10px;
+    display: block;
+    margin-bottom: 25px;
+    font-size: 1em;
+
+    div {
+      span {
+        margin-bottom: 4px;
+        font-size: 0.85em;
+      }
+    }
+
+    mat-expansion-panel {
+      padding: 0;
+      box-shadow: none;
+      width: 100%;
+      background-color: $median-background;
+      color: white;
+
+      ::ng-deep .mat-expansion-panel-header {
+        background-color: $median-background !important;
+        color: white;
+
+        mat-panel-title {
+          color: white;
+        }
+
+        mat-panel-description {
+          color: white;
+        }
+
+        .mat-expansion-indicator {
+          &:after {
+            color: white;
+          }
+        }
+      }
+
+      ::ng-deep .mat-expansion-panel-body {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 14px 10px;
+        padding: 0 16px 8px;
+      }
+    }
 
     .interval-select {
       grid-column-start: 1;

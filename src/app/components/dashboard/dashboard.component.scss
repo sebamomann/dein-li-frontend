@@ -42,6 +42,10 @@ main {
           @include md-icon-size(35px);
         }
       }
+
+      mat-hint {
+        color: gray;
+      }
     }
   }
 
@@ -132,7 +136,14 @@ main {
     .link-creation {
       form {
         grid-template-columns: 1fr auto;
-        grid-gap: 5px;
+        grid-gap: 0 5px;
+
+        mat-form-field {
+          &:first-of-type {
+            grid-column-start: 1;
+            grid-column-end: 3;
+          }
+        }
 
         button {
           font-size: 1.25em;
@@ -140,14 +151,6 @@ main {
 
           mat-icon {
             @include md-icon-size(25px);
-          }
-        }
-
-        & .short {
-          display: block;
-
-          & * {
-            width: 100%;
           }
         }
       }

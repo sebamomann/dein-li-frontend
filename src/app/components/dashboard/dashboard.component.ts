@@ -8,6 +8,7 @@ import {MatDialog} from '@angular/material';
 import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.component';
 import {ToolbarService} from '../../services/toolbar.service';
 import {IChartFilter} from '../../models/IChartFilter';
+
 // @ts-ignore
 import moment from 'moment';
 import {environment} from '../../../environments/environment';
@@ -24,7 +25,6 @@ const validUrl = require('valid-url');
     styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
     public chart;
     public $totalStats: Observable<ILinkStats>;
     public event: FormGroup;

@@ -55,6 +55,8 @@ mat-toolbar {
     margin-bottom: 25px;
 
     .toolbar-wrapper {
+      grid-template-columns: 1fr  1fr;
+
       .title {
         display: none;
       }

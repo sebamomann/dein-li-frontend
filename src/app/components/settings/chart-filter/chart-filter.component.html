@@ -1,4 +1,23 @@
 <div class="chart-filter-wrapper">
+  <mat-expansion-panel *ngIf="isSmallScreen">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Filter
+      </mat-panel-title>
+      <mat-panel-description>
+        Grapheinstellungen
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </mat-expansion-panel>
+
+  <ng-container *ngIf="!isSmallScreen">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+  </ng-container>
+</div>
+
+<ng-template #content>
   <div>
     <span>Automatisches Update</span>
     <mat-checkbox (click)="toggleAutoUpdate()">{{timeInterval ? "Eingeschaltet" : "Ausgeschaltet"}}
@@ -63,4 +82,4 @@
       </label>
     </mat-form-field>
   </ng-container>
-</div>
+</ng-template>

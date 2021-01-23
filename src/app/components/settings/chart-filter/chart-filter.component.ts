@@ -3,6 +3,7 @@ import {IChartFilter} from '../../../models/IChartFilter';
 // @ts-ignore
 import moment from 'moment';
 import {MatSnackBar} from '@angular/material';
+import {BreakpointObserver} from '@angular/cdk/layout';
 
 moment.locale('de');
 
@@ -23,13 +24,15 @@ export class ChartFilterComponent implements OnInit {
   public defaultOptions: { value: string, text: string }[];
   public options: { value: string, text: string }[];
   public updateInterval = 15;
-  defaultUpdateInterval = 'last_day';
+  public defaultUpdateInterval = 'last_day';
   public barPercentage: number;
   public timeInterval: any;
   public timeIntervalBar: any;
   public liveUpdate = false;
 
-  constructor(private readonly snackBar: MatSnackBar) {
+  public isSmallScreen;
+
+  constructor(private readonly snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver) {
     if (this.chartFilter) {
       this.interval = this.chartFilter.interval;
       this.start = this.chartFilter.start;
@@ -40,6 +43,12 @@ export class ChartFilterComponent implements OnInit {
 
       this.start = moment(d).format('YYYY-MM-DDTHH:mm');
     }
+
+    this.breakpointObserver
+      .observe('(max-width: 1024px)')
+      .subscribe((val) => {
+        this.isSmallScreen = val.matches;
+      });
 
     this.defaultOptions = [
       {
