@@ -44,17 +44,15 @@ export class BasicCallChartComponent implements OnInit, OnChanges {
   ngOnInit() {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this.loadNewData();
-  }
-
   public loadChart() {
     this.initializeChart();
 
     this.loadNewData();
   }
 
-  private loadNewData() {
+  loadNewData() {
+    console.log('loadData');
+
     this.linkService.loadLinkStats(this.short, false, this.chartFilter).toPromise().then((res) => this.linkStats$$.next(res));
   }
 

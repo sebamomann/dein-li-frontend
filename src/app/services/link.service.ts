@@ -54,13 +54,16 @@ export class LinkService {
       url = `${environment.API_URL}link/${short}/history`;
     }
 
-    const end = new Date();
+    let interval;
 
-    if (chartFilter.end) {
-      end.setTime(new Date(chartFilter.end).getTime() + 1000 * 60);
+    if (chartFilter.preset === 'custom') {
+      interval = chartFilter.customInterval;
+    } else {
+      interval = chartFilter.presetInterval;
     }
 
-    url = `${url}?interval=${chartFilter.interval}&start=${chartFilter.start}&end=${end}`;
+
+    url = `${url}?interval=${interval.elementInterval}&start=${interval.start}&end=${interval.end}`;
 
     const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
 

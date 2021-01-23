@@ -29,8 +29,10 @@ export class ChartDataParser {
    * Convert timestamps to needed interval format
    */
   private mapDatesOfCalls() {
+    const interval = this.chartFilter.preset === 'custom' ? this.chartFilter.customInterval : this.chartFilter.presetInterval;
+
     this.calls = this.calls.map((mCall) => {
-      mCall.iat = moment(mCall.iat).format((ChartMomentFormat[this.chartFilter.interval]).format);
+      mCall.iat = moment(mCall.iat).format((ChartMomentFormat[interval.elementInterval]).format);
       return mCall;
     });
   }
@@ -41,25 +43,27 @@ export class ChartDataParser {
    * dates are not present
    */
   private extendCallRangeToSetDates() {
-    const chartMomentFormat = (ChartMomentFormat[this.chartFilter.interval]).format;
+    const interval = this.chartFilter.preset === 'custom' ? this.chartFilter.customInterval : this.chartFilter.presetInterval;
+
+    const chartMomentFormat = (ChartMomentFormat[interval.elementInterval]).format;
 
     if (this.calls.length > 0) {
       const pre = moment(this.calls[0].iat, chartMomentFormat);
-      const start = moment(this.chartFilter.start, chartMomentFormat);
+      const start = moment(interval.start, chartMomentFormat);
 
       if (!pre.isSameOrBefore(start)) {
         this.calls.splice(0, 0, {iat: start.format(chartMomentFormat), count: 0});
       }
 
       const post = moment(this.calls[this.calls.length - 1].iat, chartMomentFormat);
-      const end = moment(this.chartFilter.end, chartMomentFormat);
+      const end = moment(interval.end, chartMomentFormat);
 
       if (!post.isSameOrAfter(end)) {
         this.calls.push({iat: end.format(chartMomentFormat), count: 0});
       }
     } else {
-      this.calls[0] = {iat: moment(this.chartFilter.start).format(chartMomentFormat), count: 0};
-      this.calls[1] = {iat: moment(this.chartFilter.end).format(chartMomentFormat), count: 0};
+      this.calls[0] = {iat: moment(interval.start).format(chartMomentFormat), count: 0};
+      this.calls[1] = {iat: moment(interval.end).format(chartMomentFormat), count: 0};
     }
   }
 
@@ -67,7 +71,9 @@ export class ChartDataParser {
    * Fill gaps where no data is present with default data
    */
   private fillMissingDatasets() {
-    const chartMomentFormat = (ChartMomentFormat[this.chartFilter.interval]).format;
+    const interval = this.chartFilter.preset === 'custom' ? this.chartFilter.customInterval : this.chartFilter.presetInterval;
+
+    const chartMomentFormat = (ChartMomentFormat[interval.elementInterval]).format;
 
     for (let i = 0; i < this.calls.length; i++) {
       if (i + 1 < this.calls.length) {
@@ -84,7 +90,7 @@ export class ChartDataParser {
         this.calls[i].iat = date1.format(chartMomentFormat);
         this.calls[i + 1].iat = date2.format(chartMomentFormat);
 
-        if (!date1.add(1, (ChartMomentFormat[this.chartFilter.interval]).momentInterval).isSame(date2)) {
+        if (!date1.add(1, (ChartMomentFormat[interval.elementInterval]).momentInterval).isSame(date2)) {
           const obj = {iat: date1.format(chartMomentFormat), count: 0};
           this.calls.splice(i + 1, 0, obj);
         }
@@ -101,8 +107,10 @@ export class ChartDataParser {
     const labels = [];
     const values = [];
 
+    const interval = this.chartFilter.preset === 'custom' ? this.chartFilter.customInterval : this.chartFilter.presetInterval;
+
     this.calls.forEach((fCall) => {
-      labels.push(moment(fCall.iat).format((ChartMomentFormat[this.chartFilter.interval]).labelFormat));
+      labels.push(moment(fCall.iat).format((ChartMomentFormat[interval.elementInterval]).labelFormat));
       values.push(+fCall.count);
     });
 

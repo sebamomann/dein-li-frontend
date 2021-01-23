@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {IChartFilter} from '../../../models/IChartFilter';
+import {ElementInterval, IChartFilter} from '../../../models/IChartFilter';
 // @ts-ignore
 import moment from 'moment';
 import {MatSnackBar} from '@angular/material';
@@ -17,33 +17,19 @@ export class ChartFilterComponent implements OnInit {
   @Output() update = new EventEmitter<any>();
   @Input() chartFilter: IChartFilter;
 
-  public interval = 'hours';
-  public intervals = ['minutes', 'hours', 'days', 'months'];
-  public start;
-  public end = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+  public intervals: ElementInterval[] = ['minutes', 'hours', 'days', 'months'];
+
   public defaultOptions: { value: string, text: string }[];
   public options: { value: string, text: string }[];
   public updateInterval = 15;
-  public defaultUpdateInterval = 'last_day';
   public barPercentage: number;
+
   public timeInterval: any;
   public timeIntervalBar: any;
-  public liveUpdate = false;
 
   public isSmallScreen;
 
   constructor(private readonly snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver) {
-    if (this.chartFilter) {
-      this.interval = this.chartFilter.interval;
-      this.start = this.chartFilter.start;
-      this.end = this.chartFilter.end;
-    } else {
-      const d = new Date();
-      d.setDate(d.getDate() - 1);
-
-      this.start = moment(d).format('YYYY-MM-DDTHH:mm');
-    }
-
     this.breakpointObserver
       .observe('(max-width: 1024px)')
       .subscribe((val) => {
@@ -74,10 +60,10 @@ export class ChartFilterComponent implements OnInit {
   }
 
   changedFilter() {
-    if (this.defaultUpdateInterval === 'custom') {
-      const index = this.intervals.indexOf(this.interval);
+    if (this.chartFilter.preset === 'custom') {
+      const index = this.intervals.indexOf(this.chartFilter.customInterval.elementInterval);
 
-      const duration = moment.duration(moment(this.end).diff(moment(this.start)));
+      const duration = moment.duration(moment(this.chartFilter.customInterval.end).diff(moment(this.chartFilter.customInterval.start)));
 
       const nrOfPointsMin = duration.asMinutes();
       const nrOfPointsHour = duration.asHours();
@@ -98,59 +84,41 @@ export class ChartFilterComponent implements OnInit {
             panelClass: 'snackbar-default'
           });
 
-        this.interval = this.intervals[minPossIndex];
+        this.chartFilter.customInterval.elementInterval = this.intervals[minPossIndex];
       }
     } else {
       const date = moment();
-      this.end = date.format('YYYY-MM-DDTHH:mm');
+      this.chartFilter.presetInterval.end = date.format('YYYY-MM-DDTHH:mm');
 
-      if (this.defaultUpdateInterval === 'last_15_minutes') {
-        this.start = date.subtract(15, 'minutes').format('YYYY-MM-DDTHH:mm');
-        this.interval = 'minutes';
-      } else if (this.defaultUpdateInterval === 'last_hour') {
-        this.start = date.subtract(1, 'hours').format('YYYY-MM-DDTHH:mm');
-        this.interval = 'minutes';
-      } else if (this.defaultUpdateInterval === 'last_12_hours') {
-        this.start = date.subtract(12, 'hours').format('YYYY-MM-DDTHH:mm');
-        this.interval = 'hours';
-      } else if (this.defaultUpdateInterval === 'last_day') {
-        this.start = date.subtract(24, 'hours').format('YYYY-MM-DDTHH:mm');
-        this.interval = 'hours';
+      if (this.chartFilter.preset === 'last_15_minutes') {
+        this.chartFilter.presetInterval.start = date.subtract(15, 'minutes').format('YYYY-MM-DDTHH:mm');
+        this.chartFilter.presetInterval.elementInterval = 'minutes';
+      } else if (this.chartFilter.preset === 'last_hour') {
+        this.chartFilter.presetInterval.start = date.subtract(1, 'hours').format('YYYY-MM-DDTHH:mm');
+        this.chartFilter.presetInterval.elementInterval = 'minutes';
+      } else if (this.chartFilter.preset === 'last_12_hours') {
+        this.chartFilter.presetInterval.start = date.subtract(12, 'hours').format('YYYY-MM-DDTHH:mm');
+        this.chartFilter.presetInterval.elementInterval = 'hours';
+      } else if (this.chartFilter.preset === 'last_day') {
+        this.chartFilter.presetInterval.start = date.subtract(24, 'hours').format('YYYY-MM-DDTHH:mm');
+        this.chartFilter.presetInterval.elementInterval = 'hours';
       }
     }
 
-    this.update.emit({
-      interval: this.interval,
-      start: this.start,
-      end: this.end,
-    });
+    localStorage.setItem('chartFilter', JSON.stringify(this.chartFilter));
+
+    this.update.emit(this.chartFilter);
   }
 
-  toggleAutoUpdate() {
-    if (this.liveUpdate) {
-      clearInterval(this.timeIntervalBar);
-      clearInterval(this.timeInterval);
-      this.timeInterval = undefined;
-      this.liveUpdate = false;
-    } else {
-      this.liveUpdate = true;
-      clearInterval(this.timeInterval);
-      clearInterval(this.timeIntervalBar);
-      this.barPercentage = 0;
-
-      this.changedUpdateInterval();
-    }
-  }
-
-  changedUpdateInterval() {
+  public changedUpdateInterval() {
     this.changedFilter();
 
     let millis = 0;
 
-    if (this.liveUpdate) {
-      clearInterval(this.timeInterval);
-      clearInterval(this.timeIntervalBar);
+    clearInterval(this.timeInterval);
+    clearInterval(this.timeIntervalBar);
 
+    if (this.chartFilter.isAutoUpdate) {
       this.timeInterval = setInterval(() => {
         this.changedFilter();
         millis = 0;
@@ -162,6 +130,8 @@ export class ChartFilterComponent implements OnInit {
 
         this.barPercentage = millis / total * 100;
       }, 100);
+    } else {
+
     }
   }
 }

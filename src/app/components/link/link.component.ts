@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ILink} from '../../models/ILink.model';
 import {ActivatedRoute} from '@angular/router';
 import {LinkService} from '../../services/link.service';
@@ -11,114 +11,137 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 // @ts-ignore
 import moment from 'moment';
 import {IChartFilter} from '../../models/IChartFilter';
+import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';
 
 moment.locale('de');
 
 export const fadeAnimation = trigger('listAnimation', [
-  transition('* <=> *', [
-    query(':enter',
-      [style({opacity: 0, transform: 'translateY(-10px)'}), stagger('60ms', animate('600ms ease-out', style({
-        opacity: 1,
-        transform: 'translateY(0px)'
-      })))],
-      {optional: true}
-    )
-  ])
+    transition('* <=> *', [
+        query(':enter',
+            [style({opacity: 0, transform: 'translateY(-10px)'}), stagger('60ms', animate('600ms ease-out', style({
+                opacity: 1,
+                transform: 'translateY(0px)'
+            })))],
+            {optional: true}
+        )
+    ])
 ]);
 
 @Component({
-  selector: 'app-link',
-  templateUrl: './link.component.html',
-  styleUrls: ['./link.component.scss'],
-  animations: [fadeAnimation]
+    selector: 'app-link',
+    templateUrl: './link.component.html',
+    styleUrls: ['./link.component.scss'],
+    animations: [fadeAnimation]
 })
 export class LinkComponent implements OnInit {
-  public $link: Observable<ILink>;
-  public $linkVersions: Observable<ILink[]>;
+    public $link: Observable<ILink>;
+    public $linkVersions: Observable<ILink[]>;
 
-  public short: string;
-  public chart: any;
-  public baseUrl = environment.API_URL.replace('https://', '').replace('http://', '');
+    public short: string;
+    public chart: any;
 
-  public chartFilter: IChartFilter;
+    // TODO
+    public baseUrl = environment.API_URL.replace('https://', '').replace('http://', '');
 
-  public monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
-    'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
-  ];
+    public chartFilter: IChartFilter;
 
-  constructor(private route: ActivatedRoute, private linkService: LinkService,
-              private dialog: MatDialog, private snackBar: MatSnackBar) {
-    this.route.queryParams.subscribe(params => {
-      this.short = params.l;
-    });
+    // TODO
+    public monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
+        'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
+    ];
+    @ViewChild('chartRef', {static: true}) public chartRef: BasicCallChartComponent;
 
-    const d = new Date();
-    d.setDate(d.getDate() - 1);
+    constructor(private route: ActivatedRoute, private linkService: LinkService,
+                private dialog: MatDialog, private snackBar: MatSnackBar) {
+        this.route.queryParams.subscribe(params => {
+            this.short = params.l;
+        });
+
+        // TODO IS DUPE
+        let chartFilter;
+
+        try {
+            chartFilter = JSON.parse(localStorage.getItem('chartFilter'));
+            if (!chartFilter) {
+                throw Error();
+            }
+            this.chartFilter = chartFilter;
+        } catch {
+            const end = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+
+            const d = new Date();
+            d.setDate(d.getDate() - 1);
+
+            this.chartFilter = {
+                isAutoUpdate: false,
+                updateInterval: 15,
+                preset: 'last_15_minutes',
+                presetInterval: {
+                    elementInterval: 'hours',
+                    start: moment(d).format('YYYY-MM-DDTHH:mm'),
+                    end,
+                },
+                customInterval: {
+                    elementInterval: 'hours',
+                    start: moment(d).format('YYYY-MM-DDTHH:mm'),
+                    end,
+                }
+            };
+        }
+    }
+
+    ngOnInit() {
+        this.$link = this.linkService.loadLinkByShort(this.short);
+        this.$linkVersions = this.linkService.loadLinkVersions(this.short);
+    }
 
 
-    this.chartFilter = {
-      interval: 'hours',
-      start: moment(d).format('YYYY-MM-DDTHH:mm'),
-      end: moment(new Date()).format('YYYY-MM-DDTHH:mm'),
-    };
-  }
+    getDay(linkVersion: any) {
+        return (new Date(linkVersion.iat)).getDate();
+    }
 
-  ngOnInit() {
-    this.$link = this.linkService.loadLinkByShort(this.short);
-    this.$linkVersions = this.linkService.loadLinkVersions(this.short);
-  }
+    getMonthName(linkVersion: any) {
+        return this.monthNames[(new Date(linkVersion.iat)).getMonth()];
+    }
 
+    openAddVersionDialog() {
+        const dialogRef = this.dialog.open(AddVersionDialogComponent, {
+            id: 'add-version-dialog',
+            width: '80%',
+            maxWidth: '500px',
+            height: 'auto',
+            data: this.short,
+        });
 
-  getDay(linkVersion: any) {
-    return (new Date(linkVersion.iat)).getDate();
-  }
+        dialogRef.afterClosed().subscribe(sLink => {
+            // TODO can be better
+            this.$link = this.linkService.loadLinkByShort(this.short);
+            this.$linkVersions = this.linkService.loadLinkVersions(this.short);
+        });
+    }
 
-  getMonthName(linkVersion: any) {
-    return this.monthNames[(new Date(linkVersion.iat)).getMonth()];
-  }
+    openLinkInNewTab(original: any) {
+        window.open(original, '_blank');
+    }
 
-  openAddVersionDialog() {
-    const dialogRef = this.dialog.open(AddVersionDialogComponent, {
-      id: 'add-version-dialog',
-      width: '80%',
-      maxWidth: '500px',
-      height: 'auto',
-      data: this.short,
-    });
+    copyLinkToClipboard(link: any, e: Event) {
+        e.preventDefault();
 
-    dialogRef.afterClosed().subscribe(sLink => {
-      // TODO can be better
-      this.$link = this.linkService.loadLinkByShort(this.short);
-      this.$linkVersions = this.linkService.loadLinkVersions(this.short);
-    });
-  }
+        const selBox = document.createElement('textarea');
+        selBox.style.position = 'fixed';
+        selBox.style.left = '0';
+        selBox.style.top = '0';
+        selBox.style.opacity = '0';
+        selBox.value = link;
+        document.body.appendChild(selBox);
+        selBox.focus();
+        selBox.select();
+        document.execCommand('copy');
+        document.body.removeChild(selBox);
 
-  openLinkInNewTab(original: any) {
-    window.open(original, '_blank');
-  }
-
-  copyLinkToClipboard(link: any, e: Event) {
-    e.preventDefault();
-
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = link;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
-
-    this.snackBar.open('Link in die Zwischenablage kopiert', null, {
-      duration: 2000,
-      panelClass: 'snackbar-default'
-    });
-  }
-
-  public filterUpdated(filter: IChartFilter) {
-    this.chartFilter = filter;
-  }
+        this.snackBar.open('Link in die Zwischenablage kopiert', null, {
+            duration: 2000,
+            panelClass: 'snackbar-default'
+        });
+    }
 }
