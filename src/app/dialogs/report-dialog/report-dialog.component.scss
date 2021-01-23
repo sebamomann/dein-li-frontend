@@ -1,0 +1,22 @@
+form {
+  width: 100%;
+
+  mat-form-field {
+    width: 100%;
+  }
+}
+
+.mat-dialog-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  button {
+    width: auto;
+
+    &:first-child {
+    }
+
+    &:nth-child(2) {
+    }
+  }
+}

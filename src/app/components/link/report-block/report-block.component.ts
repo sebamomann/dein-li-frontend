@@ -24,28 +24,33 @@ export class ReportBlockComponent {
       data: {short: this.short}
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.linkService
-        .report(result.short)
-        .subscribe((sResponse) => {
-          if (sResponse instanceof HttpErrorResponse) {
-            if (sResponse.status === 404) {
-              this.snackBar.open('Link konnte gefunden werden', 'OK', {
-                panelClass: 'snackbar-default'
-              });
+    dialogRef.afterClosed()
+      .subscribe(result => {
+        if (!result) {
+          return;
+        }
+
+        this.linkService
+          .report(result.short)
+          .subscribe((sResponse) => {
+            if (sResponse instanceof HttpErrorResponse) {
+              if (sResponse.status === 404) {
+                this.snackBar.open('Link konnte gefunden werden', 'OK', {
+                  panelClass: 'snackbar-default'
+                });
+              } else {
+                this.snackBar.open('Link konnte nicht gemeldet werden', 'OK', {
+                  panelClass: 'snackbar-default'
+                });
+              }
             } else {
-              this.snackBar.open('Link konnte nicht gemeldet werden', 'OK', {
+              this.snackBar.open('Link erfolgreich gemeldet!', null, {
+                duration: 2000,
                 panelClass: 'snackbar-default'
               });
             }
-          } else {
-            this.snackBar.open('Link erfolgreich gemeldet!', null, {
-              duration: 2000,
-              panelClass: 'snackbar-default'
-            });
-          }
-        });
-    });
+          });
+      });
   }
 
 }
