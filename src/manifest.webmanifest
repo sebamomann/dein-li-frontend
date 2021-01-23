@@ -2,7 +2,7 @@
   "name": "dein-li",
   "short_name": "dein-li",
   "theme_color": "#2976C4",
-  "background_color": "#232222",
+  "background_color": "#c2b8b8",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
