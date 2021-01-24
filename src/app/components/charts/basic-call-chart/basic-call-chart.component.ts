@@ -112,7 +112,7 @@ export class BasicCallChartComponent implements OnInit {
 
   private listenToDataChanges() {
     this.linkStats$$.subscribe((sLinkStats) => {
-      if (sLinkStats) {
+      if (sLinkStats && this.chart.canvas) {
         const calls = sLinkStats.calls;
 
         const chartDataParser = new ChartDataParser(this.chartFilter, calls);
