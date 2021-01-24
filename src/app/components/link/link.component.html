@@ -1,7 +1,7 @@
 <div class="header-statistic-wrapper">
   <div class="header-statistic">
-    <app-chart-filter  (update)="this.chartRef.loadNewData()"  [chartFilter]="chartFilter"></app-chart-filter>
-    <app-basic-call-chart [short]="short" [chartFilter]="chartFilter"></app-basic-call-chart>
+    <app-chart-filter (update)="this.chartRef.loadNewData()" [chartFilter]="chartFilter"></app-chart-filter>
+    <app-basic-call-chart #chartRef [short]="short" [chartFilter]="chartFilter"></app-basic-call-chart>
   </div>
 </div>
 <main>
