@@ -2383,7 +2383,7 @@ ${msgIdle}`, { headers: this.adapter.newHeaders({ 'Content-Type': 'text/plain' }
         }
         fetchLatestManifest(ignoreOfflineError = false) {
             return __awaiter$5(this, void 0, void 0, function* () {
-                const res = yield this.safeFetch(this.adapter.newRequest('ngsw-config.json?ngsw-cache-bust=' + Math.random()));
+                const res = yield this.safeFetch(this.adapter.newRequest('ngsw.json?ngsw-cache-bust=' + Math.random()));
                 if (!res.ok) {
                     if (res.status === 404) {
                         yield this.deleteAllCaches();
