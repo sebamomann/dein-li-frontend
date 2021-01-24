@@ -8,8 +8,9 @@
         {{title}}
       </h2>
       <div *ngIf="userIsLoggedIn" class="account-menu-wrapper">
-        <span>{{username}}</span>
-        <mat-icon [matMenuTriggerFor]="menu">account_circle</mat-icon>
+        <button [matMenuTriggerFor]="menu" mat-stroked-button>{{username}}
+          <mat-icon>account_circle</mat-icon>
+        </button>
         <mat-menu #menu="matMenu" xPosition="before">
           <ng-container [ngTemplateOutlet]="loggedInMenu">
           </ng-container>

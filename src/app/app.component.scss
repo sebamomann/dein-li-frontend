@@ -24,7 +24,7 @@ mat-toolbar {
     div {
       mat-icon {
         @include md-icon-size(35px);
-        margin: 0 10px 0 0;
+        margin: 0 0 0 10px;
         outline: none;
         vertical-align: top;
       }
@@ -37,6 +37,11 @@ mat-toolbar {
 
           &.mat-stroked-button {
             border-color: $blue;
+          }
+
+          mat-icon {
+            vertical-align: middle;
+            @include md-icon-size(25px);
           }
         }
       }
