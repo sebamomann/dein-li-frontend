@@ -66,13 +66,15 @@
         margin-left: 10px;
         position: relative;
         text-align: center;
+        margin-top: 0;
+        transform: translateY(-2px);
 
         span {
           position: absolute;
           display: inline-block;
           z-index: 10;
           margin-bottom: 0;
-          left: 4px;
+          left: 1px;
           top: 2px;
         }
 
