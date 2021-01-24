@@ -72,18 +72,23 @@
 
 @media all and (max-width: 1024px) {
   ::ng-deep #report-dialog {
-    width: 95%;
+    width: 100%;
     margin: 0 auto;
   }
 
   .chart-filter-wrapper {
     position: relative;
-    width: 95%;
+    width: 100%;
     display: block;
     margin-bottom: 25px;
     font-size: 1em;
 
     div {
+      &.datetime {
+        grid-column-start: 1;
+        grid-column-end: 3;
+      }
+
       span {
         margin-bottom: 4px;
         font-size: 0.85em;
@@ -91,11 +96,25 @@
     }
 
     mat-expansion-panel {
+      .col- * {
+        box-sizing: border-box;
+      }
+
       padding: 0;
       box-shadow: none;
       width: 100%;
       background-color: $median-background;
       color: white;
+      box-sizing: border-box;
+
+      * {
+        box-sizing: border-box;
+      }
+
+      *:before,
+      *:after {
+        box-sizing: border-box;
+      }
 
       ::ng-deep .mat-expansion-panel-header {
         background-color: $median-background !important;
@@ -117,10 +136,16 @@
       }
 
       ::ng-deep .mat-expansion-panel-body {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 14px 10px;
-        padding: 0 16px 8px;
+        .filter-wrapper-outer {
+          .filter-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 14px 10px;
+            padding: 0;
+            width: 100%;
+            margin: 0 auto;
+          }
+        }
       }
     }
 

@@ -18,78 +18,79 @@
 </div>
 
 <ng-template #content>
-  <div>
-    <span>Automatisches Update</span>
-    <mat-checkbox (click)="changedUpdateInterval(!chartFilter.isAutoUpdate)"
-                  [(ngModel)]="chartFilter.isAutoUpdate">{{chartFilter.isAutoUpdate ? "Eingeschaltet" : "Ausgeschaltet"}}
-      <mat-progress-spinner *ngIf="chartFilter.isAutoUpdate" mode="determinate" [value]="barPercentage" diameter="20"
-                            strokeWidth="10">
-      </mat-progress-spinner>
-    </mat-checkbox>
-  </div>
+  <div class="filter-wrapper-outer">
+    <div class="filter-wrapper">
+      <div>
+        <span>Automatisches Update</span>
+        <mat-checkbox (click)="changedUpdateInterval(!chartFilter.isAutoUpdate)"
+                      [(ngModel)]="chartFilter.isAutoUpdate">{{chartFilter.isAutoUpdate ? "Eingeschaltet" : "Ausgeschaltet"}}
+          <mat-progress-spinner *ngIf="chartFilter.isAutoUpdate" mode="determinate" [value]="barPercentage"
+                                diameter="20"
+                                strokeWidth="10">
+          </mat-progress-spinner>
+        </mat-checkbox>
+      </div>
 
-  <div>
-    <span>Updateintervall</span>
-    <mat-select class="update-interval-select"
-                [(value)]="chartFilter.updateInterval"
-                (valueChange)="changedUpdateInterval(!chartFilter.isAutoUpdate)">
-      <mat-option [value]="15">15 Sekunden</mat-option>
-      <mat-option [value]="30">30 Sekunden</mat-option>
-      <mat-option [value]="60">1 Minute</mat-option>
-      <mat-option [value]="300">5 Minuten</mat-option>
-      <mat-option [value]="9000">15 Minuten</mat-option>
-    </mat-select>
-  </div>
+      <div>
+        <span>Updateintervall</span>
+        <mat-select class="update-interval-select"
+                    [(value)]="chartFilter.updateInterval"
+                    (valueChange)="changedUpdateInterval(!chartFilter.isAutoUpdate)">
+          <mat-option [value]="15">15 Sekunden</mat-option>
+          <mat-option [value]="30">30 Sekunden</mat-option>
+          <mat-option [value]="60">1 Minute</mat-option>
+          <mat-option [value]="300">5 Minuten</mat-option>
+          <mat-option [value]="9000">15 Minuten</mat-option>
+        </mat-select>
+      </div>
 
-  <div>
-    <span>Datenzeitraum</span>
-    <mat-select class="default-update-interval-select"
-                [(value)]="chartFilter.preset"
-                (valueChange)="changedFilter()">
-      <mat-option [value]="'custom'">Benutzerdefiniert</mat-option>
-      <mat-option [value]="'last_15_minutes'">Letzte 15 Minuten</mat-option>
-      <mat-option [value]="'last_hour'">Letzte Stunde</mat-option>
-      <mat-option [value]="'last_12_hours'">Letzte 12 Stunden</mat-option>
-      <mat-option [value]="'last_day'">Letzte 24 Stunden</mat-option>
-    </mat-select>
-  </div>
+      <div>
+        <span>Datenzeitraum</span>
+        <mat-select class="default-update-interval-select"
+                    [(value)]="chartFilter.preset"
+                    (valueChange)="changedFilter()">
+          <mat-option [value]="'custom'">Benutzerdefiniert</mat-option>
+          <mat-option [value]="'last_15_minutes'">Letzte 15 Minuten</mat-option>
+          <mat-option [value]="'last_hour'">Letzte Stunde</mat-option>
+          <mat-option [value]="'last_12_hours'">Letzte 12 Stunden</mat-option>
+          <mat-option [value]="'last_day'">Letzte 24 Stunden</mat-option>
+        </mat-select>
+      </div>
 
-  <ng-container *ngIf="chartFilter.preset == 'custom'">
-    <div>
-      <span>Darstellungsintervall</span>
-      <mat-select class="interval-select"
-                  [(value)]="chartFilter.customInterval.elementInterval"
-                  (valueChange)="changedFilter()">
-        <mat-option *ngFor="let option of options" [value]="option.value">{{option.text}}</mat-option>
-      </mat-select>
+      <ng-container *ngIf="chartFilter.preset == 'custom'">
+        <div>
+          <span>Darstellungsintervall</span>
+          <mat-select class="interval-select"
+                      [(value)]="chartFilter.customInterval.elementInterval"
+                      (valueChange)="changedFilter()">
+            <mat-option *ngFor="let option of options" [value]="option.value">{{option.text}}</mat-option>
+          </mat-select>
+        </div>
+
+        <div class="datetime">
+          <mat-form-field>
+            <mat-label>Startdatum</mat-label>
+            <input id="dateStart"
+                   [(ngModel)]="chartFilter.customInterval.start"
+                   (change)="changedFilter()"
+                   type="datetime-local"
+                   matInput
+                   required>
+          </mat-form-field>
+        </div>
+
+        <div class="datetime">
+          <mat-form-field>
+            <mat-label>Enddatum</mat-label>
+            <input id="dateEnd"
+                   [(ngModel)]="chartFilter.customInterval.end"
+                   (change)="changedFilter()"
+                   type="datetime-local"
+                   matInput
+                   required>
+          </mat-form-field>
+        </div>
+      </ng-container>
     </div>
-
-    <div>
-      <mat-form-field class="">
-        <mat-label>Startdatum</mat-label>
-        <label for="dateStart">
-          <input id="dateStart"
-                 [(ngModel)]="chartFilter.customInterval.start"
-                 (change)="changedFilter()"
-                 type="datetime-local"
-                 matInput
-                 required>
-        </label>
-      </mat-form-field>
-    </div>
-
-    <div>
-      <mat-form-field class="">
-        <mat-label>Enddatum</mat-label>
-        <label for="dateEnd">
-          <input id="dateEnd"
-                 [(ngModel)]="chartFilter.customInterval.end"
-                 (change)="changedFilter()"
-                 type="datetime-local"
-                 matInput
-                 required>
-        </label>
-      </mat-form-field>
-    </div>
-  </ng-container>
+  </div>
 </ng-template>

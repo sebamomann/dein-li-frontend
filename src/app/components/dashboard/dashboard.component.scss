@@ -128,7 +128,7 @@ main {
     .link-creation, .link-management {
       font-size: 0.9em;
       $padding: 16px;
-      width: calc(95% - #{$padding} * 2);
+      width: calc(100% - #{$padding} * 2);
       padding: $padding;
       margin-top: 0;
     }

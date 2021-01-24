@@ -29,7 +29,7 @@ $padding: 16px;
 @media all and (max-width: 1024px) {
   .form {
     &.float {
-      width: calc(95% - #{$padding} * 2);
+      width: calc(100% - #{$padding} * 2);
       transform: translate(-50%, 0);
     }
   }
