@@ -45,4 +45,22 @@ export class SuccessfulCreationDialogComponent implements OnInit {
   close() {
     this.dialogRef.close();
   }
+
+  share() {
+    let newVariable: any;
+
+    newVariable = window.navigator;
+
+    if (newVariable && newVariable.share) {
+      newVariable.share({
+        title: 'dein.li Kurzlink',
+        text: 'dein.li Kurzlink' + ' - ' + 'Hier, für dich',
+        url: this.completeUrl,
+      })
+        .then(() => console.log('Successful share'))
+        .catch((error) => this.copyLinkToClipboard());
+    } else {
+      this.copyLinkToClipboard();
+    }
+  }
 }

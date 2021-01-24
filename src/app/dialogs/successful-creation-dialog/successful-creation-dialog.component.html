@@ -11,10 +11,10 @@
       </label>
     </mat-form-field>
     <button
-      (click)="copyLinkToClipboard();close()"
+      (click)="share();close()"
       color="primary"
       mat-raised-button>
-      <mat-icon>content_copy</mat-icon>
+      <mat-icon>share</mat-icon>
     </button>
   </div>
   <div class="open-analytics" *ngIf="userIsLoggedIn">

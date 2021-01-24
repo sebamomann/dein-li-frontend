@@ -144,4 +144,22 @@ export class LinkComponent implements OnInit {
             panelClass: 'snackbar-default'
         });
     }
+
+    share(param: any, $event: MouseEvent) {
+        let newVariable: any;
+
+        newVariable = window.navigator;
+
+        if (newVariable && newVariable.share) {
+            newVariable.share({
+                title: 'dein.li Kurzlink',
+                text: 'dein.li Kurzlink' + ' - ' + 'Hier, für dich',
+                url: param,
+            })
+                .then(() => console.log('Successful share'))
+                .catch((error) => this.copyLinkToClipboard(param, $event));
+        } else {
+            this.copyLinkToClipboard(param, $event);
+        }
+    }
 }
