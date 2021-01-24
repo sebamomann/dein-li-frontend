@@ -12,6 +12,7 @@
 
   .statistic-chart {
     height: 30vh;
+    min-height: 300px;
     width: 100%;
 
     canvas {
@@ -56,7 +57,9 @@
   .statistic-chart-wrapper {
     width: 100%;
 
-    canvas {
+
+    .statistic-chart {
+      min-height: 250px;
     }
 
     .statistic-information {
