@@ -127,7 +127,7 @@ export class ChartFilterComponent implements OnInit {
         const total = this.chartFilter.updateInterval * 1000;
         millis += 100;
 
-        this.barPercentage = millis / total * 100;
+        this.barPercentage = Math.round(millis / total * 100);
       }, 100);
     }
   }

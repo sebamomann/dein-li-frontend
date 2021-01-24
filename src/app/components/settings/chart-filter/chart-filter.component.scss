@@ -61,10 +61,25 @@
         border-color: rgba(255, 255, 255, 0.5);
       }
 
-      mat-progress-spinner {
-        display: inline;
+      .progress-spinner-wrapper {
+        display: inline-block;
         margin-left: 10px;
-        vertical-align: middle;
+        position: relative;
+        text-align: center;
+
+        span {
+          position: absolute;
+          display: inline-block;
+          z-index: 10;
+          margin-bottom: 0;
+          left: 4px;
+          top: 2px;
+        }
+
+        mat-progress-spinner {
+          display: inline-block;
+          vertical-align: middle;
+        }
       }
     }
   }
