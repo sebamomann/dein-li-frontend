@@ -25,12 +25,12 @@ export class BasicCallChartComponent implements OnInit {
   public chart;
   private isSmallScreen: boolean;
 
-
   constructor(private readonly linkService: LinkService, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver
       .observe('(max-width: 1024px)')
       .subscribe((val) => {
         this.isSmallScreen = val.matches;
+
         this.initializeChart();
       });
   }
