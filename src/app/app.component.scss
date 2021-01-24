@@ -71,6 +71,10 @@ mat-toolbar {
 
 
 footer {
+  position: relative;
+  margin: 10px auto;
+  z-index: 1;
+
   a {
     color: white;
   }
