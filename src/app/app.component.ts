@@ -4,6 +4,8 @@ import {NavigationEnd, Router} from '@angular/router';
 import {filter} from 'rxjs/operators';
 import {AuthenticationService} from './services/authentication.service';
 import {IUser} from './models/IUser.model';
+import {UpdateService} from './services/update.service';
+import {interval} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,8 @@ export class AppComponent {
   public userIsLoggedIn: boolean;
   public username: string;
 
-  constructor(private toolbarService: ToolbarService, router: Router, private authenticationService: AuthenticationService) {
+  constructor(private toolbarService: ToolbarService, router: Router, private authenticationService: AuthenticationService,
+              private update: UpdateService) {
 
     this.toolbarService.title$.subscribe((sTitle) => {
       this.title = sTitle;
@@ -27,5 +30,11 @@ export class AppComponent {
 
     this.authenticationService.loginStatus$.subscribe((status: boolean) => this.userIsLoggedIn = status);
     this.authenticationService.currentUserSubject$.subscribe((user: IUser) => user ? this.username = user.username : this.username = '');
+
+    const source = interval(1000 * 60);
+    source.subscribe(val => {
+      console.log('check for update');
+      this.update.checkForUpdate();
+    });
   }
 }

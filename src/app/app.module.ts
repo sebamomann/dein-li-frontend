@@ -8,11 +8,10 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './_helper/interceptor/authentication.interceptor';
 import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
-import {MatButtonModule, MatIconModule, MatMenuModule, MatSnackBar, MatSnackBarModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatMenuModule, MatSnackBarModule, MatToolbarModule} from '@angular/material';
 import {WINDOW_PROVIDERS} from './provider/window.provider';
 import {ImpressumComponent} from './components/impressum/impressum.component';
-import {ServiceWorkerModule, SwUpdate} from '@angular/service-worker';
-import {switchMap} from 'rxjs/operators';
+import {ServiceWorkerModule} from '@angular/service-worker';
 
 registerLocaleData(localeDe);
 
@@ -46,12 +45,6 @@ registerLocaleData(localeDe);
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(swUpdate: SwUpdate, snackbar: MatSnackBar) {
-    swUpdate.available.pipe(
-      // tslint:disable-next-line
-      switchMap(() => {
-        return snackbar.open('Neue Version verfügbar', 'Neu laden').onAction();
-      })
-    ).subscribe(() => window.location.reload());
+  constructor() {
   }
 }
