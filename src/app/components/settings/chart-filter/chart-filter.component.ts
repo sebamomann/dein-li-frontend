@@ -21,7 +21,6 @@ export class ChartFilterComponent implements OnInit {
 
   public defaultOptions: { value: string, text: string }[];
   public options: { value: string, text: string }[];
-  public updateInterval = 15;
   public barPercentage: number;
 
   public timeInterval: any;
@@ -56,7 +55,7 @@ export class ChartFilterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.changedFilter();
+    this.changedUpdateInterval(this.chartFilter.isAutoUpdate);
   }
 
   changedFilter() {
@@ -110,7 +109,7 @@ export class ChartFilterComponent implements OnInit {
     this.update.emit(this.chartFilter);
   }
 
-  public changedUpdateInterval() {
+  public changedUpdateInterval(refresh: boolean) {
     this.changedFilter();
 
     let millis = 0;
@@ -118,20 +117,18 @@ export class ChartFilterComponent implements OnInit {
     clearInterval(this.timeInterval);
     clearInterval(this.timeIntervalBar);
 
-    if (this.chartFilter.isAutoUpdate) {
+    if (refresh) {
       this.timeInterval = setInterval(() => {
         this.changedFilter();
         millis = 0;
-      }, this.updateInterval * 1000);
+      }, this.chartFilter.updateInterval * 1000);
 
       this.timeIntervalBar = setInterval(() => {
-        const total = this.updateInterval * 1000;
+        const total = this.chartFilter.updateInterval * 1000;
         millis += 100;
 
         this.barPercentage = millis / total * 100;
       }, 100);
-    } else {
-
     }
   }
 }

@@ -10,9 +10,8 @@ import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import {MatButtonModule, MatIconModule, MatMenuModule, MatSnackBar, MatSnackBarModule, MatToolbarModule} from '@angular/material';
 import {WINDOW_PROVIDERS} from './provider/window.provider';
-import { ImpressumComponent } from './components/impressum/impressum.component';
+import {ImpressumComponent} from './components/impressum/impressum.component';
 import {ServiceWorkerModule, SwUpdate} from '@angular/service-worker';
-import { environment } from '../environments/environment';
 import {switchMap} from 'rxjs/operators';
 
 registerLocaleData(localeDe);
@@ -48,10 +47,12 @@ registerLocaleData(localeDe);
 })
 export class AppModule {
   constructor(swUpdate: SwUpdate, snackbar: MatSnackBar) {
-
     swUpdate.available.pipe(
       // tslint:disable-next-line
-      switchMap((notes) => snackbar.open('Neue Version verfügbar', 'Neu laden').onAction())
+      switchMap(() => {
+        console.log('new Version');
+        return snackbar.open('Neue Version verfügbar', 'Neu laden').onAction();
+      })
     ).subscribe(() => window.location.reload());
   }
 }

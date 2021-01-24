@@ -20,7 +20,7 @@
 <ng-template #content>
   <div>
     <span>Automatisches Update</span>
-    <mat-checkbox (click)="changedUpdateInterval()"
+    <mat-checkbox (click)="changedUpdateInterval(!chartFilter.isAutoUpdate)"
                   [(ngModel)]="chartFilter.isAutoUpdate">{{chartFilter.isAutoUpdate ? "Eingeschaltet" : "Ausgeschaltet"}}
       <mat-progress-spinner *ngIf="chartFilter.isAutoUpdate" mode="determinate" [value]="barPercentage" diameter="20"
                             strokeWidth="10">
@@ -31,8 +31,8 @@
   <div>
     <span>Updateintervall</span>
     <mat-select class="update-interval-select"
-                [(value)]="updateInterval"
-                (valueChange)="changedUpdateInterval()">
+                [(value)]="chartFilter.updateInterval"
+                (valueChange)="changedUpdateInterval(!chartFilter.isAutoUpdate)">
       <mat-option [value]="15">15 Sekunden</mat-option>
       <mat-option [value]="30">30 Sekunden</mat-option>
       <mat-option [value]="60">1 Minute</mat-option>
