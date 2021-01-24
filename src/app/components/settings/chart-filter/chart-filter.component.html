@@ -22,8 +22,8 @@
     <span>Automatisches Update</span>
     <mat-checkbox (click)="changedUpdateInterval(!chartFilter.isAutoUpdate)"
                   [(ngModel)]="chartFilter.isAutoUpdate">{{chartFilter.isAutoUpdate ? "Eingeschaltet" : "Ausgeschaltet"}}
-      <div class="progress-spinner-wrapper">
-        <mat-progress-spinner *ngIf="chartFilter.isAutoUpdate" mode="determinate"
+      <div class="progress-spinner-wrapper" *ngIf="chartFilter.isAutoUpdate">
+        <mat-progress-spinner mode="determinate"
                               [value]="barPercentage"
                               diameter="25"
                               strokeWidth="10">
