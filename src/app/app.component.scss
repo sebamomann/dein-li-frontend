@@ -16,6 +16,17 @@ mat-toolbar {
     align-items: center;
     width: 100%;
 
+    .logo-wrapper {
+      outline: none;
+
+      img {
+        vertical-align: middle;
+        height: 50px;
+        width: 50px;
+        outline: none;
+      }
+    }
+
     .title {
       font-size: 1.5em;
       text-align: center;
