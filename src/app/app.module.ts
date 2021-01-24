@@ -12,6 +12,7 @@ import {MatButtonModule, MatIconModule, MatMenuModule, MatSnackBarModule, MatToo
 import {WINDOW_PROVIDERS} from './provider/window.provider';
 import {ImpressumComponent} from './components/impressum/impressum.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
+import {UpdateService} from './services/update.service';
 
 registerLocaleData(localeDe);
 
@@ -39,7 +40,8 @@ registerLocaleData(localeDe);
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
     },
-    {provide: LOCALE_ID, useValue: 'de-DE'}
+    {provide: LOCALE_ID, useValue: 'de-DE'},
+    UpdateService
   ],
   exports: [],
   bootstrap: [AppComponent]

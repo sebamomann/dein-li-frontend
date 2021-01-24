@@ -32,7 +32,7 @@ export class AppComponent {
     this.authenticationService.currentUserSubject$.subscribe((user: IUser) => user ? this.username = user.username : this.username = '');
 
     const source = interval(1000 * 60);
-    source.subscribe(val => {
+    source.subscribe(() => {
       console.log('check for update');
       this.update.checkForUpdate();
     });
