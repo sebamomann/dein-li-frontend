@@ -25,6 +25,6 @@ export class AppComponent {
     );
 
     this.authenticationService.loginStatus$.subscribe((status: boolean) => this.userIsLoggedIn = status);
-    this.authenticationService.currentUserSubject$.subscribe((user: IUser) => this.username = user.username);
+    this.authenticationService.currentUserSubject$.subscribe((user: IUser) => user ? this.username = user.username : this.username = '');
   }
 }
