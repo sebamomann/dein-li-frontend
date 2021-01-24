@@ -4,7 +4,6 @@ import {NavigationEnd, Router} from '@angular/router';
 import {filter} from 'rxjs/operators';
 import {AuthenticationService} from './services/authentication.service';
 import {IUser} from './models/IUser.model';
-import {UpdateService} from './services/update.service';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +15,7 @@ export class AppComponent {
   public userIsLoggedIn: boolean;
   public username: string;
 
-  constructor(private toolbarService: ToolbarService, router: Router, private authenticationService: AuthenticationService,
-              private sw: UpdateService) {
-    this.sw.checkForUpdates();
+  constructor(private toolbarService: ToolbarService, router: Router, private authenticationService: AuthenticationService) {
 
     this.toolbarService.title$.subscribe((sTitle) => {
       this.title = sTitle;
