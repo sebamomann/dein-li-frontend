@@ -51,6 +51,10 @@ export class BasicCallChartComponent implements OnInit {
   }
 
   loadNewData() {
+    if (!this.chartFilter) {
+      return;
+    }
+
     this.linkService.loadLinkStats(this.short, false, this.chartFilter).toPromise().then((res) => this.linkStats$$.next(res));
   }
 
