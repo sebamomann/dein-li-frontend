@@ -1,0 +1,17 @@
+p {
+  a {
+    margin: 8px 0;
+    outline: none;
+  }
+}
+
+form {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 16px;
+
+  button {
+    align-self: center;
+  }
+}
