@@ -27,6 +27,7 @@ export class ChartFilterComponent implements OnInit {
   public timeIntervalBar: any;
 
   public isSmallScreen;
+  public panelExpanded = false;
 
   constructor(private readonly snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver

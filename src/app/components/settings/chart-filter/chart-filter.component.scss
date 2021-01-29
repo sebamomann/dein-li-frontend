@@ -60,29 +60,29 @@
       ::ng-deep .mat-checkbox-frame {
         border-color: rgba(255, 255, 255, 0.5);
       }
+    }
+  }
 
-      .progress-spinner-wrapper {
-        display: inline-block;
-        margin-left: 10px;
-        position: relative;
-        text-align: center;
-        margin-top: 0;
-        transform: translateY(-2px);
+  .progress-spinner-wrapper {
+    display: inline-block;
+    margin-left: 10px;
+    position: relative;
+    text-align: center;
+    margin-top: 0;
+    transform: translateY(-2px);
 
-        span {
-          position: absolute;
-          display: inline-block;
-          z-index: 10;
-          margin-bottom: 0;
-          left: 1px;
-          top: 2px;
-        }
+    span {
+      position: absolute;
+      display: inline-block;
+      z-index: 10;
+      margin-bottom: 0;
+      left: 1px;
+      top: 1px;
+    }
 
-        mat-progress-spinner {
-          display: inline-block;
-          vertical-align: middle;
-        }
-      }
+    mat-progress-spinner {
+      display: inline-block;
+      vertical-align: middle;
     }
   }
 }
@@ -133,12 +133,17 @@
         box-sizing: border-box;
       }
 
+      ::ng-deep .mat-content {
+        overflow: visible;
+      }
+
       ::ng-deep .mat-expansion-panel-header {
         background-color: $median-background !important;
         color: white;
 
         mat-panel-title {
           color: white;
+          overflow: visible;
         }
 
         mat-panel-description {
