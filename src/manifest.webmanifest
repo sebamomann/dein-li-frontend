@@ -1,8 +1,8 @@
 {
   "name": "dein-li",
   "short_name": "dein-li",
-  "theme_color": "#2976C4",
-  "background_color": "#c2b8b8",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
