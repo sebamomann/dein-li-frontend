@@ -11,6 +11,16 @@
   grid-gap: 20% 10%;
   font-size: 1.125em;
 
+  .show-filter-button {
+    position: absolute;
+    right: 5px;
+    top: -5px;
+    background-color: gray;
+    padding: 2px;
+    border-radius: 3px;
+    opacity: 0.5;
+  }
+
   div {
     span {
       display: block;
@@ -107,7 +117,7 @@
       }
 
       span {
-        margin-bottom: 4px;
+        margin-bottom: 0px;
         font-size: 0.85em;
       }
     }
@@ -138,8 +148,10 @@
       }
 
       ::ng-deep .mat-expansion-panel-header {
+        font-size: 13px;
         background-color: $median-background !important;
         color: white;
+        padding: 11px 14px !important;
 
         mat-panel-title {
           color: white;
@@ -161,9 +173,10 @@
         width: 90%;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-gap: 14px 10px;
+        grid-gap: 10px 10px;
         padding: 0 0 8px;
         margin: 0 auto;
+        font-size: 0.9em;
       }
     }
 

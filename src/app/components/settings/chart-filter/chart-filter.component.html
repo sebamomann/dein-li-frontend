@@ -1,19 +1,11 @@
 <div class="chart-filter-wrapper">
-  <mat-expansion-panel *ngIf="isSmallScreen" [(expanded)]="panelExpanded">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        Filter
-        <div class="progress-spinner-wrapper" *ngIf="chartFilter.isAutoUpdate && !panelExpanded">
-          <mat-progress-spinner mode="determinate"
-                                [value]="barPercentage"
-                                diameter="15"
-                                strokeWidth="15">
-          </mat-progress-spinner>
-        </div>
-      </mat-panel-title>
-      <mat-panel-description>
-        Grapheinstellungen
-      </mat-panel-description>
+  <mat-icon class="show-filter-button" *ngIf="isSmallScreen && showFilterButton" (click)="showFilterClick()">
+    filter_list
+  </mat-icon>
+  <mat-expansion-panel *ngIf="isSmallScreen && showExpansion"
+                       (afterCollapse)="expansionPanelClosed()"
+                       #expansionPanel>
+    <mat-expansion-panel-header [expandedHeight]="'0px'" [collapsedHeight]="'0px'">
     </mat-expansion-panel-header>
 
     <ng-container *ngTemplateOutlet="content"></ng-container>
@@ -32,7 +24,7 @@
       <div class="progress-spinner-wrapper" *ngIf="chartFilter.isAutoUpdate">
         <mat-progress-spinner mode="determinate"
                               [value]="barPercentage"
-                              diameter="22"
+                              diameter="20"
                               strokeWidth="10">
         </mat-progress-spinner>
         <span>{{barPercentage}}%</span>

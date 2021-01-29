@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ElementInterval, IChartFilter} from '../../../models/IChartFilter';
 // @ts-ignore
 import moment from 'moment';
-import {MatSnackBar} from '@angular/material';
+import {MatExpansionPanel, MatSnackBar} from '@angular/material';
 import {BreakpointObserver} from '@angular/cdk/layout';
 
 moment.locale('de');
@@ -16,18 +16,15 @@ export class ChartFilterComponent implements OnInit {
 
   @Output() update = new EventEmitter<any>();
   @Input() chartFilter: IChartFilter;
-
   public intervals: ElementInterval[] = ['minutes', 'hours', 'days', 'months'];
-
   public defaultOptions: { value: string, text: string }[];
   public options: { value: string, text: string }[];
   public barPercentage: number;
-
   public timeInterval: any;
   public timeIntervalBar: any;
-
   public isSmallScreen;
-  public panelExpanded = false;
+  public showExpansion = false;
+  public showFilterButton = true;
 
   constructor(private readonly snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver
@@ -53,6 +50,14 @@ export class ChartFilterComponent implements OnInit {
     ];
 
     this.options = this.defaultOptions;
+  }
+
+  @ViewChild('expansionPanel', {static: false}) set panel(content: MatExpansionPanel) {
+    if (content) {
+      setTimeout(() => {
+        content.open();
+      });
+    }
   }
 
   ngOnInit() {
@@ -131,5 +136,15 @@ export class ChartFilterComponent implements OnInit {
         this.barPercentage = Math.round(millis / total * 100);
       }, 100);
     }
+  }
+
+  showFilterClick() {
+    this.showExpansion = true;
+    this.showFilterButton = false;
+  }
+
+  expansionPanelClosed() {
+    this.showExpansion = false;
+    this.showFilterButton = true;
   }
 }
