@@ -1,12 +1,13 @@
 @import "src/app/styles/variables";
 
 mat-toolbar {
-  background-image: linear-gradient($dark-background 0%, $dark-background 75%, $background 100%);
+  background-image: linear-gradient($dark-background 0%, $dark-background calc(100% - 15px), $background 100%);
   color: $blue;
-  margin-bottom: 50px;
+  margin-bottom: 75px;
   z-index: 2;
   position: relative;
-  padding: 0;
+  padding: 7px 0 15px;
+  height: auto;
 
   .toolbar-wrapper {
     display: grid;
@@ -14,21 +15,36 @@ mat-toolbar {
     max-width: 1275px;
     margin: 0 auto;
     align-items: center;
-    width: 100%;
+    width: 95%;
+
 
     .logo-wrapper {
       outline: none;
 
       img {
         vertical-align: middle;
-        height: 50px;
-        width: 50px;
+        height: 34px;
+        width: 34px;
         outline: none;
+        display: inline-block;
+      }
+
+      .logo-name {
+        margin-left: 10px;
+        display: inline-block;
+        font-size: 1.25em;
+        vertical-align: middle;
+
+        span {
+          span {
+            color: $light-background;
+          }
+        }
       }
     }
 
     .title {
-      font-size: 1.5em;
+      font-size: 1.75em;
       text-align: center;
       font-weight: bolder;
     }

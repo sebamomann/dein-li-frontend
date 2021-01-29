@@ -1,8 +1,11 @@
 <div class="wrapper">
   <mat-toolbar>
     <div class="toolbar-wrapper">
-      <div class="logo-wrapper">
-        <img src="assets/icons/icon-192x192.png" alt="" [routerLink]="['/']">
+      <div class="logo-wrapper" [routerLink]="['/']">
+        <img src="assets/icons/icon_stripped.png" alt="dein.li logo">
+        <div class="logo-name">
+          <span>dein.li<span>nk</span></span>
+        </div>
       </div>
       <h2 class="title">
         {{title}}
@@ -18,11 +21,7 @@
       </div>
       <div *ngIf="!userIsLoggedIn">
         <button mat-stroked-button
-                [routerLink]="['/account/register']">Registrieren
-        </button>
-        <button mat-raised-button
-                color="primary"
-                [routerLink]="['/account/login']">Anmelden
+                [routerLink]="['/account/login']">Login
         </button>
       </div>
     </div>
