@@ -4,7 +4,7 @@ export class LinkUtil {
    *
    * @param link String   Link to open
    */
-  public static openLinkInNewTab(link: string) {
+  public static openLinkInNewTab(link: string): void {
     window.open(link, '_blank');
   }
 }
