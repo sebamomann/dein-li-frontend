@@ -10,9 +10,9 @@ import {ToolbarService} from '../../services/toolbar.service';
 import {IChartFilter} from '../../models/IChartFilter';
 // @ts-ignore
 import moment from 'moment';
-import {environment} from '../../../environments/environment';
 import {HttpErrorResponse} from '@angular/common/http';
 import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';
+import {UrlUtil} from '../../_util/Url.util';
 
 moment.locale('de');
 
@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
 
   public chartFilter: IChartFilter;
 
-  public baseUrl = environment.API_URL.replace('https://', '').replace('http://', '');
+  public baseUrl = UrlUtil.getApiDomain();
   public highlightHint = false;
 
   @ViewChild('chartRef', {static: true}) public chartRef: BasicCallChartComponent;

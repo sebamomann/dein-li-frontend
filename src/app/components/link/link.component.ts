@@ -3,7 +3,6 @@ import {ILink} from '../../models/ILink.model';
 import {ActivatedRoute} from '@angular/router';
 import {LinkService} from '../../services/link.service';
 import {Observable} from 'rxjs';
-import {environment} from '../../../environments/environment';
 
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
@@ -12,6 +11,7 @@ import {MatDialog, MatSnackBar} from '@angular/material';
 import moment from 'moment';
 import {IChartFilter} from '../../models/IChartFilter';
 import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';
+import {UrlUtil} from '../../_util/Url.util';
 
 moment.locale('de');
 
@@ -40,8 +40,7 @@ export class LinkComponent implements OnInit {
   public short: string;
   public chart: any;
 
-  // TODO
-  public baseUrl = environment.API_URL.replace('https://', '').replace('http://', '');
+  public baseUrl = UrlUtil.getApiDomain();
 
   public chartFilter: IChartFilter;
 

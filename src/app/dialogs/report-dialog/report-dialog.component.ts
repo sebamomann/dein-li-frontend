@@ -1,7 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {environment} from '../../../environments/environment';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UrlUtil} from '../../_util/Url.util';
 
 interface ReportDialogData {
   short: string;
@@ -14,7 +14,7 @@ interface ReportDialogData {
 })
 export class ReportDialogComponent {
   public short: string;
-  public baseUrl = environment.API_URL.replace('https://', '').replace('http://', '');
+  public baseUrl = UrlUtil.getApiDomain();
 
   public event = new FormGroup({
     short: new FormControl('', [Validators.required]),
