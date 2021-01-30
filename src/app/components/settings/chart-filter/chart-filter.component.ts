@@ -4,13 +4,24 @@ import {ElementInterval, IChartFilter} from '../../../models/IChartFilter';
 import moment from 'moment';
 import {MatExpansionPanel, MatSnackBar} from '@angular/material';
 import {BreakpointObserver} from '@angular/cdk/layout';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 moment.locale('de');
 
 @Component({
   selector: 'app-chart-filter',
   templateUrl: './chart-filter.component.html',
-  styleUrls: ['./chart-filter.component.scss']
+  styleUrls: ['./chart-filter.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition('void => *', [
+        style({opacity: '0', height: '0px', paddingBottom: 0, paddingTop: 0, marginBottom: 0}),
+        animate('500ms ease-in', style({opacity: 1, height: '*', paddingBottom: '*', paddingTop: '*', marginBottom: '*'}))
+      ]),
+      transition('* => void',
+        animate('500ms ease-out', style({opacity: 0, height: '0px', paddingBottom: 0, paddingTop: 0, marginBottom: 0})))
+    ])
+  ]
 })
 export class ChartFilterComponent implements OnInit {
 
@@ -25,6 +36,7 @@ export class ChartFilterComponent implements OnInit {
   public isSmallScreen;
   public showExpansion = false;
   public showFilterButton = true;
+  public disableAnimations = false;
 
   constructor(private readonly snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver
@@ -55,8 +67,10 @@ export class ChartFilterComponent implements OnInit {
   @ViewChild('expansionPanel', {static: false}) set panel(content: MatExpansionPanel) {
     if (content) {
       setTimeout(() => {
+        console.log('open');
+        this.disableAnimations = false;
         content.open();
-      });
+      }, 250);
     }
   }
 
@@ -139,12 +153,6 @@ export class ChartFilterComponent implements OnInit {
   }
 
   showFilterClick() {
-    this.showExpansion = true;
-    this.showFilterButton = false;
-  }
-
-  expansionPanelClosed() {
-    this.showExpansion = false;
-    this.showFilterButton = true;
+    this.showExpansion = !this.showExpansion;
   }
 }

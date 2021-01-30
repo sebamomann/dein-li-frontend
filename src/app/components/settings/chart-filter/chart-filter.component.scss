@@ -1,5 +1,15 @@
 @import "src/app/styles/variables";
 
+.show-filter-button {
+  position: absolute;
+  background-color: gray;
+  right: 0;
+  padding: 2px;
+  border-radius: 3px;
+  opacity: 0.5;
+  z-index: 1;
+}
+
 .chart-filter-wrapper {
   width: 100%;
   max-width: 1275px;
@@ -10,16 +20,6 @@
   align-items: start;
   grid-gap: 20% 10%;
   font-size: 1.125em;
-
-  .show-filter-button {
-    position: absolute;
-    right: 5px;
-    top: -5px;
-    background-color: gray;
-    padding: 2px;
-    border-radius: 3px;
-    opacity: 0.5;
-  }
 
   div {
     span {
@@ -107,83 +107,41 @@
     position: relative;
     width: 100%;
     display: block;
-    margin-bottom: 25px;
     font-size: 1em;
+    margin-bottom: 0;
 
-    div {
-      &.datetime {
-        grid-column-start: 1;
-        grid-column-end: 3;
-      }
-
-      span {
-        margin-bottom: 0px;
-        font-size: 0.85em;
-      }
-    }
-
-    mat-expansion-panel {
-      .col- * {
-        box-sizing: border-box;
-      }
-
-      padding: 0;
+    .chart-filter-dialog {
       box-shadow: none;
-      width: 100%;
       background-color: $median-background;
       color: white;
       box-sizing: border-box;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 10px 10px;
+      padding: 16px 16px 8px;
+      margin: 0 auto 25px;
+      font-size: 0.9em;
+      border-radius: 5px;
+      overflow: hidden;
 
-      * {
-        box-sizing: border-box;
-      }
-
-      *:before,
-      *:after {
-        box-sizing: border-box;
-      }
-
-      ::ng-deep .mat-content {
-        overflow: visible;
-      }
-
-      ::ng-deep .mat-expansion-panel-header {
-        font-size: 13px;
-        background-color: $median-background !important;
-        color: white;
-        padding: 11px 14px !important;
-
-        mat-panel-title {
-          color: white;
-          overflow: visible;
+      div {
+        &.datetime {
+          grid-column-start: 1;
+          grid-column-end: 3;
         }
 
-        mat-panel-description {
-          color: white;
-        }
-
-        .mat-expansion-indicator {
-          &:after {
-            color: white;
-          }
+        span {
+          margin-bottom: 0px;
+          font-size: 0.85em;
         }
       }
 
-      ::ng-deep .mat-expansion-panel-body {
-        width: 90%;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 10px 10px;
-        padding: 0 0 8px;
-        margin: 0 auto;
-        font-size: 0.9em;
+      .interval-select {
+        grid-column-start: 1;
+        grid-column-end: 3;
+        margin-bottom: 16px;
       }
-    }
-
-    .interval-select {
-      grid-column-start: 1;
-      grid-column-end: 3;
-      margin-bottom: 16px;
     }
   }
 }

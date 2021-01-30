@@ -1,15 +1,11 @@
-<div class="chart-filter-wrapper">
-  <mat-icon class="show-filter-button" *ngIf="isSmallScreen && showFilterButton" (click)="showFilterClick()">
-    filter_list
-  </mat-icon>
-  <mat-expansion-panel *ngIf="isSmallScreen && showExpansion"
-                       (afterCollapse)="expansionPanelClosed()"
-                       #expansionPanel>
-    <mat-expansion-panel-header [expandedHeight]="'0px'" [collapsedHeight]="'0px'">
-    </mat-expansion-panel-header>
+<mat-icon class="show-filter-button" *ngIf="isSmallScreen && showFilterButton" (click)="showFilterClick()">
+  filter_list
+</mat-icon>
 
+<div class="chart-filter-wrapper">
+  <div class="chart-filter-dialog" *ngIf="isSmallScreen && showExpansion" [@fade]>
     <ng-container *ngTemplateOutlet="content"></ng-container>
-  </mat-expansion-panel>
+  </div>
 
   <ng-container *ngIf="!isSmallScreen">
     <ng-container *ngTemplateOutlet="content"></ng-container>
