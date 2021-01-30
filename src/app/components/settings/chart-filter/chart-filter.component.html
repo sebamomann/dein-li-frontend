@@ -1,15 +1,9 @@
-<mat-icon class="show-filter-button" *ngIf="isSmallScreen && showFilterButton" (click)="showFilterClick()">
+<mat-icon class="show-filter-button" *ngIf="showFilterButton" (click)="showFilterClick()">
   filter_list
 </mat-icon>
 
-<div class="chart-filter-wrapper">
-  <div class="chart-filter-dialog" *ngIf="isSmallScreen && showExpansion" [@fade]>
-    <ng-container *ngTemplateOutlet="content"></ng-container>
-  </div>
-
-  <ng-container *ngIf="!isSmallScreen">
-    <ng-container *ngTemplateOutlet="content"></ng-container>
-  </ng-container>
+<div class="chart-filter-wrapper" *ngIf=" showExpansion" [@fade]>
+  <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>
 
 <ng-template #content>

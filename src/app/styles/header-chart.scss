@@ -1,14 +1,17 @@
-.header-statistic {
-  & > div {
-    width: 100%;
+.header-statistic-wrapper {
+  max-width: 1275px;
+  position: relative;
+  margin: 0 auto;
+
+  .header-statistic {
+    & > div {
+      width: 100%;
+    }
   }
 }
 
 .statistic-chart-wrapper {
-  width: 100%;
-  max-width: 1275px;
   height: 100%;
-  margin: 0 auto;
 
   .statistic-chart {
     height: 30vh;
