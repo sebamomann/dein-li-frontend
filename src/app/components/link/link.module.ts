@@ -9,6 +9,7 @@ import {AuthGuard} from '../../_helper/auth.gaurd';
 import {HexagonLoaderModule} from '../../html-templates/hexagon-loader/hexagon-loader.module';
 import {ChartFilterModule} from '../settings/chart-filter/chart-filter.module';
 import {BasicCallChartModule} from '../charts/basic-call-chart/basic-call-chart.module';
+import {ShareModule} from '../../directives/share/share.module';
 
 const routes: Routes = [
   {
@@ -32,7 +33,8 @@ const routes: Routes = [
         MatInputModule,
         ChartFilterModule,
         BasicCallChartModule,
-        MatButtonModule
+        MatButtonModule,
+        ShareModule
     ],
   entryComponents: [
     AddVersionDialogComponent

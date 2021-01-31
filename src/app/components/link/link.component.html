@@ -15,7 +15,10 @@
               <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
                 <mat-panel-title>
                   <mat-icon class="copy-to-clipboard"
-                            (click)="share()">share
+                            [shareObject]="shareObject"
+                            (click)="closeExpansionPanel()"
+                            appShare>
+                    share
                   </mat-icon>
                   <span class="url-with-base"><!--
                     --><span class="baseUrl">{{baseUrl}}</span><!--

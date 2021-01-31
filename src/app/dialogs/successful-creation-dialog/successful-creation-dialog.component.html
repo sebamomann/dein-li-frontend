@@ -11,8 +11,9 @@
       </label>
     </mat-form-field>
     <button
-      (click)="share();close()"
+      [shareObject]="shareObject"
       color="primary"
+      appShare
       mat-raised-button>
       <mat-icon>share</mat-icon>
     </button>

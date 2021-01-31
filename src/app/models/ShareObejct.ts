@@ -4,7 +4,7 @@ export class ShareObject implements IShareObject {
   constructor() {
   }
 
-  private _text: string;
+  private _text: string = 'dein.li Kurzlink' + ' - ' + 'Hier, für dich: ';
 
   get text(): string {
     return this._text;
@@ -14,7 +14,7 @@ export class ShareObject implements IShareObject {
     this._text = value;
   }
 
-  private _title: string;
+  private _title = 'dein.li Kurzlink';
 
   get title(): string {
     return this._title;

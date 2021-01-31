@@ -6,15 +6,14 @@ import {Observable} from 'rxjs';
 
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
-import {MatDialog, MatExpansionPanel, MatSnackBar} from '@angular/material';
+import {MatDialog, MatExpansionPanel} from '@angular/material';
 import {IChartFilter} from '../../models/IChartFilter';
 import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';
 import {UrlUtil} from '../../_util/Url.util';
-import {ShareObject} from '../../models/ShareObejct';
-import {StringUtil} from '../../_util/String.util';
 import {DateUtil} from '../../_util/Date.util';
 import {LinkUtil} from '../../_util/Link.util';
 import {ChartFilter} from '../../models/ChartFilter';
+import {ShareObject} from '../../models/ShareObejct';
 
 export const fadeAnimation = trigger('listAnimation', [
   transition('* <=> *', [
@@ -47,18 +46,21 @@ export class LinkComponent implements OnInit {
   public completeUrl = '';
 
   public chartFilter: IChartFilter;
+  public shareObject: ShareObject;
 
   @ViewChild('chartRef', {static: true}) public chartRef: BasicCallChartComponent;
   @ViewChild('expansionPanel', {static: false}) public expansionPanelRef: MatExpansionPanel;
 
   constructor(private route: ActivatedRoute, private linkService: LinkService,
-              private dialog: MatDialog, private snackBar: MatSnackBar) {
+              private dialog: MatDialog) {
     this.route.queryParams.subscribe(params => {
       this.short = params.l;
       this.completeUrl = UrlUtil.getApiDomain() + this.short;
     });
 
     this.chartFilter = new ChartFilter();
+    this.shareObject = new ShareObject();
+    this.shareObject.url = this.completeUrl;
   }
 
   public ngOnInit() {
@@ -112,57 +114,6 @@ export class LinkComponent implements OnInit {
       );
   }
 
-  // TODO DUPE SEE SUCCESSFUL CREATION DIALOG COMPONENT
-
-  /**
-   * Copy complete URL of currently created link to the users clipboard
-   */
-  public copyLinkToClipboard(): void {
-    StringUtil.copyToClipboard(this.completeUrl);
-
-    this.snackBar
-      .open(
-        'Link in die Zwischenablage kopiert', null,
-        {
-          duration: 2000,
-          panelClass: 'snackbar-default'
-        }
-      );
-  }
-
-  /**
-   * Open navigator.share element of users device.<br/>
-   * Allows user to share set data via other apps.<br/>
-   * If current device has not share option, copy created Link to clipboard instead.
-   */
-  public share(): void {
-    setTimeout(() => {
-      this.expansionPanelRef.close();
-    });
-
-    const navigator = window.navigator as any;
-
-    if (navigator && navigator.share) {
-      const shareObject = new ShareObject();
-      shareObject.title = 'dein.li Kurzlink';
-      shareObject.text = 'dein.li Kurzlink' + ' - ' + 'Hier, für dich: ';
-      shareObject.url = this.completeUrl;
-
-      navigator.share(shareObject)
-        .then(
-          () => this.snackBar.open('Link erfolgreich geteilt', null, {
-            duration: 2000,
-            panelClass: 'snackbar-default'
-          })
-        )
-        .catch(
-          () => this.copyLinkToClipboard()
-        );
-    } else {
-      this.copyLinkToClipboard();
-    }
-  }
-
   /**
    * Take passed link an open it in a new browser tab
    *
@@ -170,5 +121,17 @@ export class LinkComponent implements OnInit {
    */
   public openLinkInNewTab(link: any) {
     LinkUtil.openLinkInNewTab(link);
+  }
+
+  /**
+   * Close expansion panel of link preview.<br/>
+   * Expansion panel gets triggered on share click.<br/>
+   *
+   * Timeout mandatory due to slight delay.<br/>
+   */
+  public closeExpansionPanel() {
+    setTimeout(() => {
+      this.expansionPanelRef.close();
+    });
   }
 }
