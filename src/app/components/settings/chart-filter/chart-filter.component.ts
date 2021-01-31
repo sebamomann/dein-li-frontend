@@ -33,8 +33,8 @@ export class ChartFilterComponent implements OnInit {
    */
   private static DATAPOINT_THRESHOLD = 500;
 
-  @Output() update = new EventEmitter<any>();
   @Input() chartFilter: ChartFilter;
+  @Output() update = new EventEmitter<ChartFilter>();
 
   public timeIntervalOptions: HtmlOption[];
   public barPercentage: number;

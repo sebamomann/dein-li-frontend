@@ -1,7 +1,12 @@
 <div class="header-statistic-wrapper">
   <div class="header-statistic">
-    <app-chart-filter (update)="this.chartRef.loadNewData()" [chartFilter]="chartFilter"></app-chart-filter>
-    <app-basic-call-chart #chartRef [short]="'all'" [chartFilter]="chartFilter"></app-basic-call-chart>
+    <app-chart-filter [chartFilter]="chartFilter"
+                      (update)="this.chartRef.loadNewData()">
+    </app-chart-filter>
+    <app-basic-call-chart [short]="'all'"
+                          [chartFilter]="chartFilter"
+                          #chartRef>
+    </app-basic-call-chart>
   </div>
 </div>
 
@@ -19,7 +24,7 @@
         <mat-error>{{getLinkErrorMessage()}}</mat-error>
       </mat-form-field>
 
-      <mat-form-field (click)="selectShort()">
+      <mat-form-field (click)="clickedShortInputField()">
         <mat-label>Eigener Kurzlink</mat-label>
         <input formControlName="short"
                id="short"
@@ -54,7 +59,6 @@
       <mat-icon>logout</mat-icon>
       Abmelden
     </button>
-    <!--    <p></p>-->
   </div>
   <div class="link-management login" *ngIf="!userIsLoggedIn">
     <h3>Deine Links</h3>

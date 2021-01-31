@@ -110,14 +110,20 @@ export class LinkService {
   public create(original: string, short: string) {
     const url = `${environment.API_URL}link`;
 
+    console.log(url);
+
     const res = this.httpClient.post(url, {original, short}, {observe: 'response', reportProgress: true});
+
+    console.log(1);
 
     return res.pipe(
       map(response => {
+        console.log(2);
         return response.body as ILink;
       }),
       catchError((err) => {
-        return of(err);
+        console.log(3);
+        throw err;
       })
     );
   }

@@ -111,7 +111,7 @@ export class LinkComponent implements OnInit {
       );
   }
 
-  // TODO DUPE SEE LINK COMPONENT
+  // TODO DUPE SEE SUCCESSFUL CREATION DIALOG COMPONENT
 
   /**
    * Copy complete URL of currently created link to the users clipboard
