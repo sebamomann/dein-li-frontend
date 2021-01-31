@@ -159,7 +159,7 @@ export class ChartFilterComponent implements OnInit {
     clearInterval(this.timerIntervalDataUpdate);
 
     this.timerIntervalDataUpdate = setInterval(() => {
-      this.refreshDataset();
+      this.changedFilter(); // NEEDE
       this.startProgressBarInterval();
     }, this.chartFilter.updateInterval * 1000);
   }
