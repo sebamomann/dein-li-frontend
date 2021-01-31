@@ -2,10 +2,10 @@ import * as moment from 'moment';
 import * as validUrl from 'valid-url';
 
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {EMPTY, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {ILinkStats} from '../../models/ILinkStats.model';
 import {LinkService} from '../../services/link.service';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../services/authentication.service';
 import {MatDialog} from '@angular/material';
 import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.component';
@@ -66,7 +66,7 @@ export class DashboardComponent implements OnInit {
    * Validate values. If correct, send API request.<br/>
    * Distributes API responses to corresponding handlers.
    */
-  public saveFnc(): void {
+  public saveFnc(formDirective: FormGroupDirective): void {
     const link = this.get('link').value;
     const short = this.get('short').value;
 
@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
       .create(link, short)
       .subscribe(
         (sResponse) => {
-          this.handleCreationSuccess(sResponse);
+          this.handleCreationSuccess(sResponse, formDirective);
         },
         (err) => {
           this.handleCreationError(err);
@@ -145,17 +145,19 @@ export class DashboardComponent implements OnInit {
    * <br/>
    * Also reset the entire form
    *
-   * @param sResponse ILink   Create Link object
+   * @param sResponse ILink                   Create Link object
+   * @param formDirective FormGroupDirective  Needed for properly resetting Validators
    */
-  private handleCreationSuccess(sResponse: ILink): void {
+  private handleCreationSuccess(sResponse: ILink, formDirective: FormGroupDirective): void {
     this.dialog.open(SuccessfulCreationDialogComponent, {
       id: 'successful-creation-dialog',
-      width: '80%',
+      width: '95%',
       maxWidth: '500px',
       height: 'auto',
       data: sResponse,
     });
 
+    formDirective.resetForm();
     this.event.reset();
   }
 

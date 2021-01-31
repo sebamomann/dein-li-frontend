@@ -13,7 +13,7 @@
 <main>
   <div class="link-creation">
     <h3>Kürze einen Link auf nur 7 Zeichen!</h3>
-    <form [formGroup]="event">
+    <form [formGroup]="event" #formDirective="ngForm">
       <mat-form-field>
         <label for="link">
           <input formControlName="link"
@@ -34,7 +34,7 @@
         <mat-error>{{getShortErrorMessage()}}</mat-error>
       </mat-form-field>
 
-      <button (click)="saveFnc()"
+      <button (click)="saveFnc(formDirective)"
               color="primary"
               mat-raised-button>
         <mat-icon>settings</mat-icon>
