@@ -90,6 +90,30 @@ body {
   }
 }
 
+.stroked-button-colored {
+  &.mat-stroked-button {
+    border-color: $blue;
+  }
+
+  mat-icon {
+    vertical-align: middle;
+    @include md-icon-size(1em);
+
+    &:first-child {
+      margin-right: 16px;
+    }
+
+    &:last-child {
+      margin-right: 16px;
+    }
+  }
+
+  .value {
+    font-size: 0.9em;
+    vertical-align: middle;
+  }
+}
+
 @media all and (max-width: 1024px) {
   #main-wrapper {
     width: 100%;

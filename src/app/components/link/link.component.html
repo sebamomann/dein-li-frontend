@@ -42,11 +42,12 @@
             </div>
             <div class="version-information new-version">
               <div>
-                <div class="add-version-button"
-                     (click)="openAddVersionDialog()">
+                <button class="add-version-button stroked-button-colored"
+                        mat-stroked-button
+                        (click)="openAddVersionDialog()">
                   <mat-icon>add_box</mat-icon>
-                  <span>Neue Version</span>
-                </div>
+                  <span class="value">Neue Version</span>
+                </button>
               </div>
             </div>
             <ng-container *ngFor="let linkVersion of linkVersions">

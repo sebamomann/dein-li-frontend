@@ -94,7 +94,7 @@ export class LinkComponent implements OnInit {
       .open(AddVersionDialogComponent,
         {
           id: 'add-version-dialog',
-          width: '80%',
+          width: '95%',
           maxWidth: '500px',
           height: 'auto',
           data: this.short,

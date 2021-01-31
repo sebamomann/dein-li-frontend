@@ -171,23 +171,13 @@
             position: relative;
 
             & > .add-version-button {
+              color: #2976C4;
               cursor: pointer;
-              padding: 8px 16px;
-              border-radius: 8px;
-              background-color: $median-background;
-              color: white;
+              padding: 0 16px;
               top: 50%;
               position: absolute;
               transform: translateY(-50%);
-
-              mat-icon {
-                vertical-align: middle;
-                margin-right: 8px;
-              }
-
-              span {
-                vertical-align: middle;
-              }
+              font-size: 1.25em;
             }
           }
         }

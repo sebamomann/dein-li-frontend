@@ -10,22 +10,29 @@
       <h2 class="title">
         {{title}}
       </h2>
-      <div *ngIf="userIsLoggedIn" class="account-menu-wrapper">
-        <button [matMenuTriggerFor]="menu" mat-stroked-button>{{username}}
-          <mat-icon>account_circle</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu" xPosition="before">
-          <ng-container [ngTemplateOutlet]="loggedInMenu">
-          </ng-container>
-        </mat-menu>
-      </div>
-      <div *ngIf="!userIsLoggedIn">
-        <button mat-stroked-button
-                [routerLink]="['/account/login']">Login
-        </button>
+      <div class="account-menu-wrapper">
+        <ng-container *ngIf="userIsLoggedIn">
+          <button [matMenuTriggerFor]="menu"
+                  class="stroked-button-colored"
+                  mat-stroked-button>
+            <span>{{username}}</span>
+            <mat-icon>account_circle</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" xPosition="before">
+            <ng-container [ngTemplateOutlet]="loggedInMenu">
+            </ng-container>
+          </mat-menu>
+        </ng-container>
+        <div *ngIf="!userIsLoggedIn">
+          <button [routerLink]="['/account/login']"
+                  class="stroked-button-colored"
+                  mat-stroked-button>
+            <span>Login</span>
+            <mat-icon>login</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
-
   </mat-toolbar>
 
   <div class="main-wrapper">

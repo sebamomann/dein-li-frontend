@@ -49,38 +49,22 @@ mat-toolbar {
       font-weight: bolder;
     }
 
-    div {
-      mat-icon {
-        @include md-icon-size(35px);
-        outline: none;
-        vertical-align: top;
-        margin: 0 0 0 10px;
+    .account-menu-wrapper {
+      margin: 0 0 0 auto;
 
-        &:first-child {
-          margin: 0 0 0 0;
-        }
-      }
+      button {
+        mat-icon {
+          @include md-icon-size(30px);
+          outline: none;
+          margin: 0 0 0 10px;
 
-      &:nth-of-type(2) {
-        text-align: right;
-
-        button {
-          margin-left: 10px;
-
-          &.mat-stroked-button {
-            border-color: $blue;
-          }
-
-          mat-icon {
-            vertical-align: middle;
-            @include md-icon-size(25px);
+          &:first-child {
+            margin: 0 0 0 0;
           }
         }
-      }
 
-      &.account-menu-wrapper {
-        span {
-          margin-right: 10px;
+        &:nth-of-type(2) {
+          text-align: right;
         }
       }
     }
