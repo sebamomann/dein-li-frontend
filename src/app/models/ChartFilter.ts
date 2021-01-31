@@ -96,6 +96,29 @@ export class ChartFilter implements IChartFilter {
   }
 
   /**
+   * Handle possible change of preset.<br/>
+   * Adapt start and end time, based on preset. Also Set correct interval.
+   */
+  public handlePresetChange(): void {
+    const date = moment();
+    this.presetInterval.end = date.format('YYYY-MM-DDTHH:mm');
+
+    if (this.preset === 'last_15_minutes') {
+      this.presetInterval.start = date.subtract(15, 'minutes').format('YYYY-MM-DDTHH:mm');
+      this.presetInterval.elementInterval = 'minutes';
+    } else if (this.preset === 'last_hour') {
+      this.presetInterval.start = date.subtract(1, 'hours').format('YYYY-MM-DDTHH:mm');
+      this.presetInterval.elementInterval = 'minutes';
+    } else if (this.preset === 'last_12_hours') {
+      this.presetInterval.start = date.subtract(12, 'hours').format('YYYY-MM-DDTHH:mm');
+      this.presetInterval.elementInterval = 'hours';
+    } else if (this.preset === 'last_day') {
+      this.presetInterval.start = date.subtract(24, 'hours').format('YYYY-MM-DDTHH:mm');
+      this.presetInterval.elementInterval = 'hours';
+    }
+  }
+
+  /**
    * Update object to default filter.<br/>
    * Set all default values. Including sub objects.
    */

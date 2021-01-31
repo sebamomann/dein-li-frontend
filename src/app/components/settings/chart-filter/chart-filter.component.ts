@@ -100,22 +100,7 @@ export class ChartFilterComponent implements OnInit {
         this.chartFilter.customInterval.elementInterval = this.intervals[minPossIndex];
       }
     } else {
-      const date = moment();
-      this.chartFilter.presetInterval.end = date.format('YYYY-MM-DDTHH:mm');
-
-      if (this.chartFilter.preset === 'last_15_minutes') {
-        this.chartFilter.presetInterval.start = date.subtract(15, 'minutes').format('YYYY-MM-DDTHH:mm');
-        this.chartFilter.presetInterval.elementInterval = 'minutes';
-      } else if (this.chartFilter.preset === 'last_hour') {
-        this.chartFilter.presetInterval.start = date.subtract(1, 'hours').format('YYYY-MM-DDTHH:mm');
-        this.chartFilter.presetInterval.elementInterval = 'minutes';
-      } else if (this.chartFilter.preset === 'last_12_hours') {
-        this.chartFilter.presetInterval.start = date.subtract(12, 'hours').format('YYYY-MM-DDTHH:mm');
-        this.chartFilter.presetInterval.elementInterval = 'hours';
-      } else if (this.chartFilter.preset === 'last_day') {
-        this.chartFilter.presetInterval.start = date.subtract(24, 'hours').format('YYYY-MM-DDTHH:mm');
-        this.chartFilter.presetInterval.elementInterval = 'hours';
-      }
+      this.chartFilter.handlePresetChange();
     }
 
     // Timeout to wait for ngModel
