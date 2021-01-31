@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import {MatDialog, MatExpansionPanel, MatSnackBar} from '@angular/material';
 import {IChartFilter} from '../../models/IChartFilter';
 import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';
 import {UrlUtil} from '../../_util/Url.util';
@@ -49,6 +49,7 @@ export class LinkComponent implements OnInit {
   public chartFilter: IChartFilter;
 
   @ViewChild('chartRef', {static: true}) public chartRef: BasicCallChartComponent;
+  @ViewChild('expansionPanel', {static: false}) public expansionPanelRef: MatExpansionPanel;
 
   constructor(private route: ActivatedRoute, private linkService: LinkService,
               private dialog: MatDialog, private snackBar: MatSnackBar) {
@@ -135,6 +136,10 @@ export class LinkComponent implements OnInit {
    * If current device has not share option, copy created Link to clipboard instead.
    */
   public share(): void {
+    setTimeout(() => {
+      this.expansionPanelRef.close();
+    });
+
     const navigator = window.navigator as any;
 
     if (navigator && navigator.share) {

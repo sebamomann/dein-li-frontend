@@ -11,7 +11,7 @@
         <div class="highlighter"></div>
         <div class="header-information">
           <div *ngIf="$link | async let link">
-            <mat-expansion-panel>
+            <mat-expansion-panel #expansionPanel>
               <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
                 <mat-panel-title>
                   <mat-icon class="copy-to-clipboard"
