@@ -1,24 +1,37 @@
 .url-with-base {
-  text-align: center;
-  font-size: 2.75em;
-  color: rgb(41, 118, 196);
-  font-weight: bold;
+  font-size: 2.5em;
 
-  & > .baseUrl {
-    font-size: 0.5em;
-    color: lightgray;
-    font-style: normal;
-    vertical-align: middle;
+  & > span {
+    &.baseUrl {
+      font-size: 0.5em;
+      color: lightgray;
+      font-style: normal;
+      vertical-align: middle;
+    }
+
+    &.short {
+      color: rgb(41, 118, 196);
+      font-weight: bold;
+    }
   }
 }
 
 @media all and (max-width: 1024px) {
   .url-with-base {
-    font-size: 1.5em;
-    line-height: 1.5em;
+    font-size: 1.75em;
 
-    & > .baseUrl {
-      font-size: 0.6em;
+    & > span {
+      &.baseUrl {
+        font-size: 0.5em;
+        color: lightgray;
+        font-style: normal;
+        vertical-align: middle;
+      }
+
+      &.short {
+        color: rgb(41, 118, 196);
+        font-weight: bold;
+      }
     }
   }
 }

@@ -1,12 +1,11 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-// @ts-ignore
-import moment from 'moment';
+import * as moment from 'moment';
 import {MatSnackBar} from '@angular/material';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {ChartFilter} from '../../../models/ChartFilter';
 import {DateUtil} from '../../../_util/Date.util';
 import {ChartMomentFormat} from '../../../enum/chart-moment-format.enum';
-import {HtmlOption} from '../../../models/Htmloption';
+import {HtmlOption} from '../../../models/HtmlOption';
 // @ts-ignore
 import Timer = NodeJS.Timer;
 

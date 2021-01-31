@@ -1,5 +1,5 @@
-import {HtmlOption} from '../models/Htmloption';
 import {ElementInterval} from '../models/ElementInterval.type';
+import {HtmlOption} from '../models/HtmlOption';
 
 export class ChartMomentFormat {
 
