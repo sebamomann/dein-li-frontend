@@ -7,7 +7,6 @@ import {Observable} from 'rxjs';
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import {MatDialog, MatExpansionPanel} from '@angular/material';
-import {IChartFilter} from '../../models/IChartFilter';
 import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';
 import {UrlUtil} from '../../_util/Url.util';
 import {DateUtil} from '../../_util/Date.util';
@@ -34,19 +33,23 @@ export const fadeAnimation = trigger('listAnimation', [
   animations: [fadeAnimation]
 })
 export class LinkComponent implements OnInit {
+  /**
+   * Observables
+   */
   public $link: Observable<ILink>;
   // TODO PAGINATION
   public $linkVersions: Observable<ILink[]>;
 
-  public short: string;
+  public chartFilter: ChartFilter;
+  public shareObject: ShareObject;
   public chart: any;
 
+  /**
+   * URLs
+   */
   public baseUrl = UrlUtil.getApiDomain();
-
   public completeUrl = '';
-
-  public chartFilter: IChartFilter;
-  public shareObject: ShareObject;
+  public short: string;
 
   @ViewChild('chartRef', {static: true}) public chartRef: BasicCallChartComponent;
   @ViewChild('expansionPanel', {static: false}) public expansionPanelRef: MatExpansionPanel;
@@ -59,10 +62,14 @@ export class LinkComponent implements OnInit {
     });
 
     this.chartFilter = new ChartFilter();
+
     this.shareObject = new ShareObject();
     this.shareObject.url = this.completeUrl;
   }
 
+  /**
+   *
+   */
   public ngOnInit() {
     this.$link = this.linkService.loadLinkByShort(this.short);
     this.$linkVersions = this.linkService.loadLinkVersions(this.short);
@@ -106,8 +113,7 @@ export class LinkComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(
-        sLink => {
-          // TODO can be better
+        _ => {
           this.$link = this.linkService.loadLinkByShort(this.short);
           this.$linkVersions = this.linkService.loadLinkVersions(this.short);
         }
