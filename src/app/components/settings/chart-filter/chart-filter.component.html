@@ -1,8 +1,8 @@
-<mat-icon class="show-filter-button" *ngIf="showFilterButton" (click)="showFilterClick()">
+<mat-icon class="show-filter-button" (click)="toggleFilter()">
   filter_list
 </mat-icon>
 
-<div class="chart-filter-wrapper" *ngIf=" showExpansion" [@fade]>
+<div class="chart-filter-wrapper" *ngIf="showFilter" [@fade]>
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>
 
@@ -55,7 +55,7 @@
       <mat-select class="interval-select"
                   [(value)]="chartFilter.customInterval.elementInterval"
                   (valueChange)="changedFilter()">
-        <mat-option *ngFor="let option of options" [value]="option.value">{{option.text}}</mat-option>
+        <mat-option *ngFor="let option of timeIntervalOptions" [value]="option.value">{{option.text}}</mat-option>
       </mat-select>
     </div>
 

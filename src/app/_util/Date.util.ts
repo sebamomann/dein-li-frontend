@@ -1,3 +1,6 @@
+import * as moment from 'moment';
+import {Duration} from 'moment';
+
 export class DateUtil {
   // TODO moment JS
   private static MONTHNAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
@@ -21,5 +24,17 @@ export class DateUtil {
    */
   public static getDayByDate(date: Date) {
     return date.getDate();
+  }
+
+  /**
+   * Calculate difference between two Dates.
+   *
+   * @param start Date    Start date
+   * @param end Date      End date
+   *
+   * @return duration Duration   Moment representation for duration
+   */
+  public static getTimeDifference(start: Date, end: Date): Duration {
+    return moment.duration(moment(end).diff(moment(start)));
   }
 }

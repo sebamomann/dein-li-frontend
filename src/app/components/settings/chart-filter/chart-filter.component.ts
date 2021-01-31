@@ -2,10 +2,13 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 // @ts-ignore
 import moment from 'moment';
 import {MatSnackBar} from '@angular/material';
-import {BreakpointObserver} from '@angular/cdk/layout';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {ChartFilter} from '../../../models/ChartFilter';
-import {ElementInterval} from '../../../models/ElementInterval.type';
+import {DateUtil} from '../../../_util/Date.util';
+import {ChartMomentFormat} from '../../../enum/chart-moment-format.enum';
+import {HtmlOption} from '../../../models/Htmloption';
+// @ts-ignore
+import Timer = NodeJS.Timer;
 
 moment.locale('de');
 
@@ -25,79 +28,52 @@ moment.locale('de');
   ]
 })
 export class ChartFilterComponent implements OnInit {
+  /**
+   * Number of datapoints the chart should be capable of showing
+   */
+  private static DATAPOINT_THRESHOLD = 500;
 
   @Output() update = new EventEmitter<any>();
   @Input() chartFilter: ChartFilter;
-  public intervals: ElementInterval[] = ['minutes', 'hours', 'days', 'months'];
-  public defaultOptions: { value: string, text: string }[];
-  public options: { value: string, text: string }[];
+
+  public timeIntervalOptions: HtmlOption[];
   public barPercentage: number;
-  public timeInterval: any;
-  public timeIntervalBar: any;
-  public isSmallScreen;
-  public showExpansion = false;
-  public showFilterButton = true;
+  public showFilter = false;
 
-  constructor(private readonly snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver) {
-    this.breakpointObserver
-      .observe('(max-width: 1024px)')
-      .subscribe((val) => {
-        this.isSmallScreen = val.matches;
-      });
+  /**
+   * Intervals for data update and update progress bar
+   */
+  private timerIntervalDataUpdate: Timer;
+  private timerIntervalProgressBarUpdate: Timer;
 
-    this.defaultOptions = [
-      {
-        value: 'minutes',
-        text: 'Minuten'
-      }, {
-        value: 'hours',
-        text: 'Stunden'
-      }, {
-        value: 'days',
-        text: 'Tage'
-      }, {
-        value: 'months',
-        text: 'Monate'
-      }
-    ];
-
-    this.options = this.defaultOptions;
+  constructor(private readonly snackBar: MatSnackBar) {
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.changedUpdateInterval(this.chartFilter.isAutoUpdate);
   }
 
-  changedFilter() {
+  public changedFilter() {
     if (!this.chartFilter) {
       return;
     }
 
     if (this.chartFilter.preset === 'custom') {
-      const index = this.intervals.indexOf(this.chartFilter.customInterval.elementInterval);
+      const selectedChartMomentFormat = ChartMomentFormat[this.chartFilter.customInterval.elementInterval];
 
-      const duration = moment.duration(moment(this.chartFilter.customInterval.end).diff(moment(this.chartFilter.customInterval.start)));
+      const minimumPossibleChartMomentFormat = this.getMinimumPossibleInterval(ChartFilterComponent.DATAPOINT_THRESHOLD);
+      this.updatePossibleTimeIntervalSelections(minimumPossibleChartMomentFormat);
 
-      const nrOfPointsMin = duration.asMinutes();
-      const nrOfPointsHour = duration.asHours();
-      const nrOfPointsDays = duration.asDays();
-
-      const minPossIndex = nrOfPointsMin < 500 ? 0 : (nrOfPointsHour < 500 ? 1 : (nrOfPointsDays < 500 ? 2 : 3));
-
-      this.options = this.defaultOptions.slice(minPossIndex, this.defaultOptions.length);
-
-      if (index < minPossIndex) {
-        console.log('INDEX ' + index + ' NOT POSSIBLE, REPLACE BY ' + minPossIndex);
-
+      if (selectedChartMomentFormat.hasLowerIntervalThan(minimumPossibleChartMomentFormat)) {
         this.snackBar.open(
-          `'${this.defaultOptions[index].text}' nicht möglich als Intervall. Ersetzt durch '${this.defaultOptions[minPossIndex].text}'`,
+          `'${selectedChartMomentFormat.label}' nicht möglich als Intervall. Ersetzt durch '${minimumPossibleChartMomentFormat.label}'`,
           null,
           {
             duration: 2000,
             panelClass: 'snackbar-default'
           });
 
-        this.chartFilter.customInterval.elementInterval = this.intervals[minPossIndex];
+        this.chartFilter.customInterval.elementInterval = minimumPossibleChartMomentFormat.momentInterval;
       }
     } else {
       this.chartFilter.handlePresetChange();
@@ -106,33 +82,129 @@ export class ChartFilterComponent implements OnInit {
     // Timeout to wait for ngModel
     setTimeout(() => this.chartFilter.saveToStorage());
 
-    this.update.emit(this.chartFilter);
+    this.refreshDataset();
   }
 
+  /**
+   * Update Interval has been changed or set.<br/>
+   * Reset the current update interval timer and progress bar.<br/>
+   *
+   * @param refresh boolean   If auto update is enabled or not
+   *                          Don't use chartFilter.isAutoUpdate. Value lacks behind due to [(ngModel)]
+   */
   public changedUpdateInterval(refresh: boolean) {
     this.changedFilter();
-
-    let millis = 0;
-
-    clearInterval(this.timeInterval);
-    clearInterval(this.timeIntervalBar);
+    this.resetIntervals();
 
     if (refresh) {
-      this.timeInterval = setInterval(() => {
-        this.changedFilter();
-        millis = 0;
-      }, this.chartFilter.updateInterval * 1000);
-
-      this.timeIntervalBar = setInterval(() => {
-        const total = this.chartFilter.updateInterval * 1000;
-        millis += 100;
-
-        this.barPercentage = Math.round(millis / total * 100);
-      }, 100);
+      this.startUpdateInterval();
+      this.startProgressBarInterval();
     }
   }
 
-  showFilterClick() {
-    this.showExpansion = !this.showExpansion;
+  /**
+   * Open or close filter based on current state
+   */
+  public toggleFilter() {
+    this.showFilter = !this.showFilter;
+  }
+
+  /**
+   * Update possible options that can be selected as chart interval.<br/>
+   * Interval is the distance between two datapoints.<br/>
+   * See {@link ElementInterval} for possible option
+   *
+   * @param minimumPossibleChartMomentFormat ChartMomentFormat
+   *        Minimum ChartMomentFormat that can be selected, so that there are less datapoints in the chart
+   *        than the specified threshold {@link DATAPOINT_THRESHOLD}
+   */
+  private updatePossibleTimeIntervalSelections(minimumPossibleChartMomentFormat: ChartMomentFormat) {
+    const possibleChartMomentFormats = ChartMomentFormat.getElementsBiggerThan(minimumPossibleChartMomentFormat);
+
+    this.timeIntervalOptions = ChartMomentFormat.getOptionArray(possibleChartMomentFormats);
+  }
+
+  /**
+   * Get the minimum possible interval that can be selected.<br/>
+   * Threshold defines number of datapoints the chart is allowed to have.<br/>
+   *
+   * @param threshold number    Number of datapoints the chart is allowed to have
+   */
+  private getMinimumPossibleInterval(threshold: number): ChartMomentFormat {
+    const startToEndDuration = DateUtil.getTimeDifference(this.chartFilter.customInterval.start, this.chartFilter.customInterval.end);
+
+    const nrOfPointsMin = startToEndDuration.asMinutes();
+    const nrOfPointsHour = startToEndDuration.asHours();
+    const nrOfPointsDays = startToEndDuration.asDays();
+
+    if (nrOfPointsMin < threshold) {
+      return ChartMomentFormat.minutes;
+    } else {
+      if (nrOfPointsHour < threshold) {
+        return ChartMomentFormat.hours;
+      } else {
+        if (nrOfPointsDays < threshold) {
+          return ChartMomentFormat.days;
+        } else {
+          return ChartMomentFormat.months;
+        }
+      }
+    }
+  }
+
+  /**
+   * Start timer for automatic data refresh.<br/>
+   * Reset previous timer.
+   */
+  private startUpdateInterval() {
+    clearInterval(this.timerIntervalDataUpdate);
+
+    this.timerIntervalDataUpdate = setInterval(() => {
+      this.refreshDataset();
+      this.startProgressBarInterval();
+    }, this.chartFilter.updateInterval * 1000);
+  }
+
+  /**
+   * Start the interval to update the progress bar every 100ms.<br/>
+   * Reset previous timer.
+   */
+  private startProgressBarInterval() {
+    clearInterval(this.timerIntervalProgressBarUpdate);
+
+    const refreshRateInMs = 100;
+    let millisSinceLastUpdate = 0;
+    this.timerIntervalProgressBarUpdate = setInterval(() => {
+      millisSinceLastUpdate += refreshRateInMs;
+      this.calculateCurrentUpdatePercentage(millisSinceLastUpdate);
+    }, refreshRateInMs);
+  }
+
+  /**
+   * Calculate the current progress percentage.<br/>
+   * Percentage represents progress passed till next data refresh
+   *
+   * @param millisPassed number   Millis passed after last update
+   */
+  private calculateCurrentUpdatePercentage(millisPassed: number): void {
+    const totalMillisTillUpdate = this.chartFilter.updateInterval * 1000;
+
+    this.barPercentage = Math.round(millisPassed / totalMillisTillUpdate * 100);
+  }
+
+  /**
+   * Reset time intervals for update and progress percentage.<br/>
+   */
+  private resetIntervals() {
+    clearInterval(this.timerIntervalDataUpdate);
+    clearInterval(this.timerIntervalProgressBarUpdate);
+  }
+
+  /**
+   * Emit current filter.<br/>
+   * Causes dataset to be refreshed.<br/>
+   */
+  private refreshDataset() {
+    this.update.emit(this.chartFilter);
   }
 }
