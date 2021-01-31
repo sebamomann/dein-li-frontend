@@ -95,6 +95,17 @@ export class DashboardComponent implements OnInit {
   }
 
   /**
+   * Activated if user tried to set custom short link.<br/>
+   * If user is not logged in, he can not set a custom short link.<br/>
+   * If user is not logged in, highlight explanation
+   */
+  public clickedShortInputField() {
+    this.highlightHint = false;
+
+    this.highlightHint = this.userIsLoggedIn === false;
+  }
+
+  /**
    * Get form element based on name
    *
    * @param name string   Form element name
@@ -125,17 +136,6 @@ export class DashboardComponent implements OnInit {
     } else if (this.get('short').hasError('minlength')) {
       return 'Der Kurzlink muss mindestens 3 Zeichen lang sein';
     }
-  }
-
-  /**
-   * Activated if user tried to set custom short link.<br/>
-   * If user is not logged in, he can not set a custom short link.<br/>
-   * If user is not logged in, highlight explanation
-   */
-  public clickedShortInputField() {
-    this.highlightHint = false;
-
-    this.highlightHint = this.userIsLoggedIn === false;
   }
 
   /**
