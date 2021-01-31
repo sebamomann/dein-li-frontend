@@ -77,7 +77,6 @@ export class ChartDataParser {
 
     for (let i = 0; i < this.calls.length; i++) {
       if (i + 1 < this.calls.length) {
-
         if (i > 500) {
           console.log('FAILURE - More than 500 Datapoints');
           break;
@@ -90,9 +89,16 @@ export class ChartDataParser {
         this.calls[i].iat = date1.format(chartMomentFormat);
         this.calls[i + 1].iat = date2.format(chartMomentFormat);
 
-        if (!date1.add(1, (ChartMomentFormat[interval.elementInterval]).momentInterval).isSame(date2)) {
-          const obj = {iat: date1.format(chartMomentFormat), count: 0};
-          this.calls.splice(i + 1, 0, obj);
+        date1.add(1, (ChartMomentFormat[interval.elementInterval]).momentInterval);
+
+        if (!date1.isSame(date2)) {
+          if (date1.isAfter(date2)) {
+            this.calls[i - 1].count = +this.calls[i - 1].count + +this.calls[i].count;
+            delete this.calls[i].count; // mark value to be deleted
+          } else {
+            const obj = {iat: date1.format(chartMomentFormat), count: 0};
+            this.calls.splice(i + 1, 0, obj);
+          }
         }
       }
     }
@@ -110,8 +116,10 @@ export class ChartDataParser {
     const interval = this.chartFilter.preset === 'custom' ? this.chartFilter.customInterval : this.chartFilter.presetInterval;
 
     this.calls.forEach((fCall) => {
-      labels.push(moment(fCall.iat).format((ChartMomentFormat[interval.elementInterval]).labelFormat));
-      values.push(+fCall.count);
+      if (fCall.count !== undefined) {
+        labels.push(moment(fCall.iat).format((ChartMomentFormat[interval.elementInterval]).labelFormat));
+        values.push(+fCall.count);
+      }
     });
 
     return {labels, values};

@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChildren} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {IChartFilter} from '../../../models/IChartFilter';
 import {LinkService} from '../../../services/link.service';
 
@@ -22,34 +22,54 @@ export class BasicCallChartComponent implements OnInit {
   @Input() chartFilter: IChartFilter;
 
   public linkStats$$ = new BehaviorSubject<ILinkStats>(undefined);
-  public chart;
-  private isSmallScreen: boolean;
 
+  public chart;
+
+  private isSmallScreen: boolean;
+  private initialized = false;
+
+  /**
+   * Make sure to re-initialize chart only, if it has already been initialized once.<br/>
+   * Otherwise an error will occur, that the context (canvas) could not be found {@link content}
+   */
   constructor(private readonly linkService: LinkService, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver
       .observe('(max-width: 1024px)')
       .subscribe((val) => {
         this.isSmallScreen = val.matches;
 
-        this.initializeChart();
+        if (this.initialized) {
+          this.initializeChart();
+        }
       });
   }
 
-  @ViewChildren('canvas') set content(content: ElementRef) {
+  /**
+   * Upon successful canvas load, initialize the chart
+   *
+   * @param content ElementRef    HTML Element of the canvas
+   */
+  @ViewChild('canvas', {static: false})
+  set content(content: ElementRef) {
     if (content) {
-      this.loadChart();
+      setTimeout(() => {
+        this.initializeChart();
+      });
     }
   }
 
-  ngOnInit() {
-  }
-
-  public loadChart() {
-    this.initializeChart();
-
+  /**
+   *
+   */
+  public ngOnInit() {
     this.loadNewData();
   }
 
+  /**
+   * Populate BehaviourSubject with new data from the API.
+   * This function gets called by the parent periodically. <br/>
+   * Only if auto updat is enabled in {@link ChartFilterComponent}
+   */
   loadNewData() {
     if (!this.chartFilter) {
       return;
@@ -108,6 +128,8 @@ export class BasicCallChartComponent implements OnInit {
     });
 
     this.listenToDataChanges();
+
+    this.initialized = true;
   }
 
   private listenToDataChanges() {

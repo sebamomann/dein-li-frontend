@@ -50,8 +50,18 @@ export class ChartFilterComponent implements OnInit {
 
   public ngOnInit() {
     this.changedUpdateInterval(this.chartFilter.isAutoUpdate);
+    const minimumPossibleChartMomentFormat = this.getMinimumPossibleInterval(ChartFilterComponent.DATAPOINT_THRESHOLD);
+    this.updatePossibleTimeIntervalSelections(minimumPossibleChartMomentFormat);
   }
 
+  /**
+   * Called, when the user changed the filter settings in any way. <br/>
+   * Causes preset changes to be updated (eg on preset change) or validated the custom set dates and intervals.<br/>
+   * <br/>
+   * Note that this function is also called when periodically updating the dataset.<br/>
+   * Filter dates need to be updated periodically due to progressing time, otherwise the chart would stand still
+   * even on auto update.
+   */
   public changedFilter() {
     if (!this.chartFilter) {
       return;
@@ -64,18 +74,11 @@ export class ChartFilterComponent implements OnInit {
       this.updatePossibleTimeIntervalSelections(minimumPossibleChartMomentFormat);
 
       if (selectedChartMomentFormat.hasLowerIntervalThan(minimumPossibleChartMomentFormat)) {
-        this.snackBar.open(
-          `'${selectedChartMomentFormat.label}' nicht möglich als Intervall. Ersetzt durch '${minimumPossibleChartMomentFormat.label}'`,
-          null,
-          {
-            duration: 2000,
-            panelClass: 'snackbar-default'
-          });
-
+        this.createInvalidIntervalSnackbar(selectedChartMomentFormat, minimumPossibleChartMomentFormat);
         this.chartFilter.customInterval.elementInterval = minimumPossibleChartMomentFormat.momentInterval;
       }
     } else {
-      this.chartFilter.handlePresetChange();
+      this.chartFilter.updatePresetValues();
     }
 
     // Timeout to wait for ngModel
@@ -92,7 +95,8 @@ export class ChartFilterComponent implements OnInit {
    *                          Don't use chartFilter.isAutoUpdate. Value lacks behind due to [(ngModel)]
    */
   public changedUpdateInterval(refresh: boolean) {
-    this.changedFilter();
+    this.refreshDataset();
+
     this.resetIntervals();
 
     if (refresh) {
@@ -106,6 +110,23 @@ export class ChartFilterComponent implements OnInit {
    */
   public toggleFilter() {
     this.showFilter = !this.showFilter;
+  }
+
+  /**
+   * Open a Snackbar to show the user, that his custom select interval could not be set. <br/>
+   * Selected interval would have more datapoints, than the {@link DATAPOINT_THRESHOLD} allows.
+   *
+   * @param selectedCMF ChartMomentFormat   Selected interval by the user
+   * @param minCMF ChartMomentFormat        Interval forced by system due to threshold
+   */
+  private createInvalidIntervalSnackbar(selectedCMF: ChartMomentFormat, minCMF: ChartMomentFormat) {
+    this.snackBar.open(
+      `'${selectedCMF.label}' nicht möglich als Intervall. Ersetzt durch '${minCMF.label}'`,
+      null,
+      {
+        duration: 2000,
+        panelClass: 'snackbar-default'
+      });
   }
 
   /**
@@ -153,13 +174,17 @@ export class ChartFilterComponent implements OnInit {
 
   /**
    * Start timer for automatic data refresh.<br/>
-   * Reset previous timer.
+   * Reset previous timer. <br/>
+   * Also update preset values (start, end) if any preset is selected
    */
   private startUpdateInterval() {
     clearInterval(this.timerIntervalDataUpdate);
 
     this.timerIntervalDataUpdate = setInterval(() => {
-      this.changedFilter(); // NEEDE
+      if (this.chartFilter.preset !== 'custom') {
+        this.chartFilter.updatePresetValues();
+      }
+
       this.startProgressBarInterval();
     }, this.chartFilter.updateInterval * 1000);
   }
@@ -192,7 +217,7 @@ export class ChartFilterComponent implements OnInit {
   }
 
   /**
-   * Reset time intervals for update and progress percentage.<br/>
+   * Reset time intervals for update and progress percentage.
    */
   private resetIntervals() {
     clearInterval(this.timerIntervalDataUpdate);

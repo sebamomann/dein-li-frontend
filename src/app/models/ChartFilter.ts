@@ -99,7 +99,7 @@ export class ChartFilter implements IChartFilter {
    * Handle possible change of preset.<br/>
    * Adapt start and end time, based on preset. Also Set correct interval.
    */
-  public handlePresetChange(): void {
+  public updatePresetValues(): void {
     const date = moment();
     this.presetInterval.end = date.format('YYYY-MM-DDTHH:mm');
 

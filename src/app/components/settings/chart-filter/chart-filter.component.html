@@ -1,16 +1,19 @@
-<mat-icon class="show-filter-button" (click)="toggleFilter()">
+<mat-icon (click)="toggleFilter()"
+          class="show-filter-button">
   filter_list
 </mat-icon>
 
-<div class="chart-filter-wrapper" *ngIf="showFilter" [@fade]>
+<div *ngIf="showFilter"
+     [@fade]
+     class="chart-filter-wrapper">
   <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>
 
 <ng-template #content>
   <div>
     <span>Automatisches Update</span>
-    <mat-checkbox (click)="changedUpdateInterval(!chartFilter.isAutoUpdate)"
-                  [(ngModel)]="chartFilter.isAutoUpdate">
+    <mat-checkbox [(ngModel)]="chartFilter.isAutoUpdate"
+                  (click)="changedUpdateInterval(!chartFilter.isAutoUpdate)">
       {{chartFilter.isAutoUpdate ? "Eingeschaltet" : "Ausgeschaltet"}}
       <div class="progress-spinner-wrapper" *ngIf="chartFilter.isAutoUpdate">
         <mat-progress-spinner mode="determinate"
@@ -55,31 +58,38 @@
       <mat-select class="interval-select"
                   [(value)]="chartFilter.customInterval.elementInterval"
                   (valueChange)="changedFilter()">
-        <mat-option *ngFor="let option of timeIntervalOptions" [value]="option.value">{{option.text}}</mat-option>
+        <mat-option *ngFor="let option of timeIntervalOptions"
+                    [value]="option.value">
+          {{option.text}}
+        </mat-option>
       </mat-select>
     </div>
 
     <div class="datetime">
       <mat-form-field>
         <mat-label>Startdatum</mat-label>
-        <input id="dateStart"
-               [(ngModel)]="chartFilter.customInterval.start"
-               (change)="changedFilter()"
-               type="datetime-local"
-               matInput
-               required>
+        <label for="dateStart">
+          <input [(ngModel)]="chartFilter.customInterval.start"
+                 (change)="changedFilter()"
+                 id="dateStart"
+                 type="datetime-local"
+                 matInput
+                 required>
+        </label>
       </mat-form-field>
     </div>
 
     <div class="datetime">
       <mat-form-field>
         <mat-label>Enddatum</mat-label>
-        <input id="dateEnd"
-               [(ngModel)]="chartFilter.customInterval.end"
-               (change)="changedFilter()"
-               type="datetime-local"
-               matInput
-               required>
+        <label for="dateEnd">
+          <input [(ngModel)]="chartFilter.customInterval.end"
+                 (change)="changedFilter()"
+                 id="dateEnd"
+                 type="datetime-local"
+                 matInput
+                 required>
+        </label>
       </mat-form-field>
     </div>
   </ng-container>
