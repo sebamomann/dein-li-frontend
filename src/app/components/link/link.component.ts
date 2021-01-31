@@ -7,13 +7,14 @@ import {Observable} from 'rxjs';
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import {MatDialog, MatSnackBar} from '@angular/material';
-// @ts-ignore
-import moment from 'moment';
 import {IChartFilter} from '../../models/IChartFilter';
 import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';
 import {UrlUtil} from '../../_util/Url.util';
-
-moment.locale('de');
+import {ShareObject} from '../../models/ShareObejct';
+import {StringUtil} from '../../_util/String.util';
+import {DateUtil} from '../../_util/Date.util';
+import {LinkUtil} from '../../_util/Link.util';
+import {ChartFilter} from '../../models/ChartFilter';
 
 export const fadeAnimation = trigger('listAnimation', [
   transition('* <=> *', [
@@ -35,6 +36,7 @@ export const fadeAnimation = trigger('listAnimation', [
 })
 export class LinkComponent implements OnInit {
   public $link: Observable<ILink>;
+  // TODO PAGINATION
   public $linkVersions: Observable<ILink[]>;
 
   public short: string;
@@ -42,123 +44,126 @@ export class LinkComponent implements OnInit {
 
   public baseUrl = UrlUtil.getApiDomain();
 
+  public completeUrl = '';
+
   public chartFilter: IChartFilter;
 
-  // TODO
-  public monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
-    'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
-  ];
   @ViewChild('chartRef', {static: true}) public chartRef: BasicCallChartComponent;
 
   constructor(private route: ActivatedRoute, private linkService: LinkService,
               private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.route.queryParams.subscribe(params => {
       this.short = params.l;
+      this.completeUrl = UrlUtil.getApiDomain() + this.short;
     });
 
-    // TODO IS DUPE
-    let chartFilter;
-
-    try {
-      chartFilter = JSON.parse(localStorage.getItem('chartFilter'));
-      if (!chartFilter) {
-        throw Error();
-      }
-      this.chartFilter = chartFilter;
-    } catch {
-      const end = moment(new Date()).format('YYYY-MM-DDTHH:mm');
-
-      const d = new Date();
-      d.setDate(d.getDate() - 1);
-
-      this.chartFilter = {
-        isAutoUpdate: false,
-        updateInterval: 15,
-        preset: 'last_15_minutes',
-        presetInterval: {
-          elementInterval: 'hours',
-          start: moment(d).format('YYYY-MM-DDTHH:mm'),
-          end,
-        },
-        customInterval: {
-          elementInterval: 'hours',
-          start: moment(d).format('YYYY-MM-DDTHH:mm'),
-          end,
-        }
-      };
-    }
+    this.chartFilter = new ChartFilter();
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this.$link = this.linkService.loadLinkByShort(this.short);
     this.$linkVersions = this.linkService.loadLinkVersions(this.short);
   }
 
-
-  getDay(linkVersion: any) {
-    return (new Date(linkVersion.iat)).getDate();
+  /**
+   * Get date from creation date of passed link.<br/>
+   * Returns actual day number between 1 and 31.
+   *
+   * @param link Link   Link to consider iat from
+   *
+   * @returns number    Day between 1 and 31
+   */
+  public getDay(link: ILink): number {
+    return DateUtil.getDayByDate(new Date(link.iat));
   }
 
-  getMonthName(linkVersion: any) {
-    return this.monthNames[(new Date(linkVersion.iat)).getMonth()];
+  /**
+   * Get month abbreviation from creation date of passed link.
+   *
+   * @param link Link   Link to consider iat from
+   */
+  public getMonthName(link: ILink) {
+    return DateUtil.getMonthAbbreviationByDate(new Date(link.iat));
   }
 
-  openAddVersionDialog() {
-    const dialogRef = this.dialog.open(AddVersionDialogComponent, {
-      id: 'add-version-dialog',
-      width: '80%',
-      maxWidth: '500px',
-      height: 'auto',
-      data: this.short,
-    });
+  /**
+   * Open dialog to add a new version
+   */
+  public openAddVersionDialog(): void {
+    const dialogRef = this.dialog
+      .open(AddVersionDialogComponent,
+        {
+          id: 'add-version-dialog',
+          width: '80%',
+          maxWidth: '500px',
+          height: 'auto',
+          data: this.short,
+        }
+      );
 
-    dialogRef.afterClosed().subscribe(sLink => {
-      // TODO can be better
-      this.$link = this.linkService.loadLinkByShort(this.short);
-      this.$linkVersions = this.linkService.loadLinkVersions(this.short);
-    });
+    dialogRef.afterClosed()
+      .subscribe(
+        sLink => {
+          // TODO can be better
+          this.$link = this.linkService.loadLinkByShort(this.short);
+          this.$linkVersions = this.linkService.loadLinkVersions(this.short);
+        }
+      );
   }
 
-  openLinkInNewTab(original: any) {
-    window.open(original, '_blank');
+  // TODO DUPE SEE LINK COMPONENT
+
+  /**
+   * Copy complete URL of currently created link to the users clipboard
+   */
+  public copyLinkToClipboard(): void {
+    StringUtil.copyToClipboard(this.completeUrl);
+
+    this.snackBar
+      .open(
+        'Link in die Zwischenablage kopiert', null,
+        {
+          duration: 2000,
+          panelClass: 'snackbar-default'
+        }
+      );
   }
 
-  copyLinkToClipboard(link: any, e: Event) {
-    e.preventDefault();
+  /**
+   * Open navigator.share element of users device.<br/>
+   * Allows user to share set data via other apps.<br/>
+   * If current device has not share option, copy created Link to clipboard instead.
+   */
+  public share(): void {
+    const navigator = window.navigator as any;
 
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = link;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
+    if (navigator && navigator.share) {
+      const shareObject = new ShareObject();
+      shareObject.title = 'dein.li Kurzlink';
+      shareObject.text = 'dein.li Kurzlink' + ' - ' + 'Hier, für dich: ';
+      shareObject.url = this.completeUrl;
 
-    this.snackBar.open('Link in die Zwischenablage kopiert', null, {
-      duration: 2000,
-      panelClass: 'snackbar-default'
-    });
-  }
-
-  share(param: any, $event: MouseEvent) {
-    let newVariable: any;
-
-    newVariable = window.navigator;
-
-    if (newVariable && newVariable.share) {
-      newVariable.share({
-        title: 'dein.li Kurzlink',
-        text: 'dein.li Kurzlink' + ' - ' + 'Hier, für dich',
-        url: param,
-      })
-        .then(() => console.log('Successful share'))
-        .catch((error) => this.copyLinkToClipboard(param, $event));
+      navigator.share(shareObject)
+        .then(
+          () => this.snackBar.open('Link erfolgreich geteilt', null, {
+            duration: 2000,
+            panelClass: 'snackbar-default'
+          })
+        )
+        .catch(
+          () => this.copyLinkToClipboard()
+        );
     } else {
-      this.copyLinkToClipboard(param, $event);
+      this.copyLinkToClipboard();
     }
+  }
+
+  /**
+   * Take passed link an open it in a new browser tab
+   *
+   * @param link String   Link to open
+   */
+  public openLinkInNewTab(link: any) {
+    LinkUtil.openLinkInNewTab(link);
   }
 }

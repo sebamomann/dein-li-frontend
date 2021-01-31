@@ -1,10 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {ElementInterval, IChartFilter} from '../../../models/IChartFilter';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 // @ts-ignore
 import moment from 'moment';
-import {MatExpansionPanel, MatSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {ChartFilter} from '../../../models/ChartFilter';
+import {ElementInterval} from '../../../models/ElementInterval.type';
 
 moment.locale('de');
 
@@ -26,7 +27,7 @@ moment.locale('de');
 export class ChartFilterComponent implements OnInit {
 
   @Output() update = new EventEmitter<any>();
-  @Input() chartFilter: IChartFilter;
+  @Input() chartFilter: ChartFilter;
   public intervals: ElementInterval[] = ['minutes', 'hours', 'days', 'months'];
   public defaultOptions: { value: string, text: string }[];
   public options: { value: string, text: string }[];
@@ -36,7 +37,6 @@ export class ChartFilterComponent implements OnInit {
   public isSmallScreen;
   public showExpansion = false;
   public showFilterButton = true;
-  public disableAnimations = false;
 
   constructor(private readonly snackBar: MatSnackBar, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver
@@ -64,21 +64,15 @@ export class ChartFilterComponent implements OnInit {
     this.options = this.defaultOptions;
   }
 
-  @ViewChild('expansionPanel', {static: false}) set panel(content: MatExpansionPanel) {
-    if (content) {
-      setTimeout(() => {
-        console.log('open');
-        this.disableAnimations = false;
-        content.open();
-      }, 250);
-    }
-  }
-
   ngOnInit() {
     this.changedUpdateInterval(this.chartFilter.isAutoUpdate);
   }
 
   changedFilter() {
+    if (!this.chartFilter) {
+      return;
+    }
+
     if (this.chartFilter.preset === 'custom') {
       const index = this.intervals.indexOf(this.chartFilter.customInterval.elementInterval);
 
@@ -124,7 +118,8 @@ export class ChartFilterComponent implements OnInit {
       }
     }
 
-    localStorage.setItem('chartFilter', JSON.stringify(this.chartFilter));
+    // Timeout to wait for ngModel
+    setTimeout(() => this.chartFilter.saveToStorage());
 
     this.update.emit(this.chartFilter);
   }

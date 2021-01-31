@@ -1,6 +1,8 @@
 import {IShareObject} from './IShareObject';
 
 export class ShareObject implements IShareObject {
+  constructor() {
+  }
 
   private _text: string;
 
@@ -30,11 +32,5 @@ export class ShareObject implements IShareObject {
 
   set url(value: string) {
     this._url = value;
-  }
-
-  /**
-   *
-   */
-  public ShareObject() {
   }
 }

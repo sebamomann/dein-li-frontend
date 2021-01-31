@@ -22,6 +22,15 @@ export class SuccessfulCreationDialogComponent {
   }
 
   /**
+   * Close entire creation dialog
+   */
+  public close() {
+    this.dialogRef.close();
+  }
+
+  // TODO DUPE SEE LINK COMPONENT
+
+  /**
    * Copy complete URL of currently created link to the users clipboard
    */
   public copyLinkToClipboard(): void {
@@ -35,13 +44,6 @@ export class SuccessfulCreationDialogComponent {
           panelClass: 'snackbar-default'
         }
       );
-  }
-
-  /**
-   * Close entire creation dialog
-   */
-  public close() {
-    this.dialogRef.close();
   }
 
   /**
