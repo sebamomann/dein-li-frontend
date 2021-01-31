@@ -8,9 +8,9 @@ export class UrlUtil {
    * @return String   Domain
    */
   public static getApiDomain(): string {
-    const url = this.getApiUrl();
-    url.replace('http://', '');
-    url.replace('https://', '');
+    let url = this.getApiUrl();
+    url = url.replace('http://', '');
+    url = url.replace('https://', '');
 
     return url;
   }
