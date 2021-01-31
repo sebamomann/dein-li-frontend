@@ -147,7 +147,7 @@ export class DashboardComponent implements OnInit {
    *
    * @param sResponse ILink   Create Link object
    */
-  private handleCreationSuccess(sResponse: ILink): Observable<never> {
+  private handleCreationSuccess(sResponse: ILink): void {
     this.dialog.open(SuccessfulCreationDialogComponent, {
       id: 'successful-creation-dialog',
       width: '80%',
@@ -157,8 +157,6 @@ export class DashboardComponent implements OnInit {
     });
 
     this.event.reset();
-
-    return EMPTY;
   }
 
   /**
@@ -169,7 +167,7 @@ export class DashboardComponent implements OnInit {
    *
    * @return EMPTY Observable<never>      Instruction to end the Observable
    */
-  private handleCreationError(response: HttpErrorResponse): Observable<never> {
+  private handleCreationError(response: HttpErrorResponse): void {
     if (response.status === 400) {
       this.event.get('short').setErrors({inUse: true});
     } else if (response.status === 422) {
@@ -181,7 +179,5 @@ export class DashboardComponent implements OnInit {
         }
       });
     }
-
-    return EMPTY;
   }
 }
