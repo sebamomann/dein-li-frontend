@@ -1,8 +1,8 @@
 // @ts-ignore
 import moment from 'moment';
 import {IChartFilter} from './IChartFilter';
-import {UpdateIntervalPreset} from '../UpdateIntervalPreset.type';
-import {UpdateIntervalSeconds} from '../UpdateIntervalSeconds.type';
+import {UpdateIntervalPreset} from '../../types/UpdateIntervalPreset.type';
+import {UpdateIntervalSeconds} from '../../types/UpdateIntervalSeconds.type';
 import {Interval} from '../Interval/Interval.class';
 import {IntervalPreset} from '../Interval/IntervalPreset.class';
 import {IntervalFactory} from '../Interval/Interval.factory';

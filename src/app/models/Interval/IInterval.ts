@@ -1,5 +1,5 @@
 import {IIntervalJSON} from './IIntervalJSON';
-import {TimeUnit} from '../TimeUnit.type';
+import {TimeUnit} from '../../types/TimeUnit.type';
 
 /**
  * Contains function declaration for Interval

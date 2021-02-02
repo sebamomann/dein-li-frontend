@@ -2,7 +2,7 @@
 import moment from 'moment';
 import {IInterval} from './IInterval';
 import {IIntervalJSON} from './IIntervalJSON';
-import {TimeUnit} from '../TimeUnit.type';
+import {TimeUnit} from '../../types/TimeUnit.type';
 
 moment.locale('de');
 

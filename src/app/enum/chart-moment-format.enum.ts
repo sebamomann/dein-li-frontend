@@ -1,5 +1,5 @@
 import {HtmlOption} from '../models/HtmlOption';
-import {TimeUnit} from '../models/TimeUnit.type';
+import {TimeUnit} from '../types/TimeUnit.type';
 
 export class ChartMomentFormat {
 

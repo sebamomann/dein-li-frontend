@@ -1,4 +1,4 @@
-import {UpdateIntervalPreset} from '../UpdateIntervalPreset.type';
+import {UpdateIntervalPreset} from '../../types/UpdateIntervalPreset.type';
 import {IntervalPreset} from './IntervalPreset.class';
 
 export class IntervalFactory {

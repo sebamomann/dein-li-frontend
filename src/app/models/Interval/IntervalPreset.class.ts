@@ -1,5 +1,5 @@
 import {Interval} from './Interval.class';
-import {TimeUnit} from '../TimeUnit.type';
+import {TimeUnit} from '../../types/TimeUnit.type';
 
 export class IntervalPreset extends Interval {
   /**

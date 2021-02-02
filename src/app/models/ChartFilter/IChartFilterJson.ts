@@ -1,5 +1,5 @@
-import {UpdateIntervalSeconds} from '../UpdateIntervalSeconds.type';
-import {UpdateIntervalPreset} from '../UpdateIntervalPreset.type';
+import {UpdateIntervalSeconds} from '../../types/UpdateIntervalSeconds.type';
+import {UpdateIntervalPreset} from '../../types/UpdateIntervalPreset.type';
 import {IIntervalJSON} from '../Interval/IIntervalJSON';
 
 export interface IChartFilterJson {
