@@ -1,4 +1,4 @@
-import {TimeUnit} from '../ElementInterval.type';
+import {TimeUnit} from '../../types/TimeUnit.type';
 
 export interface IIntervalJSON {
   start: string;
