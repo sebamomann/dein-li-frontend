@@ -2,10 +2,11 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import * as moment from 'moment';
 import {MatSnackBar} from '@angular/material';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {ChartFilter} from '../../../models/ChartFilter';
+import {ChartFilter} from '../../../models/ChartFilter/ChartFilter';
 import {DateUtil} from '../../../_util/Date.util';
 import {ChartMomentFormat} from '../../../enum/chart-moment-format.enum';
 import {HtmlOption} from '../../../models/HtmlOption';
+import {IntervalFactory} from '../../../models/Interval/Interval.factory';
 // @ts-ignore
 import Timer = NodeJS.Timer;
 
@@ -57,10 +58,6 @@ export class ChartFilterComponent implements OnInit {
   /**
    * Called, when the user changed the filter settings in any way. <br/>
    * Causes preset changes to be updated (eg on preset change) or validated the custom set dates and intervals.<br/>
-   * <br/>
-   * Note that this function is also called when periodically updating the dataset.<br/>
-   * Filter dates need to be updated periodically due to progressing time, otherwise the chart would stand still
-   * even on auto update.
    */
   public changedFilter() {
     if (!this.chartFilter) {
@@ -68,21 +65,20 @@ export class ChartFilterComponent implements OnInit {
     }
 
     if (this.chartFilter.preset === 'custom') {
-      const selectedChartMomentFormat = ChartMomentFormat[this.chartFilter.customInterval.elementInterval];
+      const selectedChartMomentFormat = ChartMomentFormat[this.chartFilter.customInterval.timeUnit];
 
       const minimumPossibleChartMomentFormat = this.getMinimumPossibleInterval(ChartFilterComponent.DATAPOINT_THRESHOLD);
       this.updatePossibleTimeIntervalSelections(minimumPossibleChartMomentFormat);
 
       if (selectedChartMomentFormat.hasLowerIntervalThan(minimumPossibleChartMomentFormat)) {
         this.createInvalidIntervalSnackbar(selectedChartMomentFormat, minimumPossibleChartMomentFormat);
-        this.chartFilter.customInterval.elementInterval = minimumPossibleChartMomentFormat.momentInterval;
+        this.chartFilter.customInterval.timeUnit = minimumPossibleChartMomentFormat.momentInterval;
       }
     } else {
-      this.chartFilter.updatePresetValues();
+      this.chartFilter.presetInterval = IntervalFactory.createPresetInterval(this.chartFilter.preset);
     }
 
-    // Timeout to wait for ngModel
-    setTimeout(() => this.chartFilter.saveToStorage());
+    this.chartFilter.saveToStorage();
 
     this.refreshDataset();
   }
@@ -103,6 +99,8 @@ export class ChartFilterComponent implements OnInit {
       this.startUpdateInterval();
       this.startProgressBarInterval();
     }
+
+    this.chartFilter.saveToStorage();
   }
 
   /**
@@ -132,7 +130,7 @@ export class ChartFilterComponent implements OnInit {
   /**
    * Update possible options that can be selected as chart interval.<br/>
    * Interval is the distance between two datapoints.<br/>
-   * See {@link ElementInterval} for possible option
+   * See {@link TimeUnit} for possible option
    *
    * @param minimumPossibleChartMomentFormat ChartMomentFormat
    *        Minimum ChartMomentFormat that can be selected, so that there are less datapoints in the chart
@@ -183,6 +181,7 @@ export class ChartFilterComponent implements OnInit {
     this.timerIntervalDataUpdate = setInterval(() => {
       if (this.chartFilter.preset !== 'custom') {
         this.chartFilter.updatePresetValues();
+        this.refreshDataset();
       }
 
       this.startProgressBarInterval();

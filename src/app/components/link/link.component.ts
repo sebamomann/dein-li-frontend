@@ -11,7 +11,7 @@ import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-cha
 import {UrlUtil} from '../../_util/Url.util';
 import {DateUtil} from '../../_util/Date.util';
 import {LinkUtil} from '../../_util/Link.util';
-import {ChartFilter} from '../../models/ChartFilter';
+import {ChartFilter} from '../../models/ChartFilter/ChartFilter';
 import {ShareObject} from '../../models/ShareObejct';
 
 export const fadeAnimation = trigger('listAnimation', [

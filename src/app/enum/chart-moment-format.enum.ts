@@ -1,5 +1,5 @@
-import {ElementInterval} from '../models/ElementInterval.type';
 import {HtmlOption} from '../models/HtmlOption';
+import {TimeUnit} from '../models/TimeUnit.type';
 
 export class ChartMomentFormat {
 
@@ -9,7 +9,7 @@ export class ChartMomentFormat {
   static readonly months = new ChartMomentFormat('months', 'YYYY-MM', 'MM; YY', 'months', 4, 'Monate');
 
   private constructor(private readonly key: string, public readonly format: string, public readonly labelFormat: string,
-                      public readonly  momentInterval: ElementInterval, public index: number, public label: string) {
+                      public readonly  momentInterval: TimeUnit, public index: number, public label: string) {
   }
 
   public static getElementsBiggerThan(minimumPossibleInterval: ChartMomentFormat): ChartMomentFormat[] {

@@ -1,18 +1,18 @@
 import {Injectable} from '@angular/core';
-import {IChartFilter} from '../models/IChartFilter';
 import * as moment from 'moment';
 import {ICall} from '../models/ICall';
 import {IBasicChartData} from '../models/IBasicChartData';
 import {ChartMomentFormat} from '../enum/chart-moment-format.enum';
+import {ChartFilter} from '../models/ChartFilter/ChartFilter';
 
 moment.locale('de');
 
 @Injectable()
 export class ChartDataParser {
   public calls: ICall[];
-  public chartFilter: IChartFilter;
+  public chartFilter: ChartFilter;
 
-  constructor(chartFilter: IChartFilter, calls: ICall[]) {
+  constructor(chartFilter: ChartFilter, calls: ICall[]) {
     this.chartFilter = chartFilter;
     this.calls = calls;
   }
@@ -32,7 +32,7 @@ export class ChartDataParser {
     const interval = this.chartFilter.preset === 'custom' ? this.chartFilter.customInterval : this.chartFilter.presetInterval;
 
     this.calls = this.calls.map((mCall) => {
-      mCall.iat = moment(mCall.iat).format((ChartMomentFormat[interval.elementInterval]).format);
+      mCall.iat = moment(mCall.iat).format((ChartMomentFormat[interval.timeUnit]).format);
       return mCall;
     });
   }
@@ -45,7 +45,7 @@ export class ChartDataParser {
   private extendCallRangeToSetDates() {
     const interval = this.chartFilter.preset === 'custom' ? this.chartFilter.customInterval : this.chartFilter.presetInterval;
 
-    const chartMomentFormat = (ChartMomentFormat[interval.elementInterval]).format;
+    const chartMomentFormat = (ChartMomentFormat[interval.timeUnit]).format;
 
     if (this.calls.length > 0) {
       const pre = moment(this.calls[0].iat, chartMomentFormat);
@@ -73,7 +73,7 @@ export class ChartDataParser {
   private fillMissingDatasets() {
     const interval = this.chartFilter.preset === 'custom' ? this.chartFilter.customInterval : this.chartFilter.presetInterval;
 
-    const chartMomentFormat = (ChartMomentFormat[interval.elementInterval]).format;
+    const chartMomentFormat = (ChartMomentFormat[interval.timeUnit]).format;
 
     for (let i = 0; i < this.calls.length; i++) {
       if (i + 1 < this.calls.length) {
@@ -89,7 +89,7 @@ export class ChartDataParser {
         this.calls[i].iat = date1.format(chartMomentFormat);
         this.calls[i + 1].iat = date2.format(chartMomentFormat);
 
-        date1.add(1, (ChartMomentFormat[interval.elementInterval]).momentInterval);
+        date1.add(1, (ChartMomentFormat[interval.timeUnit]).momentInterval);
 
         if (!date1.isSame(date2)) {
           if (date1.isAfter(date2)) {
@@ -117,7 +117,7 @@ export class ChartDataParser {
 
     this.calls.forEach((fCall) => {
       if (fCall.count !== undefined) {
-        labels.push(moment(fCall.iat).format((ChartMomentFormat[interval.elementInterval]).labelFormat));
+        labels.push(moment(fCall.iat).format((ChartMomentFormat[interval.timeUnit]).labelFormat));
         values.push(+fCall.count);
       }
     });

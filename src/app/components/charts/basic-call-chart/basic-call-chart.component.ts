@@ -1,13 +1,14 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {IChartFilter} from '../../../models/IChartFilter';
 import {LinkService} from '../../../services/link.service';
-
-import {Chart} from 'chart.js';
-import * as moment from 'moment';
-import {BehaviorSubject} from 'rxjs';
 import {ILinkStats} from '../../../models/ILinkStats.model';
 import {ChartDataParser} from '../../../_helper/chart-data.parser';
+
+import * as moment from 'moment';
+
+import {Chart} from 'chart.js';
+import {BehaviorSubject} from 'rxjs';
 import {BreakpointObserver} from '@angular/cdk/layout';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {ChartFilter} from '../../../models/ChartFilter/ChartFilter';
 
 moment.locale('de');
 
@@ -19,7 +20,7 @@ moment.locale('de');
 export class BasicCallChartComponent implements OnInit {
 
   @Input() short: string;
-  @Input() chartFilter: IChartFilter;
+  @Input() chartFilter: ChartFilter;
 
   public linkStats$$ = new BehaviorSubject<ILinkStats>(undefined);
 

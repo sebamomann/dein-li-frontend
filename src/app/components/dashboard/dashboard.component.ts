@@ -12,7 +12,7 @@ import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creati
 import {ToolbarService} from '../../services/toolbar.service';
 import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';
 import {UrlUtil} from '../../_util/Url.util';
-import {ChartFilter} from '../../models/ChartFilter';
+import {ChartFilter} from '../../models/ChartFilter/ChartFilter';
 import {ILink} from '../../models/ILink.model';
 import {HttpErrorResponse} from '@angular/common/http';
 

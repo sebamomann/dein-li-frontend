@@ -5,7 +5,7 @@ import {catchError, map} from 'rxjs/operators';
 import {ILink} from '../models/ILink.model';
 import {Observable, of} from 'rxjs';
 import {ILinkStats} from '../models/ILinkStats.model';
-import {IChartFilter} from '../models/IChartFilter';
+import {ChartFilter} from '../models/ChartFilter/ChartFilter';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +45,7 @@ export class LinkService {
     );
   }
 
-  loadLinkStats(short: string, preview: boolean, chartFilter: IChartFilter) {
+  loadLinkStats(short: string, preview: boolean, chartFilter: ChartFilter) {
     let url;
 
     if (preview) {
