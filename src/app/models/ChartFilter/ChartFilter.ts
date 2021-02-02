@@ -35,6 +35,11 @@ export class ChartFilter implements IChartFilter {
     this.saveToStorage();
   }
 
+  // --------------------------------------------------------
+
+  /**
+   * Interval object, where user sets his own data interval
+   */
   private _customInterval: Interval;
 
   get customInterval(): Interval {
@@ -45,6 +50,12 @@ export class ChartFilter implements IChartFilter {
     this._customInterval = value;
   }
 
+  // --------------------------------------------------------
+
+  /**
+   * Enable automatic update of chart data.<br/>
+   * Used as internal state change
+   */
   private _isAutoUpdate: boolean;
 
   get isAutoUpdate(): boolean {
@@ -55,6 +66,11 @@ export class ChartFilter implements IChartFilter {
     this._isAutoUpdate = value;
   }
 
+  // --------------------------------------------------------
+
+  /**
+   * Preset description to activate preset intervals
+   */
   private _preset: UpdateIntervalPreset;
 
   get preset(): UpdateIntervalPreset {
@@ -65,6 +81,11 @@ export class ChartFilter implements IChartFilter {
     this._preset = value;
   }
 
+  // --------------------------------------------------------
+
+  /**
+   * Actual interval based on {@see _preset}
+   */
   private _presetInterval: IntervalPreset;
 
   get presetInterval(): IntervalPreset {
@@ -75,6 +96,11 @@ export class ChartFilter implements IChartFilter {
     this._presetInterval = value;
   }
 
+  // --------------------------------------------------------
+
+  /**
+   * Time in seconds when to automatically update the chart again
+   */
   private _updateInterval: UpdateIntervalSeconds;
 
   get updateInterval(): UpdateIntervalSeconds {
@@ -84,6 +110,10 @@ export class ChartFilter implements IChartFilter {
   set updateInterval(value: UpdateIntervalSeconds) {
     this._updateInterval = value;
   }
+
+  // --------------------------------------------------------
+  // --------------------------------------------------------
+  // --------------------------------------------------------
 
   /**
    * Timeout to wait for possible ngModel change when e.g.toggling autoUpdate state
