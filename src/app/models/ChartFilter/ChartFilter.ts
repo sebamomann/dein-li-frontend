@@ -3,10 +3,10 @@ import moment from 'moment';
 import {IChartFilter} from './IChartFilter';
 import {UpdateIntervalPreset} from '../../types/UpdateIntervalPreset.type';
 import {UpdateIntervalSeconds} from '../../types/UpdateIntervalSeconds.type';
-import {Interval} from '../Interval/Interval.class';
 import {IntervalPreset} from '../Interval/IntervalPreset.class';
 import {IntervalFactory} from '../Interval/Interval.factory';
 import {IChartFilterJson} from './IChartFilterJson';
+import {IntervalCustom} from '../Interval/IntervalCustom.class';
 
 moment.locale('de');
 
@@ -25,7 +25,7 @@ export class ChartFilter implements IChartFilter {
         this.initializeDefault();
       } else {
         Object.assign(this, storageData);
-        this.customInterval = Object.assign(new Interval(), storageData.customInterval);
+        this.customInterval = Object.assign(new IntervalCustom(), storageData.customInterval);
         this.presetInterval = IntervalFactory.createPresetInterval(this.preset); // create anyway - even if currently not used
       }
     } catch {
@@ -40,13 +40,13 @@ export class ChartFilter implements IChartFilter {
   /**
    * Interval object, where user sets his own data interval
    */
-  private _customInterval: Interval;
+  private _customInterval: IntervalCustom;
 
-  get customInterval(): Interval {
+  get customInterval(): IntervalCustom {
     return this._customInterval;
   }
 
-  set customInterval(value: Interval) {
+  set customInterval(value: IntervalCustom) {
     this._customInterval = value;
   }
 
@@ -155,7 +155,7 @@ export class ChartFilter implements IChartFilter {
     this.updateInterval = 15;
     this.preset = 'last_15_minutes';
     this.presetInterval = IntervalFactory.createPresetInterval(this.preset);
-    this.customInterval = new Interval(); // TODO FACTORY
+    this.customInterval = IntervalFactory.createCustomInterval();
 
     return this;
   }

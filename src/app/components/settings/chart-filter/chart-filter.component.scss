@@ -27,7 +27,7 @@
     span {
       display: block;
       color: lightgray;
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       font-size: 0.75em;
       font-weight: 200;
     }
@@ -48,8 +48,16 @@
       }
     }
 
+    ::ng-deep .mat-input-element:disabled {
+      color: gray;
+    }
+
     ::ng-deep .mat-form-field .mat-form-field-label {
       color: lightgray;
+    }
+
+    ::ng-deep .mat-form-field-disabled .mat-form-field-label {
+      color: gray;
     }
 
     ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
@@ -64,6 +72,10 @@
       background-color: lightgray;
     }
 
+    ::ng-deep .mat-form-field-underline {
+      background-color: lightgray;
+    }
+
     ::-webkit-calendar-picker-indicator {
       filter: invert(1);
     }
@@ -71,6 +83,19 @@
     .mat-checkbox {
       ::ng-deep .mat-checkbox-frame {
         border-color: rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    &.datetime {
+      &.checkbox {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-column-gap: 20px;
+
+        & > div {
+          top: 20px;
+          position: relative;
+        }
       }
     }
   }

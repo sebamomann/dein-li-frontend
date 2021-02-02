@@ -1,10 +1,10 @@
 import {UpdateIntervalSeconds} from '../../types/UpdateIntervalSeconds.type';
 import {UpdateIntervalPreset} from '../../types/UpdateIntervalPreset.type';
-import {IIntervalJSON} from '../Interval/IIntervalJSON';
+import {IIntervalCustomJSON} from '../Interval/IIntervalCustomJSON';
 
 export interface IChartFilterJson {
   isAutoUpdate: boolean;
   updateInterval: UpdateIntervalSeconds;
   preset: UpdateIntervalPreset;
-  customInterval: IIntervalJSON;
+  customInterval: IIntervalCustomJSON;
 }

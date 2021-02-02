@@ -39,7 +39,7 @@ export class Interval implements IInterval {
    * On preset methods its always the current time.<br/>
    * Custom timespan is usually fix
    */
-  private _end: string;
+  protected _end: string;
 
   get end(): string {
     return this._end;

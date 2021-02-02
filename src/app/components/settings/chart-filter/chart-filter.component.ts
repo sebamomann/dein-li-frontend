@@ -38,7 +38,8 @@ export class ChartFilterComponent implements OnInit {
 
   public timeIntervalOptions: HtmlOption[];
   public barPercentage: number;
-  public showFilter = false;
+  // public showFilter = false;
+  public showFilter = true;
 
   /**
    * Intervals for data update and update progress bar
@@ -179,7 +180,7 @@ export class ChartFilterComponent implements OnInit {
     clearInterval(this.timerIntervalDataUpdate);
 
     this.timerIntervalDataUpdate = setInterval(() => {
-      if (this.chartFilter.preset !== 'custom') {
+      if (this.chartFilter.preset !== 'custom' || this.chartFilter.customInterval.isLive) {
         this.chartFilter.updatePresetValues();
         this.refreshDataset();
       }
