@@ -45,10 +45,10 @@ export class IntervalCustom extends Interval {
   /**
    * @param value
    *
-   * override forced due to getter override
+   * "override" forced due to getter override
    */
   public set end(value: string) {
-    this._end = value;
+    super.end = value;
   }
 
   /**
