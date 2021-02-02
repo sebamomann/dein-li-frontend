@@ -4,8 +4,9 @@ import {HttpClient} from '@angular/common/http';
 import {catchError, map} from 'rxjs/operators';
 import {ILink} from '../models/ILink.model';
 import {Observable, of} from 'rxjs';
-import {ILinkStats} from '../models/ILinkStats.model';
 import {ChartFilter} from '../models/ChartFilter/ChartFilter';
+import {ILinkStats} from '../models/ILinkStats.model';
+import {Interval} from '../models/Interval/Interval.class';
 
 @Injectable({
   providedIn: 'root'
@@ -54,7 +55,7 @@ export class LinkService {
       url = `${environment.API_URL}link/${short}/history`;
     }
 
-    let interval;
+    let interval: Interval;
 
     if (chartFilter.preset === 'custom') {
       interval = chartFilter.customInterval;
@@ -63,7 +64,7 @@ export class LinkService {
     }
 
 
-    url = `${url}?interval=${interval.elementInterval}&start=${interval.start}&end=${interval.end}`;
+    url = `${url}?interval=${interval.timeUnit}&start=${interval.start}&end=${interval.end}`;
 
     const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
 
