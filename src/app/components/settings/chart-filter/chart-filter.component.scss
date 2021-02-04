@@ -34,10 +34,6 @@
 
     ::ng-deep .mat-form-field-wrapper {
       margin-bottom: -0.4em;
-
-      &:last-of-type {
-        margin-bottom: -1.25em;
-      }
     }
 
     mat-form-field {
@@ -168,6 +164,12 @@
       span {
         margin-bottom: 0;
         font-size: 0.85em;
+      }
+
+      ::ng-deep .mat-form-field-wrapper {
+        &:last-of-type {
+          margin-bottom: -1.25em;
+        }
       }
     }
 
