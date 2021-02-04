@@ -58,7 +58,7 @@
 .header {
   display: grid;
   grid-template-columns: 1fr minmax(25%, auto);
-  width: 95%;
+  width: 100%;
   margin: 0 auto 15px;
 
   .mat-select {
@@ -87,16 +87,18 @@
 
 @media all and (max-width: 1024px) {
   .link-list {
-    width: 100%;
     margin: 0 auto;
     grid-template-columns: 1fr 1fr;
     grid-gap: 15px;
+    font-size: 0.9em;
 
     .card-block {
       padding: 16px;
+      overflow: scroll;
 
       span {
         &:first-child {
+          word-wrap: break-word;
           font-size: 1.25em;
           font-weight: bolder;
         }

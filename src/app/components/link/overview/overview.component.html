@@ -1,6 +1,6 @@
 <main>
   <div class="header">
-    <mat-select [(value)]="selected" (valueChange)="changedOrderBy()">
+    <mat-select [(value)]="filter" (valueChange)="changedFilter()">
       <mat-option value="iat">Erstelldatum</mat-option>
       <mat-option value="calls">Aufrufe gesamt</mat-option>
       <mat-option value="calls_version">Aufrufe aktuelle Version</mat-option>
@@ -8,9 +8,16 @@
     <mat-icon (click)="changedOrder()">keyboard_arrow_down</mat-icon>
   </div>
 
-  <div class="link-list" *ngIf="$links | async let links; else loading">
-    <ng-container *ngFor="let link of links">
+  <ng-container *ngIf="loaded; else loading">
+    <div class="link-list"
+         infiniteScroll
+         [immediateCheck]="true"
+         [infiniteScrollDistance]="1"
+         [infiniteScrollThrottle]="50"
+         (scrolled)="onScroll()"
+         [@listAnimation]="links.length">
       <div class="card-block"
+           *ngFor="let link of links; trackBy: linkTrackBy"
            (click)="redirectToLink(link)">
         <span>{{link.short}}</span>
         <span>{{link.original | truncate: [50, '...']}}</span>
@@ -18,8 +25,8 @@
               class="nrOfCalls">Aufrufe: {{link.nrOfCalls }}</span>
         <span class="date">{{link.iat | date : 'dd.MM.yyyy'}}</span>
       </div>
-    </ng-container>
-  </div>
+    </div>
+  </ng-container>
 </main>
 
 <ng-template #loading>

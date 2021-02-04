@@ -5,6 +5,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {HexagonLoaderModule} from '../../../html-templates/hexagon-loader/hexagon-loader.module';
 import {TextPipesModule} from '../../../pipes/text-pipes.module';
 import {MatIconModule, MatSelectModule} from '@angular/material';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 const routes: Routes = [
   {
@@ -15,14 +16,15 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [OverviewComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    HexagonLoaderModule,
-    TextPipesModule,
-    MatSelectModule,
-    MatIconModule,
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        HexagonLoaderModule,
+        TextPipesModule,
+        MatSelectModule,
+        MatIconModule,
+        InfiniteScrollModule,
+    ]
 })
 export class OverviewModule {
 }

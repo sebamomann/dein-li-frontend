@@ -93,14 +93,14 @@ export class LinkService {
     );
   }
 
-  public loadLinks(orderBy = 'iat', order = 'DESC'): Observable<ILink[]> {
-    const url = `${environment.API_URL}link/all?order_by=${orderBy}&order=${order}`;
+  public loadLinks(orderBy = 'iat', order = 'DESC', limit = 15, offset = 0): Observable<ILink[]> {
+    const url = `${environment.API_URL}link/all?order_by=${orderBy}&order=${order}&limit=${limit}&offset=${offset}`;
 
     const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
 
     return res.pipe(
       map(response => {
-        return response.body as ILink;
+        return response.body as ILink[];
       }),
       catchError(() => {
         return of(null);
