@@ -38,8 +38,7 @@ export class ChartFilterComponent implements OnInit {
 
   public timeIntervalOptions: HtmlOption[];
   public barPercentage: number;
-  // public showFilter = false;
-  public showFilter = true;
+  public showFilter = false;
 
   /**
    * Intervals for data update and update progress bar
