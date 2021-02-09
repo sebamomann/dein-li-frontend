@@ -50,7 +50,7 @@ export class BasicCallChartComponent implements OnInit {
    *
    * @param content ElementRef    HTML Element of the canvas
    */
-  @ViewChild('canvas', {static: false})
+  @ViewChild('canvas')
   set content(content: ElementRef) {
     if (content) {
       setTimeout(() => {

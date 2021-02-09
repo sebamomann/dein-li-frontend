@@ -7,10 +7,10 @@ import {HexagonLoaderModule} from '../../html-templates/hexagon-loader/hexagon-l
 
 const routes: Routes = [
   {path: '', component: RedirectComponent},
-  {path: 'notFound', loadChildren: './not-found/not-found.module#NotFoundModule'},
-  {path: 'unknown', loadChildren: './unknown/unknown.module#UnknownModule'},
-  {path: 'locked', loadChildren: './locked/locked.module#LockedModule'},
-  {path: 'threat', loadChildren: './threat/threat.module#ThreatModule'},
+  {path: 'notFound', loadChildren: () => import('./not-found/not-found.module').then(m => m.NotFoundModule)},
+  {path: 'unknown', loadChildren: () => import('./unknown/unknown.module').then(m => m.UnknownModule)},
+  {path: 'locked', loadChildren: () => import('./locked/locked.module').then(m => m.LockedModule)},
+  {path: 'threat', loadChildren: () => import('./threat/threat.module').then(m => m.ThreatModule)},
 ];
 
 @NgModule({

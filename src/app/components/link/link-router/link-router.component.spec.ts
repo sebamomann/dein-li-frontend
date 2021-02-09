@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { LinkRouterComponent } from './link-router.component';
 
@@ -6,7 +6,7 @@ describe('LinkRouterComponent', () => {
   let component: LinkRouterComponent;
   let fixture: ComponentFixture<LinkRouterComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ LinkRouterComponent ]
     })

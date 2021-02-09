@@ -8,17 +8,17 @@ import {HexagonLoaderModule} from '../../../html-templates/hexagon-loader/hexago
 const routes: Routes = [
   {
     path: 'overview',
-    loadChildren: '../overview/overview.module#OverviewModule',
+    loadChildren: () => import('../overview/overview.module').then(m => m.OverviewModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'specific',
-    loadChildren: '../link.module#LinkModule',
+    loadChildren: () => import('../link.module').then(m => m.LinkModule),
     canActivate: [AuthGuard]
   },
   {
     path: 'preview',
-    loadChildren: '../preview/preview.module#PreviewModule',
+    loadChildren: () => import('../preview/preview.module').then(m => m.PreviewModule),
   },
   {
     path: '',

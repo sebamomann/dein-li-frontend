@@ -1,4 +1,4 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import {HexagonLoaderComponent} from './hexagon-loader.component';
 
@@ -6,7 +6,7 @@ describe('HexagonLoaderComponent', () => {
   let component: HexagonLoaderComponent;
   let fixture: ComponentFixture<HexagonLoaderComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [HexagonLoaderComponent]
     })

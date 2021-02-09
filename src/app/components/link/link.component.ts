@@ -52,7 +52,7 @@ export class LinkComponent implements OnInit {
   public short: string;
 
   @ViewChild('chartRef', {static: true}) public chartRef: BasicCallChartComponent;
-  @ViewChild('expansionPanel', {static: false}) public expansionPanelRef: MatExpansionPanel;
+  @ViewChild('expansionPanel') public expansionPanelRef: MatExpansionPanel;
 
   constructor(private route: ActivatedRoute, private linkService: LinkService,
               private dialog: MatDialog) {
