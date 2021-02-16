@@ -28,7 +28,10 @@ export class AccountToolbarComponent implements OnInit {
   }
 
   public login() {
-    this.authenticationService.login();
+    this.authenticationService.login().catch((err) => {
+      console.log(err);
+      console.log('login error');
+    });
   }
 
   public logout() {
