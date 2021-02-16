@@ -8,10 +8,10 @@ RUN npm install
 
 COPY . .
 
-ARG BACKEND_URL="http://localhost:3000/"
-ENV BACKEND_URL=$BACKEND_URL
-
-RUN sed -i "s|http://localhost:3000|$BACKEND_URL|g" ./src/assets/env.js
+#ARG BACKEND_URL="http://localhost:3000/"
+#ENV BACKEND_URL=$BACKEND_URL
+#
+#RUN sed -i "s|http://localhost:3000|$BACKEND_URL|g" ./src/assets/env.js
 
 RUN npm run-script build:prod
 ## STAGE 2
