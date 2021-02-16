@@ -76,11 +76,13 @@ export class AuthConfigService {
             .catch((err) => {
               console.log(err);
               console.log('[KEYCLOAK] - ERROR (after TRY LOGIN)');
+              resolveFn(true);
             });
         })
         .catch((err) => {
           console.log(err);
           console.log('[KEYCLOAK] - ERROR (after LOAD DISCOVERY DOCUMENT)');
+          resolveFn(true);
         });
     });
   }
