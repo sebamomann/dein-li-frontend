@@ -36,7 +36,9 @@ export class AddVersionDialogComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.output$$.unsubscribe();
+    if (this.output$$) {
+      this.output$$.unsubscribe();
+    }
   }
 
   public saveFnc() {
@@ -48,8 +50,8 @@ export class AddVersionDialogComponent implements OnInit, OnDestroy {
 
     const output$ = this.linkService.createNewVersion(this.short, link);
 
-    this.output$$ = output$.subscribe((sLink) => {
-      this.dialogRef.close(sLink);
+    this.output$$ = output$.subscribe(_ => {
+      this.dialogRef.close(link);
     });
   }
 

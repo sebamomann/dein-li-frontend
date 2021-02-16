@@ -9,13 +9,22 @@ import {BehaviorSubject} from 'rxjs';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {ChartFilter} from '../../../models/ChartFilter/ChartFilter';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 moment.locale('de');
 
 @Component({
   selector: 'app-basic-call-chart',
   templateUrl: './basic-call-chart.component.html',
-  styleUrls: ['./basic-call-chart.component.scss']
+  styleUrls: ['./basic-call-chart.component.scss'],
+  animations: [
+    trigger('remove', [
+      transition('* => void', [
+        style({opacity: '1'}),
+        animate('250ms ease-in', style({opacity: 0}))
+      ]),
+    ])
+  ]
 })
 export class BasicCallChartComponent implements OnInit {
 
@@ -50,7 +59,7 @@ export class BasicCallChartComponent implements OnInit {
    *
    * @param content ElementRef    HTML Element of the canvas
    */
-  @ViewChild('canvas')
+  @ViewChild('canvas', {static: false})
   set content(content: ElementRef) {
     if (content) {
       setTimeout(() => {
@@ -69,14 +78,18 @@ export class BasicCallChartComponent implements OnInit {
   /**
    * Populate BehaviourSubject with new data from the API.
    * This function gets called by the parent periodically. <br/>
-   * Only if auto updat is enabled in {@link ChartFilterComponent}
+   * Only if auto update is enabled in {@link ChartFilterComponent}
    */
-  loadNewData() {
+  public loadNewData() {
     if (!this.chartFilter) {
       return;
     }
 
-    this.linkService.loadLinkStats(this.short, false, this.chartFilter).toPromise().then((res) => this.linkStats$$.next(res));
+    if (this.short) {
+      this.linkService.loadLinkStats(this.short, false, this.chartFilter).toPromise().then((res) => this.linkStats$$.next(res));
+    } else {
+      this.linkService.loadGlobalLinkStatistics(this.chartFilter).toPromise().then((res) => this.linkStats$$.next(res));
+    }
   }
 
   private initializeChart() {

@@ -1,146 +1,44 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {finalize, map} from 'rxjs/operators';
 
 import {environment} from '../../environments/environment';
-import {IUser} from '../models/IUser.model';
 import {Router, RouterStateSnapshot} from '@angular/router';
+import {OAuthService} from 'angular-oauth2-oidc';
+import {LinkUtil} from '../_util/Link.util';
+import {AuthenticationValuesService} from './authentication.values.service';
+import {AuthConfigService} from './auth-config.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-  public currentUser: Observable<any>;
-
-  constructor(private _http: HttpClient, private _router: Router) {
-    this._currentUserSubject$ = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this._currentUserSubject$.asObservable();
-
-    this._currentUserSubject$
-      .subscribe(() => {
-        this._loginStatus$.next(this.userIsLoggedIn());
-      });
+  constructor(private _http: HttpClient, private _router: Router, private oauth: OAuthService,
+              private authenticationValuesService: AuthenticationValuesService, private authConfigService: AuthConfigService) {
   }
 
-  private _currentUserSubject$: BehaviorSubject<any>;
-
-  get currentUserSubject$(): BehaviorSubject<any> {
-    return this._currentUserSubject$;
+  public get accessToken(): string {
+    return this.oauth.getAccessToken();
   }
 
-  set currentUserSubject$(value: BehaviorSubject<any>) {
-    this._currentUserSubject$ = value;
-  }
-
-  private _refreshing$ = new BehaviorSubject<boolean>(false);
-
-  get refreshing$(): Observable<boolean> {
-    return this._refreshing$;
-  }
-
-  set refreshing(value: boolean) {
-    this._refreshing$.next(value);
-  }
-
-  private _loginStatus$ = new BehaviorSubject(false);
-
-  public get loginStatus$() {
-    return this._loginStatus$;
-  }
-
-  public get currentUserValue() {
-    return this._currentUserSubject$.value;
-  }
-
-  public get accessToken() {
-    return this.currentUserValue.session.token;
-  }
-
-  logout() {
-    // remove user from local storage and set current user to null
-    localStorage.removeItem('currentUser');
-    this._currentUserSubject$.next(null);
-  }
-
-  setCurrentUser(user: IUser) {
-    this._currentUserSubject$.next(user);
-    localStorage.setItem('currentUser', JSON.stringify(this.currentUserValue));
-  }
-
-  check(state: RouterStateSnapshot): boolean {
+  public check(state: RouterStateSnapshot): boolean {
     if (this.userIsLoggedIn()) {
       return true;
     } else {
-      // not logged in so redirect to login page with the return url
-      this._router.navigate(['/account/login'], {
-        queryParams: {
-          returnUrl: state.url,
-        }
-      })
-        .then(() => {
-          return false;
-        });
-
-      return false;
+      this.authConfigService.initLogin(state.url);
     }
   }
 
-  isExpired() {
-    if (this.currentUserValue && (new Date(this.currentUserValue.exp).getTime()) < (new Date().getTime())) {
-      this.logout();
-      return true;
-    }
-
-    return false;
+  public async login() {
+    await this.authConfigService.initLogin();
   }
 
-  login(mail, password) {
-    return this._http.post<any>(`${environment.API_URL}auth/login`, {username: mail, password})
-      .pipe(map(user => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        // tslint:disable-next-line:prefer-const
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this._loginStatus$.next(true);
-        this._currentUserSubject$.next(user);
-
-        return user;
-      }));
-  }
-
-  public getRefreshToken() {
-    if (this.currentUserValue !== null) {
-      return this.currentUserValue.session.refreshToken;
-    }
-
-    return '';
-  }
-
-  public refreshAccessToken() {
-    this.refreshing = true;
-    return this._http
-      .post<any>(`${environment.API_URL}auth/token`, {
-        user: {
-          id: this.currentUserValue.id,
-        },
-        refreshToken: this.getRefreshToken(),
-      })
-      .pipe(
-        map((res) => {
-          this.setAccessToken(res.session.token);
-        }),
-        finalize(() => {
-          this.refreshing = false;
-        })
-      );
+  public logout() {
+    this.oauth.logOut();
   }
 
   public userIsLoggedIn(): boolean {
-    return this.currentUserValue !== null;
+    return this.oauth.hasValidAccessToken();
   }
 
-  private setAccessToken(token: any) {
-    const currentUser = this.currentUserValue;
-    currentUser.session.token = token;
-
-    this.setCurrentUser(currentUser);
+  public openAccountSettings() {
+    LinkUtil.openLinkInNewTab(`${environment.keycloak.url}realms/${environment.keycloak.realm}/account`);
   }
 }

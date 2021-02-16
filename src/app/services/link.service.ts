@@ -17,7 +17,7 @@ export class LinkService {
   }
 
   public loadLinkByShort(short: string): Observable<ILink> {
-    const url = `${environment.API_URL}link/${short}`;
+    const url = `${environment.API_URL}links/${short}`;
 
     const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
 
@@ -32,7 +32,7 @@ export class LinkService {
   }
 
   public loadLinkVersions(short: string): Observable<ILink[]> {
-    const url = `${environment.API_URL}link/${short}/version`;
+    const url = `${environment.API_URL}links/${short}/versions`;
 
     const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
 
@@ -46,13 +46,38 @@ export class LinkService {
     );
   }
 
-  loadLinkStats(short: string, preview: boolean, chartFilter: ChartFilter) {
+  public loadGlobalLinkStatistics(chartFilter: ChartFilter) {
+    let url = `${environment.API_URL}global/links/statistics`;
+
+    let interval: Interval;
+
+    if (chartFilter.preset === 'custom') {
+      interval = chartFilter.customInterval;
+    } else {
+      interval = chartFilter.presetInterval;
+    }
+
+    url = `${url}?interval=${interval.timeUnit}&start=${interval.start}&end=${interval.end}`;
+
+    const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
+
+    return res.pipe(
+      map(response => {
+        return response.body as ILinkStats;
+      }),
+      catchError(() => {
+        return of(null);
+      })
+    );
+  }
+
+  public loadLinkStats(short: string, preview: boolean, chartFilter: ChartFilter) {
     let url;
 
     if (preview) {
-      url = `${environment.API_URL}link/${short}/history/preview`;
+      url = `${environment.API_URL}links/${short}/history/preview`;
     } else {
-      url = `${environment.API_URL}link/${short}/history`;
+      url = `${environment.API_URL}links/${short}/statistics`;
     }
 
     let interval: Interval;
@@ -79,9 +104,9 @@ export class LinkService {
   }
 
   createNewVersion(short: string, original: string) {
-    const url = `${environment.API_URL}link/${short}/version`;
+    const url = `${environment.API_URL}links/${short}`;
 
-    const res = this.httpClient.post(url, {original}, {observe: 'response', reportProgress: true});
+    const res = this.httpClient.put(url, {original}, {observe: 'response', reportProgress: true});
 
     return res.pipe(
       map(response => {
@@ -94,7 +119,7 @@ export class LinkService {
   }
 
   public loadLinks(orderBy = 'iat', order = 'DESC', limit = 15, offset = 0): Observable<ILink[]> {
-    const url = `${environment.API_URL}link/all?order_by=${orderBy}&order=${order}&limit=${limit}&offset=${offset}`;
+    const url = `${environment.API_URL}links?order_by=${orderBy}&order=${order}&limit=${limit}&offset=${offset}`;
 
     const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
 
@@ -109,21 +134,15 @@ export class LinkService {
   }
 
   public create(original: string, short: string) {
-    const url = `${environment.API_URL}link`;
-
-    console.log(url);
+    const url = `${environment.API_URL}links`;
 
     const res = this.httpClient.post(url, {original, short}, {observe: 'response', reportProgress: true});
 
-    console.log(1);
-
     return res.pipe(
       map(response => {
-        console.log(2);
         return response.body as ILink;
       }),
       catchError((err) => {
-        console.log(3);
         throw err;
       })
     );

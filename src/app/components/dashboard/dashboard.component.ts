@@ -1,12 +1,11 @@
 import * as moment from 'moment';
 import * as validUrl from 'valid-url';
 
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ILinkStats} from '../../models/ILinkStats.model';
 import {LinkService} from '../../services/link.service';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import {AuthenticationService} from '../../services/authentication.service';
 import {MatDialog} from '@angular/material';
 import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.component';
 import {ToolbarService} from '../../services/toolbar.service';
@@ -15,6 +14,8 @@ import {UrlUtil} from '../../_util/Url.util';
 import {ChartFilter} from '../../models/ChartFilter/ChartFilter';
 import {ILink} from '../../models/ILink.model';
 import {HttpErrorResponse} from '@angular/common/http';
+import {AuthenticationService} from '../../services/authentication.service';
+import {ActivatedRoute} from '@angular/router';
 
 moment.locale('de');
 
@@ -30,21 +31,28 @@ export class DashboardComponent implements OnInit {
   public chartFilter: ChartFilter;
 
   public event: FormGroup;
-  public userIsLoggedIn = this.authService.userIsLoggedIn();
+  public userIsLoggedIn = this.authenticationService.userIsLoggedIn();
   public baseUrl = UrlUtil.getApiDomain();
 
   public highlightHint = false;
-
   @ViewChild('chartRef', {static: true})
   public chartRef: BasicCallChartComponent;
+  @ViewChild('create', {static: true}) create: ElementRef;
+  private scrollToCreate = false;
 
   /**
    *
    */
   constructor(public linkService: LinkService, private formBuilder: FormBuilder,
-              private authService: AuthenticationService, private dialog: MatDialog,
-              private toolbarService: ToolbarService) {
+              private dialog: MatDialog, private authenticationService: AuthenticationService,
+              private toolbarService: ToolbarService, private route: ActivatedRoute) {
     this.toolbarService.setTitle('Home');
+
+    this.route.fragment.subscribe((fragment: string) => {
+      if (fragment === 'create') {
+        this.scrollToCreate = true;
+      }
+    });
 
     this.chartFilter = new ChartFilter();
   }
@@ -58,7 +66,13 @@ export class DashboardComponent implements OnInit {
       short: new FormControl({value: '', disabled: !this.userIsLoggedIn}, [Validators.minLength(3)]),
     });
 
-    this.totalStats$ = this.linkService.loadLinkStats('all', false, this.chartFilter);
+    this.totalStats$ = this.linkService.loadGlobalLinkStatistics(this.chartFilter);
+
+    if (this.scrollToCreate) {
+      setTimeout(() => {
+        this.create.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }, 250);
+    }
   }
 
   /**
@@ -136,6 +150,14 @@ export class DashboardComponent implements OnInit {
     } else if (this.get('short').hasError('minlength')) {
       return 'Der Kurzlink muss mindestens 3 Zeichen lang sein';
     }
+  }
+
+  public logout() {
+    this.authenticationService.logout();
+  }
+
+  public login() {
+    this.authenticationService.login();
   }
 
   /**

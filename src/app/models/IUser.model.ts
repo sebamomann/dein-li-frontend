@@ -1,9 +1,9 @@
-import {ISession} from './ISession.model';
-
 export interface IUser {
-  id: string;
-  username: string;
-  password?: string;
-  mail: string;
-  session: ISession;
+  sub: string;
+  email_verified: boolean;
+  name: string;
+  preferred_username: string;
+  given_name: string;
+  family_name: string;
+  email: string;
 }

@@ -10,28 +10,7 @@
       <h2 class="title">
         {{title}}
       </h2>
-      <div class="account-menu-wrapper">
-        <ng-container *ngIf="userIsLoggedIn">
-          <button [matMenuTriggerFor]="menu"
-                  class="stroked-button-colored"
-                  mat-stroked-button>
-            <span>{{username}}</span>
-            <mat-icon>account_circle</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu" xPosition="before">
-            <ng-container [ngTemplateOutlet]="loggedInMenu">
-            </ng-container>
-          </mat-menu>
-        </ng-container>
-        <div *ngIf="!userIsLoggedIn">
-          <button [routerLink]="['/account/login']"
-                  class="stroked-button-colored"
-                  mat-stroked-button>
-            <span>Login</span>
-            <mat-icon>login</mat-icon>
-          </button>
-        </div>
-      </div>
+      <app-account-toolbar #account id="account"></app-account-toolbar>
     </div>
   </mat-toolbar>
 
@@ -41,17 +20,3 @@
 
   <footer><a href="/impressum">Impressum</a></footer>
 </div>
-
-<ng-template #loggedInMenu>
-  <button mat-menu-item
-          [routerLink]="['/link']">
-    <mat-icon>link</mat-icon>
-    Meine Links
-  </button>
-  <button mat-menu-item
-          [routerLink]="['/account/logout']">
-    <mat-icon>logout</mat-icon>
-    Abmelden
-  </button>
-</ng-template>
-

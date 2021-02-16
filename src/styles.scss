@@ -114,6 +114,31 @@ body {
   }
 }
 
+.empty {
+  width: 50%;
+  max-width: 400px;
+  text-align: center;
+  color: $dark-background;
+  margin: 0 auto;
+  background-color: $light-background;
+  padding: 25px;
+  border-radius: 15px;
+
+  h2 {
+    margin-top: 0;
+  }
+
+  &.decent {
+    background-color: transparent;
+    color: gray
+  }
+
+  &.left {
+    margin: 0;
+    text-align: left;
+  }
+}
+
 @media all and (max-width: 1024px) {
   .main-wrapper {
     margin-bottom: 25px;

@@ -9,9 +9,11 @@ import {SuccessfulCreationDialogModule} from '../../dialogs/successful-creation-
 import {ChartFilterModule} from '../settings/chart-filter/chart-filter.module';
 import {BasicCallChartModule} from '../charts/basic-call-chart/basic-call-chart.module';
 import {ReportBlockModule} from '../link/report-block/report-block.module';
+import {AccountToolbarModule} from '../account/account-toolbar/account-toolbar.module';
 
 const routes: Routes = [
   {path: '', component: DashboardComponent},
+  {path: '**', redirectTo: '/impressum'},
 ];
 
 @NgModule({
@@ -28,7 +30,8 @@ const routes: Routes = [
     SuccessfulCreationDialogModule,
     ChartFilterModule,
     BasicCallChartModule,
-    ReportBlockModule
+    ReportBlockModule,
+    AccountToolbarModule
   ],
   exports: [
     DashboardComponent

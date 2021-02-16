@@ -113,7 +113,11 @@ export class LinkComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(
-        _ => {
+        (val) => {
+          if (!val) {
+            return;
+          }
+
           this.$link = this.linkService.loadLinkByShort(this.short);
           this.$linkVersions = this.linkService.loadLinkVersions(this.short);
         }

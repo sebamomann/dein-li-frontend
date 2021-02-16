@@ -41,9 +41,8 @@
         <div class="highlighter"></div>
       </div>
       <div class="version-history">
-        <div *ngIf="$linkVersions | async let linkVersions"
-             [@listAnimation]="linkVersions.length">
-          <div class="version-wrapper">
+        <ng-container *ngIf="$linkVersions | async let linkVersions">
+          <div class="version-wrapper" [@listAnimation]>
             <div class="date-information solo">
               <div class="main-information">
                 <span>NOW</span>
@@ -60,34 +59,54 @@
                 </button>
               </div>
             </div>
-            <ng-container *ngFor="let linkVersion of linkVersions">
-              <div class="date-information">
-                <div class="line-before"></div>
-                <div class="main-information">
-                  <span>{{getDay(linkVersion)}}.&nbsp;</span>
-                  <span>{{getMonthName(linkVersion)}}</span>
+            <ng-container *ngIf="linkVersions.length > 1; else emptyVersions">
+              <ng-container *ngFor="let linkVersion of linkVersions">
+                <div class="date-information">
+                  <div class="line-before"></div>
+                  <div class="main-information">
+                    <span>{{getDay(linkVersion)}}.&nbsp;</span>
+                    <span>{{getMonthName(linkVersion)}}</span>
+                  </div>
+                  <div class="line-after"></div>
                 </div>
-                <div class="line-after"></div>
-              </div>
-              <div class="version-information">
-                <span></span>
-                <span>
-                <mat-icon (click)="openLinkInNewTab(linkVersion.original)">
-                  open_in_new
-                </mat-icon>
-                <span>
-                  {{linkVersion.original}}
-                </span>
-              </span>
-                <span class="date">{{linkVersion.iat | date : 'dd.MM.y HH:mm'}}</span>
-              </div>
+                <div class="version-information">
+                  <span></span>
+                  <span>
+                      <mat-icon (click)="openLinkInNewTab(linkVersion.original)">
+                        open_in_new
+                      </mat-icon>
+                      <span>
+                        {{linkVersion.original}}
+                      </span>
+                    </span>
+                  <span class="date">{{linkVersion.iat | date : 'dd.MM.y HH:mm'}}</span>
+                </div>
+              </ng-container>
             </ng-container>
           </div>
-        </div>
+        </ng-container>
       </div>
     </div>
   </div>
 </main>
+
+<ng-template #emptyVersions>
+  <div class="date-information">
+    <div class="line-before"></div>
+    <div class="main-information">
+      <span>?</span>
+      <span></span>
+    </div>
+    <div class="line-after"></div>
+  </div>
+  <div class="empty decent left">
+    <h2>Ich konnte nichts finden</h2>
+    <p>
+      Wusstest du, dass du neue Versionen für einen Link erstellen kannst? Eine neue Version heißt, dass eine neue
+      Weiterleitung eingestellt werden kann. Die alten Versionen werden dir hier als Historie angezeigt.
+    </p>
+  </div>
+</ng-template>
 
 <ng-template #loading>
   <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>

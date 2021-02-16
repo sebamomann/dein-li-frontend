@@ -1,18 +1,16 @@
-import {Injectable} from '@angular/core';
 import * as moment from 'moment';
-import {ICall} from '../models/ICall';
 import {IBasicChartData} from '../models/IBasicChartData';
 import {ChartMomentFormat} from '../enum/chart-moment-format.enum';
 import {ChartFilter} from '../models/ChartFilter/ChartFilter';
+import {Call} from '../models/Call';
 
 moment.locale('de');
 
-@Injectable()
 export class ChartDataParser {
-  public calls: ICall[];
+  public calls: Call[];
   public chartFilter: ChartFilter;
 
-  constructor(chartFilter: ChartFilter, calls: ICall[]) {
+  constructor(chartFilter: ChartFilter, calls: Call[]) {
     this.chartFilter = chartFilter;
     this.calls = calls;
   }

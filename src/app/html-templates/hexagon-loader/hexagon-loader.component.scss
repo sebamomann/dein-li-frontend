@@ -4,73 +4,75 @@
   color: white;
   padding: 20px;
 
-  .container {
-    display: block;
-    margin: 27px auto -12px;
-    height: 90px;
-    width: 90px;
-
-    div {
-      position: absolute;
+  .block-wrapper {
+    .container {
+      display: block;
+      margin: 27px auto -12px;
+      height: 90px;
       width: 90px;
-      height: 51px;
-
-      &:nth-of-type(2) {
-        transform: rotate(60deg);
-      }
-
-      &:nth-of-type(3) {
-        transform: rotate(-60deg);
-      }
 
       div {
-        width: 100%;
-        height: 100%;
-        position: relative;
+        position: absolute;
+        width: 90px;
+        height: 51px;
 
-        span {
-          position: absolute;
-          width: 6px;
-          height: 0;
-          z-index: 999999;
+        &:nth-of-type(2) {
+          transform: rotate(60deg);
         }
+
+        &:nth-of-type(3) {
+          transform: rotate(-60deg);
+        }
+
+        div {
+          width: 100%;
+          height: 100%;
+          position: relative;
+
+          span {
+            position: absolute;
+            width: 6px;
+            height: 0;
+            z-index: 999999;
+          }
+        }
+      }
+
+      .h1 {
+        left: 0;
+        animation: load1 5s ease infinite, color 5s ease infinite;
+      }
+
+      .h2 {
+        right: 0;
+        animation: load2 5s ease .4s infinite, color 5s ease infinite;
+      }
+
+      .h3 {
+        right: 0;
+        animation: load3 5s ease .8s infinite, color 5s ease infinite;
+      }
+
+      .h4 {
+        right: 0;
+        animation: load4 5s ease 1.2s infinite, color 5s ease infinite;
+      }
+
+      .h5 {
+        left: 0;
+        animation: load5 5s ease 1.6s infinite, color 5s ease infinite;
+      }
+
+      .h6 {
+        left: 0;
+        animation: load6 5s ease 2s infinite, color 5s ease infinite;
       }
     }
 
-    .h1 {
-      left: 0;
-      animation: load1 5s ease infinite, color 5s ease infinite;
+    & > .message {
+      text-align: center;
+      margin-top: 25px;
     }
-
-    .h2 {
-      right: 0;
-      animation: load2 5s ease .4s infinite, color 5s ease infinite;
-    }
-
-    .h3 {
-      right: 0;
-      animation: load3 5s ease .8s infinite, color 5s ease infinite;
-    }
-
-    .h4 {
-      right: 0;
-      animation: load4 5s ease 1.2s infinite, color 5s ease infinite;
-    }
-
-    .h5 {
-      left: 0;
-      animation: load5 5s ease 1.6s infinite, color 5s ease infinite;
-    }
-
-    .h6 {
-      left: 0;
-      animation: load6 5s ease 2s infinite, color 5s ease infinite;
-    }
-  }
-
-  & > .message {
-    text-align: center;
-    margin-top: 25px;
   }
 }
 

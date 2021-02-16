@@ -1,3 +1,5 @@
+@import "variables";
+
 .header-statistic-wrapper {
   max-width: 1275px;
   position: relative;
@@ -12,6 +14,23 @@
 
 .statistic-chart-wrapper {
   height: 100%;
+  padding-top: 15px;
+
+  app-hexagon-loader {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgb($dark-background, 0.75);
+    top: 0;
+    border-radius: 10px;
+
+    ::ng-deep .spinner-wrapper {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
 
   .statistic-chart {
     height: 30vh;

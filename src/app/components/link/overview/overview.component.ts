@@ -88,7 +88,7 @@ export class OverviewComponent implements OnInit {
 
         setTimeout(() => {
           this.refreshing = false;
-          
+
           if (!this.containerHasScrollBar()) {
             this.onScroll();
           }

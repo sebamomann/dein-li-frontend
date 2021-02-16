@@ -33,7 +33,8 @@
               "src/assets",
               "src/manifest.webmanifest",
               "src/ngsw-worker.js",
-              "src/ngsw.json"
+              "src/ngsw.json",
+              "src/silent-refresh.html"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",

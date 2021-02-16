@@ -48,26 +48,6 @@ mat-toolbar {
       text-align: center;
       font-weight: bolder;
     }
-
-    .account-menu-wrapper {
-      margin: 0 0 0 auto;
-
-      button {
-        mat-icon {
-          @include md-icon-size(30px);
-          outline: none;
-          margin: 0 0 0 10px;
-
-          &:first-child {
-            margin: 0 0 0 0;
-          }
-        }
-
-        &:nth-of-type(2) {
-          text-align: right;
-        }
-      }
-    }
   }
 }
 

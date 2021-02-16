@@ -11,6 +11,7 @@ export class HexagonLoaderComponent implements OnInit {
   @Input() reverse: boolean;
 
   constructor() {
+
   }
 
   ngOnInit() {
