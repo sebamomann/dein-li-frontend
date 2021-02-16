@@ -8,7 +8,7 @@
   window['env']['BASE_URL'] = "${BASE_URL}";
 
   window['env']['KEYCLOAK_URL'] = "${KEYCLOAK_URL}";
-  window['env']['KEYCLOAK_URL'] = "${KEYCLOAK_REALM}";
+  window['env']['KEYCLOAK_REALM'] = "${KEYCLOAK_REALM}";
   window['env']['KEYCLOAK_REDIRECT_URI'] = "${KEYCLOAK_REDIRECT_URI}";
   window['env']['KEYCLOAK_POST_LOGOUT_REDIRECT_URI'] = "${KEYCLOAK_POST_LOGOUT_REDIRECT_URI}";
   window['env']['KEYCLOAK_CLIENT_ID'] = "${KEYCLOAK_CLIENT_ID}";
