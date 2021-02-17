@@ -20,6 +20,8 @@ mat-toolbar {
 
     .logo-wrapper {
       outline: none;
+      width: fit-content;
+      cursor: pointer;
 
       img {
         vertical-align: middle;
