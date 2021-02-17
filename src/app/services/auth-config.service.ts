@@ -51,7 +51,7 @@ export class AuthConfigService {
             .then((loggedIn) => {
               if (this.oauthService.hasValidAccessToken()) {
                 console.log('[KEYCLOAK] - VALID TOKEN');
-                this.router.navigate(['/'], {queryParams: {success1: true}});
+                // this.router.navigate(['/'], {queryParams: {success1: true}});
 
                 this.authenticationValueService.currentUserSubject$.next(this.oauthService.getIdentityClaims());
                 this.authenticationValueService.loginStatus$.next(true);
