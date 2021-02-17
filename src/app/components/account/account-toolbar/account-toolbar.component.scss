@@ -30,28 +30,40 @@
       &:first-child {
         margin: 0 0 0 0;
       }
+
+      &.spin {
+        animation: spin 2s infinite linear;
+      }
     }
   }
 
-  //
-  //button {
-  //  line-height: 32px;
-  //  font-size: 1.25em;
-  //  font-weight: normal;
-  //  vertical-align: middle;
-  //
-  //  mat-icon {
-  //    @include md-icon-size(28px);
-  //    outline: none;
-  //    margin: 0 0 0 10px;
-  //
-  //    &:first-child {
-  //      margin: 0 0 0 0;
-  //    }
-  //  }
-  //
-  //  &:nth-of-type(2) {
-  //    text-align: right;
-  //  }
-  //}
+
+  button {
+    line-height: 32px;
+    font-weight: normal;
+    vertical-align: middle;
+
+    mat-icon {
+      @include md-icon-size(28px);
+      outline: none;
+      margin: 0 0 0 10px;
+
+      &:first-child {
+        margin: 0 0 0 0;
+      }
+    }
+
+    &:nth-of-type(2) {
+      text-align: right;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

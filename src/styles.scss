@@ -91,6 +91,8 @@ body {
 }
 
 .stroked-button-colored {
+  overflow: hidden;
+
   &.mat-stroked-button {
     border-color: $blue;
   }

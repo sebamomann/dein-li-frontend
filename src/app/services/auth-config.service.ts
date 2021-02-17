@@ -29,6 +29,8 @@ export class AuthConfigService {
 
   async initAuth(): Promise<any> {
     return new Promise<boolean>((resolveFn, rejectFn) => {
+      this.authenticationValueService.refreshing = true;
+
       // setup oauthService
       this.oauthService.configure(this.authConfig);
       this.oauthService.setStorage(localStorage);
@@ -57,6 +59,7 @@ export class AuthConfigService {
                 this.authenticationValueService.loginStatus$.next(true);
                 this.oauthService.setupAutomaticSilentRefresh();
 
+                this.authenticationValueService.refreshing = false;
                 resolveFn(true);
               } else {
                 console.log('[KEYCLOAK] - INVALID TOKEN');
@@ -65,23 +68,31 @@ export class AuthConfigService {
                     this.authenticationValueService.currentUserSubject$.next(this.oauthService.getIdentityClaims());
                     this.authenticationValueService.loginStatus$.next(true);
                     this.oauthService.setupAutomaticSilentRefresh();
+
+                    this.authenticationValueService.refreshing = false;
                   })
                   .catch((err) => {
                     console.log('[KEYCLOAK] - ERROR - LOGOUT');
+                    this.authenticationValueService.refreshing = false;
                     this.oauthService.logOut();
                   });
+
                 resolveFn(true);
               }
             })
             .catch((err) => {
               console.log(err);
               console.log('[KEYCLOAK] - ERROR (after TRY LOGIN)');
+
+              this.authenticationValueService.refreshing = true;
               resolveFn(true);
             });
         })
         .catch((err) => {
           console.log(err);
           console.log('[KEYCLOAK] - ERROR (after LOAD DISCOVERY DOCUMENT)');
+
+          this.authenticationValueService.refreshing = false;
           resolveFn(true);
         });
     });
