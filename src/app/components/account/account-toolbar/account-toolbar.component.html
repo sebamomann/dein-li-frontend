@@ -1,12 +1,13 @@
 <div class="account-menu-wrapper">
   <ng-container *ngIf="userIsLoggedIn">
-    <button [matMenuTriggerFor]="menu"
-            #menuTrigger="matMenuTrigger"
-            class="stroked-button-colored"
-            mat-stroked-button>
-      <span>{{username}}</span>
+    <div class="account-username-button">
+      <div [matMenuTriggerFor]="menu"
+           #menuTrigger="matMenuTrigger"
+           class="stroked-button-colored">
+        <span>{{username}}</span>
+      </div>
       <mat-icon>account_circle</mat-icon>
-    </button>
+    </div>
 
     <mat-menu #menu="matMenu" xPosition="before">
       <ng-container [ngTemplateOutlet]="loggedInMenu">

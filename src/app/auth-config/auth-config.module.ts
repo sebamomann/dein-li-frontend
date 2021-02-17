@@ -6,7 +6,7 @@ import {authConfig, OAuthModuleConfig} from '../auth.config';
 import {AuthConfigService} from '../services/auth-config.service';
 
 export function init_app(authConfigService: AuthConfigService) {
-  return () => authConfigService.initAuth(false);
+  return () => authConfigService.initAuth();
 }
 
 @NgModule({

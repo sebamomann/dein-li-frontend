@@ -4,19 +4,54 @@
   text-align: right;
   margin: 0 0 0 auto;
 
-  button {
+  .account-username-button {
+    width: fit-content;
+    display: unset;
+
+    div {
+      border: 1px solid $blue;
+      border-right: none;
+      padding: 3px calc(23px + 6px) 3px 12px;
+      border-radius: 5px 0px 0px 5px;
+      line-height: normal;
+      display: inline-block;
+      vertical-align: middle;
+      font-weight: 400;
+      font-size: 1em;
+    }
+
     mat-icon {
-      @include md-icon-size(30px);
+      @include md-icon-size(44px);
       outline: none;
-      margin: 0 0 0 10px;
+      margin: 0 0 0 -23px;
+      display: inline-block;
+      vertical-align: middle;
 
       &:first-child {
         margin: 0 0 0 0;
       }
     }
-
-    &:nth-of-type(2) {
-      text-align: right;
-    }
   }
+
+  //
+  //button {
+  //  line-height: 32px;
+  //  font-size: 1.25em;
+  //  font-weight: normal;
+  //  vertical-align: middle;
+  //
+  //  mat-icon {
+  //    @include md-icon-size(28px);
+  //    outline: none;
+  //    margin: 0 0 0 10px;
+  //
+  //    &:first-child {
+  //      margin: 0 0 0 0;
+  //    }
+  //  }
+  //
+  //  &:nth-of-type(2) {
+  //    text-align: right;
+  //  }
+  //}
 }

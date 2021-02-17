@@ -27,7 +27,7 @@ export class AuthConfigService {
     return this._decodedIDToken;
   }
 
-  async initAuth(reinit: boolean): Promise<any> {
+  async initAuth(): Promise<any> {
     return new Promise<boolean>((resolveFn, rejectFn) => {
       // setup oauthService
       this.oauthService.configure(this.authConfig);
