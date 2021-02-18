@@ -2,7 +2,7 @@ import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthConfig, OAuthModule} from 'angular-oauth2-oidc';
 
-import {authConfig, OAuthModuleConfig} from '../auth.config';
+import {authConfig, OAuthModuleConfig} from './auth.config';
 import {AuthConfigService} from '../services/auth-config.service';
 
 export function init_app(authConfigService: AuthConfigService) {

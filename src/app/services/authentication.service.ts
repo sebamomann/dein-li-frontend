@@ -39,6 +39,6 @@ export class AuthenticationService {
   }
 
   public openAccountSettings() {
-    LinkUtil.openLinkInNewTab(`${environment.keycloak.url}realms/${environment.keycloak.realm}/account7#/personal-info`);
+    LinkUtil.openLinkInNewTab(`${environment.keycloak.url}realms/${environment.keycloak.realm}/account/#/personal-info`);
   }
 }
