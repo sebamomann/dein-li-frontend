@@ -25,20 +25,13 @@ import {animate, style, transition, trigger} from '@angular/animations';
       transition('void => *', [
         style({
           transform: 'scale(0)',
-          borderRadius: '100%',
-          backgroundColor: '#1C1B1B'
         }),
         animate('500ms {{delay}}ms ease-out', style({
           transform: 'scale(1.15)',
-          backgroundColor: '#1C1B1B',
-          borderRadius: '100%'
         })),
         animate('250ms ease-out', style({
           transform: 'scale(1)',
-          backgroundColor: '#1C1B1B',
-          borderRadius: '100%'
         })),
-        animate('0ms 750ms ease-out', style({backgroundColor: 'transparent', borderRadius: '100%'})),
       ], {params: {delay: 0}}),
     ]),
     trigger('removeScale', [
