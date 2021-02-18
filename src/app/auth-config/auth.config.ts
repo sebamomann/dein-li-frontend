@@ -3,8 +3,8 @@ import {environment} from '../../environments/environment';
 
 export const authConfig: AuthConfig = {
   issuer: environment.keycloak.url + 'realms/' + environment.keycloak.realm,
-  redirectUri: environment.keycloak.redirectUri,
   clientId: environment.keycloak.clientId,
+  redirectUri: environment.keycloak.redirectUri,
   responseType: environment.keycloak.responseType,
   scope: environment.keycloak.scope,
   requireHttps: environment.keycloak.requireHttps,

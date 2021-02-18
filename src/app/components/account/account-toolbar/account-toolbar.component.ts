@@ -76,10 +76,7 @@ export class AccountToolbarComponent implements OnInit {
   }
 
   public login() {
-    this.authenticationService.login().catch((err) => {
-      console.log(err);
-      console.log('login error');
-    });
+    this.authenticationService.login();
   }
 
   public logout() {
@@ -90,7 +87,7 @@ export class AccountToolbarComponent implements OnInit {
     this.authenticationService.openAccountSettings();
   }
 
-  accountButtonAction() {
+  public accountButtonAction() {
     if (!this.userIsLoggedIn) {
       this.menu.closeMenu();
 

@@ -29,24 +29,40 @@ export class AuthConfigService {
 
   async initAuth(): Promise<any> {
     return new Promise<boolean>((resolveFn, rejectFn) => {
+      // const redUrl = localStorage.getItem('redirectUrl');
+
       if (this.oauthService.hasValidAccessToken()) {
         this.authenticationValueService.refreshing = true;
       }
+
       // setup oauthService
       this.oauthService.configure(this.authConfig);
       this.oauthService.setStorage(localStorage);
       this.oauthService.tokenValidationHandler = new NullValidationHandler();
+
+      this.oauthService.redirectUri = localStorage.getItem('redirectUrl');
+
+      // if (redUrl) {
+      //   this.oauthService.redirectUri = redUrl;
+      //   localStorage.getItem('redirectUrl');
+      // }
 
       // subscribe to token events
       this.oauthService.events
         .pipe(filter((e: any) => {
           return e.type === 'token_received';
         }))
-        .subscribe(() => this.handleNewToken(),
+        .subscribe(() => {
+            this.handleNewToken();
+          },
           (err) => {
           });
 
       // continue initializing app or redirect to login-page
+
+      // if (redUrl) {
+      //   localStorage.getItem('redirectUrl');
+      // }
 
       this.oauthService.loadDiscoveryDocument()
         .then(_ => {
@@ -72,21 +88,22 @@ export class AuthConfigService {
                     this.oauthService.setupAutomaticSilentRefresh();
 
                     this.authenticationValueService.refreshing = false;
+
+                    resolveFn(true);
                   })
                   .catch((err) => {
                     console.log('[KEYCLOAK] - ERROR - LOGOUT');
                     this.authenticationValueService.refreshing = false;
-                    this.oauthService.logOut();
+                    this.oauthService.revokeTokenAndLogout();
+                    resolveFn(true);
                   });
-
-                resolveFn(true);
               }
             })
             .catch((err) => {
               console.log(err);
               console.log('[KEYCLOAK] - ERROR (after TRY LOGIN)');
 
-              this.authenticationValueService.refreshing = true;
+              this.authenticationValueService.refreshing = false;
               resolveFn(true);
             });
         })
@@ -100,8 +117,11 @@ export class AuthConfigService {
     });
   }
 
-  public initLogin(url: string = '/') {
-    this.oauthService.initImplicitFlow();
+  public initLogin() {
+    this.oauthService.redirectUri = window.location.href;
+    localStorage.setItem('redirectUrl', this.oauthService.redirectUri);
+    // localStorage.setItem('redirectUrl', this.oauthService.redirectUri);
+    this.oauthService.initLoginFlow();
   }
 
   private handleNewToken() {

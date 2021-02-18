@@ -10,7 +10,7 @@ import {AuthConfigService} from './auth-config.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-  constructor(private _http: HttpClient, private _router: Router, private oauth: OAuthService,
+  constructor(private _http: HttpClient, private _router: Router, private oauth: OAuthService, private router: Router,
               private authenticationValuesService: AuthenticationValuesService, private authConfigService: AuthConfigService) {
   }
 
@@ -19,23 +19,29 @@ export class AuthenticationService {
   }
 
   public check(state: RouterStateSnapshot): boolean {
+    while (this.authenticationValuesService.refreshingSubject$.getValue() === true) {
+      console.log('refreshing');
+    }
+
     if (this.userIsLoggedIn()) {
       return true;
     } else {
-      this.authConfigService.initLogin(state.url);
+      this.login();
     }
   }
 
-  public async login() {
-    await this.authConfigService.initLogin();
+  public login() {
+    this.authConfigService.initLogin();
   }
 
   public logout() {
+    this.oauth.postLogoutRedirectUri = environment.keycloak.postLogoutRedirectUri;
     this.oauth.logOut();
   }
 
   public userIsLoggedIn(): boolean {
-    return this.oauth.hasValidAccessToken();
+    return this.oauth.hasValidAccessToken() &&
+      this.oauth.hasValidIdToken();
   }
 
   public openAccountSettings() {
