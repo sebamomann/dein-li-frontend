@@ -37,9 +37,9 @@ import {MatMenuTrigger} from '@angular/material';
     ]),
     trigger('removeScale', [
       transition('* => void', [
-        style({transform: 'scale(1)'}),
-        animate('150ms ease-in', style({transform: 'scale(1.1)'})),
-        animate('350ms ease-out', style({transform: 'scale(0)'}))
+        style({transform: 'scale(1) rotate(*)'}),
+        animate('150ms ease-in', style({transform: 'scale(1.1) rotate(1deg)'})),
+        animate('350ms ease-out', style({transform: 'scale(0) rotate(1deg)'}))
       ]),
     ])
   ]
