@@ -29,8 +29,9 @@ export class AuthConfigService {
 
   async initAuth(): Promise<any> {
     return new Promise<boolean>((resolveFn, rejectFn) => {
-      this.authenticationValueService.refreshing = true;
-
+      if (this.oauthService.hasValidAccessToken()) {
+        this.authenticationValueService.refreshing = true;
+      }
       // setup oauthService
       this.oauthService.configure(this.authConfig);
       this.oauthService.setStorage(localStorage);
@@ -62,6 +63,7 @@ export class AuthConfigService {
                 this.authenticationValueService.refreshing = false;
                 resolveFn(true);
               } else {
+                this.authenticationValueService.refreshing = true;
                 console.log('[KEYCLOAK] - INVALID TOKEN');
                 this.oauthService.silentRefresh()
                   .then((res) => {

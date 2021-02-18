@@ -9,15 +9,15 @@
     display: unset;
 
     div {
-      border: 1px solid $blue;
+      border: 3px solid $blue;
       border-right: none;
       padding: 2px calc(23px + 6px) 2px 12px;
-      border-radius: 5px 0px 0px 5px;
+      border-radius: 4px 0 0 4px;
       line-height: normal;
       display: inline-block;
       vertical-align: middle;
       font-weight: 400;
-      font-size: 1em;
+      font-size: 0.85em;
     }
 
     mat-icon {

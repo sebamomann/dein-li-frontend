@@ -1,15 +1,20 @@
 <div class="account-menu-wrapper">
-  <div class="account-username-button" *ngIf="refreshing || (!refreshing && userIsLoggedIn)">
+  <div class="account-username-button"
+       [matMenuTriggerFor]="menu"
+       #menuTrigger="matMenuTrigger"
+       (click)="accountButtonAction()">
     <div *ngIf="!refreshing"
          [@appearSidewards]="{value: '', params: {delay: refreshingOnInit ? (500 + 750) : 500}}"
-         [matMenuTriggerFor]="menu"
-         #menuTrigger="matMenuTrigger"
          class="stroked-button-colored">
-      <span>{{username}}</span>
+      <span>{{userIsLoggedIn ? username : "Login"}}</span>
     </div>
-    <mat-icon *ngIf="!refreshing"
+    <mat-icon *ngIf="!refreshing && userIsLoggedIn"
               [@appearScale]="{value: '', params: {delay: refreshingOnInit ? 500 : 0}}">
       account_circle
+    </mat-icon>
+    <mat-icon *ngIf="!refreshing && !userIsLoggedIn"
+              [@appearScale]="{value: '', params: {delay: refreshingOnInit ? 500 : 0}}">
+      login
     </mat-icon>
     <mat-icon *ngIf="refreshing"
               [@removeScale]
@@ -22,17 +27,6 @@
     <ng-container [ngTemplateOutlet]="loggedInMenu">
     </ng-container>
   </mat-menu>
-
-  <ng-container *ngIf="!userIsLoggedIn && !refreshing">
-    <div>
-      <button (click)="login()"
-              class="stroked-button-colored"
-              mat-stroked-button>
-        <span>Login</span>
-        <mat-icon>login</mat-icon>
-      </button>
-    </div>
-  </ng-container>
 </div>
 
 <ng-template #loggedInMenu>

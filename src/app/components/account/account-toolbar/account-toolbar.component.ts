@@ -1,8 +1,9 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {IUser} from '../../../models/IUser.model';
 import {AuthenticationValuesService} from '../../../services/authentication.values.service';
 import {animate, style, transition, trigger} from '@angular/animations';
+import {MatMenuTrigger} from '@angular/material';
 
 
 @Component({
@@ -46,6 +47,8 @@ import {animate, style, transition, trigger} from '@angular/animations';
 
 export class AccountToolbarComponent implements OnInit {
 
+  @ViewChild('menuTrigger', {static: true}) menu: MatMenuTrigger;
+
   public username = '';
   public userIsLoggedIn = false;
 
@@ -68,6 +71,7 @@ export class AccountToolbarComponent implements OnInit {
       this.refreshing = val;
     });
     this.refreshingOnInit = this.authenticationValuesService.refreshingSubject$.getValue();
+
     console.log(this.refreshingOnInit);
   }
 
@@ -84,5 +88,13 @@ export class AccountToolbarComponent implements OnInit {
 
   public openAccountSettings() {
     this.authenticationService.openAccountSettings();
+  }
+
+  accountButtonAction() {
+    if (!this.userIsLoggedIn) {
+      this.menu.closeMenu();
+
+      this.login();
+    }
   }
 }
