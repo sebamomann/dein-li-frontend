@@ -5,6 +5,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LinkService} from '../../services/link.service';
 import {ILink} from '../../models/ILink.model';
 import {Subscription} from 'rxjs';
+import {LinkUtil} from '../../_util/Link.util';
+import {UrlUtil} from '../../_util/Url.util';
 
 // @ts-ignore
 const validUrl = require('valid-url');
@@ -26,7 +28,7 @@ export class AddVersionDialogComponent implements OnInit, OnDestroy {
   constructor(@Inject(MAT_DIALOG_DATA) public short: string,
               private formBuilder: FormBuilder, private linkService: LinkService,
               private dialogRef: MatDialogRef<AddVersionDialogComponent>) {
-    this.link = environment.API_URL + short;
+    this.link = UrlUtil.getBaseUrl() + short;
   }
 
   ngOnInit() {
