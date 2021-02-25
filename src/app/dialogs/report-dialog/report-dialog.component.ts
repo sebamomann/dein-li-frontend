@@ -14,7 +14,7 @@ interface ReportDialogData {
 })
 export class ReportDialogComponent {
   public short: string;
-  public baseUrl = UrlUtil.getApiDomain();
+  public baseUrl = UrlUtil.getBaseUrl();
 
   public event = new FormGroup({
     short: new FormControl('', [Validators.required]),

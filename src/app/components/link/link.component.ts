@@ -47,7 +47,7 @@ export class LinkComponent implements OnInit {
   /**
    * URLs
    */
-  public baseUrl = UrlUtil.getApiDomain();
+  public baseUrl = UrlUtil.getBaseDomain();
   public completeUrl = '';
   public short: string;
 
@@ -58,7 +58,7 @@ export class LinkComponent implements OnInit {
               private dialog: MatDialog) {
     this.route.queryParams.subscribe(params => {
       this.short = params.l;
-      this.completeUrl = UrlUtil.getApiDomain() + this.short;
+      this.completeUrl = UrlUtil.getBaseUrl() + this.short;
     });
 
     this.chartFilter = new ChartFilter();

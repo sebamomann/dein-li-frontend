@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
 
   public event: FormGroup;
   public userIsLoggedIn = this.authenticationService.userIsLoggedIn();
-  public baseUrl = UrlUtil.getApiDomain();
+  public baseUrl = UrlUtil.getBaseUrl();
 
   public highlightHint = false;
   @ViewChild('chartRef', {static: true})

@@ -15,7 +15,7 @@ export class PreviewComponent implements OnInit {
   public $link: Observable<ILink>;
 
   public short: string;
-  public baseUrl = UrlUtil.getApiDomain();
+  public baseUrl = UrlUtil.getBaseDomain();
 
   constructor(private route: ActivatedRoute, private router: Router,
               private linkService: LinkService) {
