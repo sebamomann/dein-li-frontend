@@ -13,7 +13,7 @@ import {ShareObject} from '../../models/ShareObejct';
 export class SuccessfulCreationDialogComponent {
   public shareObject: ShareObject;
 
-  public completeUrl = UrlUtil.getApiDomain() + this.link.short;
+  public completeUrl = UrlUtil.getBaseDomain() + this.link.short;
   public userIsLoggedIn: boolean = this.authenticationService.userIsLoggedIn();
 
   constructor(@Inject(MAT_DIALOG_DATA) public link: ILink, private snackBar: MatSnackBar,

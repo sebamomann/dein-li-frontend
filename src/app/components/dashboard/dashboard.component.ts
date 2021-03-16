@@ -97,7 +97,7 @@ export class DashboardComponent implements OnInit {
       .create(link, short)
       .subscribe(
         (sResponse) => {
-          this.handleCreationSuccess(sResponse, formDirective);
+          this.handleCreationSuccess({original: link, short: sResponse.short} as ILink, formDirective);
         },
         (err) => {
           this.handleCreationError(err);
