@@ -1,7 +1,6 @@
 (function (window) {
   window.env = window.env || {};
 
-  // Environment variables
   window["env"]["production"] = "${PRODUCTION}"
 
   window['env']['API_URL'] = "${API_URL}";
