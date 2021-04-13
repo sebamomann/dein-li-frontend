@@ -1,7 +1,6 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
 import {ToolbarService} from './services/toolbar.service';
-import {NavigationEnd, Router} from '@angular/router';
-import {filter} from 'rxjs/operators';
+import {Router} from '@angular/router';
 import {UpdateService} from './services/update.service';
 import {interval} from 'rxjs';
 import {AuthenticationValuesService} from './services/authentication.values.service';
@@ -20,13 +19,12 @@ export class AppComponent {
       this.title = sTitle;
     });
 
-    const navEndEvent$ = router.events.pipe(
-      filter(e => e instanceof NavigationEnd)
-    );
-
     const source = interval(1000 * 60);
-    source.subscribe(() => {
-      this.update.checkForUpdate();
-    });
+
+    source.subscribe(
+      () => {
+        this.update.checkForUpdate();
+      }
+    );
   }
 }

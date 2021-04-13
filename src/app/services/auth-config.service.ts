@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {AuthConfig, NullValidationHandler, OAuthService} from 'angular-oauth2-oidc';
 import {filter} from 'rxjs/operators';
 import {AuthenticationValuesService} from './authentication.values.service';
-import {Router} from '@angular/router';
 
 @Injectable()
 export class AuthConfigService {
@@ -11,7 +10,6 @@ export class AuthConfigService {
     private readonly oauthService: OAuthService,
     private readonly authConfig: AuthConfig,
     private authenticationValueService: AuthenticationValuesService,
-    private router: Router
   ) {
   }
 

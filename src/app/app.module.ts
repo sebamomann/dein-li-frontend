@@ -47,7 +47,9 @@ registerLocaleData(localeDe);
     UpdateService,
   ],
   exports: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule {
   constructor() {

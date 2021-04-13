@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 
 import {environment} from '../../environments/environment';
-import {Router, RouterStateSnapshot} from '@angular/router';
+import {RouterStateSnapshot} from '@angular/router';
 import {OAuthService} from 'angular-oauth2-oidc';
 import {LinkUtil} from '../_util/Link.util';
 import {AuthenticationValuesService} from './authentication.values.service';
@@ -10,8 +9,9 @@ import {AuthConfigService} from './auth-config.service';
 
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
-  constructor(private _http: HttpClient, private _router: Router, private oauth: OAuthService, private router: Router,
-              private authenticationValuesService: AuthenticationValuesService, private authConfigService: AuthConfigService) {
+  constructor(private oauth: OAuthService,
+              private authenticationValuesService: AuthenticationValuesService,
+              private authConfigService: AuthConfigService) {
   }
 
   public get accessToken(): string {
