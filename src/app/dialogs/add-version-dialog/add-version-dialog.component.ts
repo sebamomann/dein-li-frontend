@@ -1,12 +1,11 @@
-import {Component, EventEmitter, Inject, OnDestroy, OnInit, Output} from '@angular/core';
-import {environment} from '../../../environments/environment';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {LinkService} from '../../services/link.service';
-import {ILink} from '../../models/ILink.model';
-import {Subscription} from 'rxjs';
-import {LinkUtil} from '../../_util/Link.util';
-import {UrlUtil} from '../../_util/Url.util';
+import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { LinkService } from '../../services/link.service';
+import { ILink } from '../../models/ILink.model';
+import { Subscription } from 'rxjs';
+import { LinkUtil } from '../../_util/Link.util';
+import { UrlUtil } from '../../_util/Url.util';
 
 // @ts-ignore
 const validUrl = require('valid-url');
@@ -26,8 +25,8 @@ export class AddVersionDialogComponent implements OnInit, OnDestroy {
   private output$$: Subscription;
 
   constructor(@Inject(MAT_DIALOG_DATA) public short: string,
-              private formBuilder: FormBuilder, private linkService: LinkService,
-              private dialogRef: MatDialogRef<AddVersionDialogComponent>) {
+    private formBuilder: FormBuilder, private linkService: LinkService,
+    private dialogRef: MatDialogRef<AddVersionDialogComponent>) {
     this.link = UrlUtil.getBaseUrl() + short;
   }
 
@@ -47,7 +46,7 @@ export class AddVersionDialogComponent implements OnInit, OnDestroy {
     const link = this.get('link').value;
 
     if (!validUrl.isUri(link)) {
-      this.get('link').setErrors({invalid: true});
+      this.get('link').setErrors({ invalid: true });
     }
 
     const output$ = this.linkService.createNewVersion(this.short, link);
