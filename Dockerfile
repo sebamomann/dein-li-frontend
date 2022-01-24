@@ -1,6 +1,5 @@
 FROM node:14.18.0 as build
 
-ENV NODE_OPTIONS=--openssl-legacy-provider
 WORKDIR /usr/src/app
 
 COPY package*.json ./
