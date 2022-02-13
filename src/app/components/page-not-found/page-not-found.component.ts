@@ -12,13 +12,13 @@ export class PageNotFoundComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    const params = await this.route.queryParamMap.toPromise();
-    console.log(params.get("isRedirect"));
-    if (/^\/([a-zA-Z0-9-_]+)\/?$/.test(this.router.url) && !params.get("isRedirect")) {
-      console.log("lol")
-      this.document.location.href;
-      window.open(this.document.location.href + this.router.url + "?isRedirect=true");
-    }
+    this.route.queryParamMap.subscribe((params) => {
+      if (/^\/([a-zA-Z0-9-_]+)\/?$/.test(this.router.url) && !params.get("isRedirect")) {
+        console.log("REDIRECTING NGINX")
+        this.document.location.href;
+        window.open(this.router.url + "?isRedirect=true", "_self");
+      }
+    });
   }
 
 }
