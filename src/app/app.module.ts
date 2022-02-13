@@ -1,3 +1,4 @@
+import { PageNotFoundModule } from './components/page-not-found/page-not-found.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -36,7 +37,8 @@ registerLocaleData(localeDe);
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: true, registrationStrategy: 'registerImmediately' }),
     AuthConfigModule,
     AccountToolbarModule,
-    MatomoModule
+    MatomoModule,
+    PageNotFoundModule,
   ],
   providers: [
     WINDOW_PROVIDERS,
