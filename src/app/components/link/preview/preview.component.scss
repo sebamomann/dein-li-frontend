@@ -11,6 +11,12 @@
   position: relative;
   line-break: anywhere;
 
+  p {
+    text-align: center;
+    color: white;
+    margin-bottom: 25px;
+  }
+
   app-report-block {
     display: block;
     margin-bottom: 25px;
@@ -36,9 +42,13 @@
     }
   }
 
-  button {
-    margin: 0 auto 25px;
-    display: block;
+  .actions {
+    text-align: center;
+
+    button {
+        margin: 0 15px 25px;
+        display: inline-block;
+      }
   }
 }
 

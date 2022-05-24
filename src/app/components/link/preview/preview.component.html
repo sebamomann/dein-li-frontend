@@ -1,24 +1,31 @@
 <main>
-  <div *ngIf="$link | async let link; else loading">
+  <div *ngIf="$link | async; let link; else: loading">
     <div class="preview-wrapper">
-      <h2 class="title">
-        Vorschau
-      </h2>
+      <h2 class="title">Vorschau</h2>
+      <p>
+        Der von Ihnen angeklickte Link leitet sie auf folgende Webiste weiter.
+      </p>
 
-      <span class="url-with-base"><!--
-        --><span class="baseUrl">{{baseUrl}}</span><!--
-        --><span class="short">{{link.short}}</span>
-      </span>
-      <span class="original">{{link.original}}</span>
+      <span class="original">{{ link.original }}</span>
+
+      <p>Sind sie damit einverstanden?</p>
+
+      <div class="actions">
+        <button mat-raised-button (click)="redirectToHome()">Zurück</button>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="openLinkInSameTab(link.original)"
+        >
+          Link Öffnen
+        </button>
+      </div>
 
       <app-report-block [short]="link.short"></app-report-block>
 
-      <button mat-raised-button
-              (click)="openLinkInNewTab(link.original)">
-        Öffnen
-      </button>
-
-      <span class="date">{{link.iat | date: "dd.MM.yyy HH:MM:ss"}}</span>
+      <span class="date"
+        >Link erstellt: {{ link.iat | date: "dd.MM.yyy HH:MM:ss" }}</span
+      >
     </div>
   </div>
 </main>

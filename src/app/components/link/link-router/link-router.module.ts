@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {LinkRouterComponent} from './link-router.component';
-import {RouterModule, Routes} from '@angular/router';
-import {AuthGuard} from '../../../_helper/auth.gaurd';
-import {HexagonLoaderModule} from '../../../html-templates/hexagon-loader/hexagon-loader.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { LinkRouterComponent } from './link-router.component';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../../../_helper/auth.gaurd';
+import { HexagonLoaderModule } from '../../../html-templates/hexagon-loader/hexagon-loader.module';
 
 const routes: Routes = [
   {
@@ -18,6 +18,10 @@ const routes: Routes = [
   },
   {
     path: 'preview',
+    loadChildren: () => import('../preview/preview.module').then(m => m.PreviewModule),
+  },
+  {
+    path: 'preview/:link',
     loadChildren: () => import('../preview/preview.module').then(m => m.PreviewModule),
   },
   {

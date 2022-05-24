@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Router, RouterModule, Routes, UrlSegment } from '@angular/router';
 import { ImpressumComponent } from './components/impressum/impressum.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: 'link', loadChildren: () => import('./components/link/link-router/link-router.module').then(m => m.LinkRouterModule) },
   { path: 'redirect', loadChildren: () => import('./components/redirect/redirect.module').then(m => m.RedirectModule) },
   { path: 'impressum', component: ImpressumComponent },
-  { path: '**', component: PageNotFoundComponent }
+  { matcher: match, redirectTo: '/link/preview/:link' },
 ];
 
 @NgModule({
@@ -17,3 +17,12 @@ const routes: Routes = [
 })
 export class AppRoutingModule {
 }
+
+function match(url: UrlSegment[]) {
+  const leurl = [new UrlSegment('segment', {})];
+  return {
+    consumed: leurl,
+    posParams: { 'link': new UrlSegment(url[0].path, {}) }
+  }
+}
+
