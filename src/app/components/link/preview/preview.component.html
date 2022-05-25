@@ -2,6 +2,7 @@
   <div *ngIf="$link | async; let link; else: loading">
     <div class="preview-wrapper">
       <h2 class="title">Vorschau</h2>
+
       <p>
         Der von Ihnen angeklickte Link leitet sie auf folgende Webiste weiter.
       </p>
@@ -15,7 +16,7 @@
         <button
           mat-raised-button
           color="primary"
-          (click)="openLinkInSameTab(link.original)"
+          (click)="openLinkInSameTab(link.short)"
         >
           Link Öffnen
         </button>

@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
-import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
-import {catchError, map} from 'rxjs/operators';
-import {ILink} from '../models/ILink.model';
-import {Observable, of} from 'rxjs';
-import {ChartFilter} from '../models/ChartFilter/ChartFilter';
-import {ILinkStats} from '../models/ILinkStats.model';
-import {Interval} from '../models/Interval/Interval.class';
+import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { ILink } from '../models/ILink.model';
+import { Observable, of } from 'rxjs';
+import { ChartFilter } from '../models/ChartFilter/ChartFilter';
+import { ILinkStats } from '../models/ILinkStats.model';
+import { Interval } from '../models/Interval/Interval.class';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class LinkService {
   public loadLinkByShort(short: string): Observable<ILink> {
     const url = `${environment.API_URL}links/${short}`;
 
-    const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
+    const res = this.httpClient.get(url, { observe: 'response', reportProgress: true });
 
     return res.pipe(
       map(response => {
@@ -34,7 +34,7 @@ export class LinkService {
   public loadLinkVersions(short: string): Observable<ILink[]> {
     const url = `${environment.API_URL}links/${short}/versions`;
 
-    const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
+    const res = this.httpClient.get(url, { observe: 'response', reportProgress: true });
 
     return res.pipe(
       map(response => {
@@ -59,7 +59,7 @@ export class LinkService {
 
     url = `${url}?interval=${interval.timeUnit}&start=${interval.start}&end=${interval.end}`;
 
-    const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
+    const res = this.httpClient.get(url, { observe: 'response', reportProgress: true });
 
     return res.pipe(
       map(response => {
@@ -91,7 +91,7 @@ export class LinkService {
 
     url = `${url}?interval=${interval.timeUnit}&start=${interval.start}&end=${interval.end}`;
 
-    const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
+    const res = this.httpClient.get(url, { observe: 'response', reportProgress: true });
 
     return res.pipe(
       map(response => {
@@ -106,7 +106,7 @@ export class LinkService {
   createNewVersion(short: string, original: string) {
     const url = `${environment.API_URL}links/${short}`;
 
-    const res = this.httpClient.put(url, {original}, {observe: 'response', reportProgress: true});
+    const res = this.httpClient.put(url, { original }, { observe: 'response', reportProgress: true });
 
     return res.pipe(
       map(response => {
@@ -121,7 +121,7 @@ export class LinkService {
   public loadLinks(orderBy = 'iat', order = 'DESC', limit = 15, offset = 0): Observable<ILink[]> {
     const url = `${environment.API_URL}links?order_by=${orderBy}&order=${order}&limit=${limit}&offset=${offset}`;
 
-    const res = this.httpClient.get(url, {observe: 'response', reportProgress: true});
+    const res = this.httpClient.get(url, { observe: 'response', reportProgress: true });
 
     return res.pipe(
       map(response => {
@@ -136,7 +136,7 @@ export class LinkService {
   public create(original: string, short: string) {
     const url = `${environment.API_URL}links`;
 
-    const res = this.httpClient.post(url, {original, short}, {observe: 'response', reportProgress: true});
+    const res = this.httpClient.post(url, { original, short }, { observe: 'response', reportProgress: true });
 
     return res.pipe(
       map(response => {
@@ -151,7 +151,7 @@ export class LinkService {
   public report(short: string) {
     const url = `${environment.API_URL}report`;
 
-    const res = this.httpClient.post(url, {short}, {observe: 'response', reportProgress: true});
+    const res = this.httpClient.post(url, { short }, { observe: 'response', reportProgress: true });
 
     return res.pipe(
       map(response => {

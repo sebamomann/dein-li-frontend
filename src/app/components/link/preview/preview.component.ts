@@ -36,6 +36,15 @@ export class PreviewComponent implements OnInit {
    */
   public ngOnInit() {
     this.$link = this.linkService.loadLinkByShort(this.short);
+    this.$link.subscribe((data) => {
+      if (data == null) {
+        this.router.navigate(['/redirect'], {
+          queryParams: {
+            error: "not_found"
+          }
+        });
+      }
+    })
   }
 
   /**
@@ -48,9 +57,9 @@ export class PreviewComponent implements OnInit {
   /**
    * Take passed link an open it in a new browser tab
    *
-   * @param link String   Link to open
+   * @param short String   Short link to open
    */
-  public openLinkInSameTab(link: any) {
-    LinkUtil.openLinkInSameTab(link);
+  public openLinkInSameTab(short: any) {
+    LinkUtil.openLinkInSameTab(window['env']['API_URL'] + "redirect/" + short + "?skip_threat=true");
   }
 }
