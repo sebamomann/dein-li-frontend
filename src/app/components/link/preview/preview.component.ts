@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ILink } from '../../../models/ILink.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,13 +12,14 @@ import { MatButton } from '@angular/material';
   templateUrl: './preview.component.html',
   styleUrls: ['./preview.component.scss']
 })
-export class PreviewComponent implements OnInit, AfterViewInit {
+export class PreviewComponent implements OnInit {
   public $link: Observable<ILink>;
 
   public short: string;
   public baseUrl = UrlUtil.getBaseDomain();
 
-  @ViewChild('btnRef') buttonRef: MatButton;
+  @ViewChild('btnRef') gotoLinkBtn: MatButton;
+
 
   constructor(private route: ActivatedRoute, private router: Router,
     private linkService: LinkService) {
@@ -34,10 +35,6 @@ export class PreviewComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public ngAfterViewInit() {
-    this.buttonRef.focus();
-  }
-
   /**
    * When view is loaded, load link by passed URL query parameter
    */
@@ -50,6 +47,10 @@ export class PreviewComponent implements OnInit, AfterViewInit {
             error: "not_found"
           }
         });
+      } else {
+        setTimeout(() => {
+          this.gotoLinkBtn.focus();
+        }, 100)
       }
     })
   }
