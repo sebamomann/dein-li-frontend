@@ -1,21 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ILink } from '../../../models/ILink.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LinkService } from '../../../services/link.service';
 import { UrlUtil } from '../../../_util/Url.util';
 import { LinkUtil } from '../../../_util/Link.util';
+import { MatButton } from '@angular/material';
 
 @Component({
   selector: 'app-preview',
   templateUrl: './preview.component.html',
   styleUrls: ['./preview.component.scss']
 })
-export class PreviewComponent implements OnInit {
+export class PreviewComponent implements OnInit, AfterViewInit {
   public $link: Observable<ILink>;
 
   public short: string;
   public baseUrl = UrlUtil.getBaseDomain();
+
+  @ViewChild('btnRef') buttonRef: MatButton;
 
   constructor(private route: ActivatedRoute, private router: Router,
     private linkService: LinkService) {
@@ -29,6 +32,10 @@ export class PreviewComponent implements OnInit {
     } else {
       this.short = this.route.snapshot.paramMap.get('link')
     }
+  }
+
+  public ngAfterViewInit() {
+    this.buttonRef.focus();
   }
 
   /**
