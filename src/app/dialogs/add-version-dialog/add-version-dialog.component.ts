@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { LinkService } from '../../services/link.service';
 import { ILink } from '../../models/ILink.model';
 import { Subscription } from 'rxjs';
@@ -17,7 +17,7 @@ const validUrl = require('valid-url');
 })
 export class AddVersionDialogComponent implements OnInit, OnDestroy {
   public link: any;
-  public event: FormGroup;
+  public event: UntypedFormGroup;
 
   @Output()
   done = new EventEmitter<ILink>();
@@ -25,14 +25,14 @@ export class AddVersionDialogComponent implements OnInit, OnDestroy {
   private output$$: Subscription;
 
   constructor(@Inject(MAT_DIALOG_DATA) public short: string,
-    private formBuilder: FormBuilder, private linkService: LinkService,
+    private formBuilder: UntypedFormBuilder, private linkService: LinkService,
     private dialogRef: MatDialogRef<AddVersionDialogComponent>) {
     this.link = UrlUtil.getBaseUrl() + short;
   }
 
   ngOnInit() {
     this.event = this.formBuilder.group({
-      link: new FormControl('', [Validators.required]),
+      link: new UntypedFormControl('', [Validators.required]),
     });
   }
 

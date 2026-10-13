@@ -5,7 +5,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ILinkStats} from '../../models/ILinkStats.model';
 import {LinkService} from '../../services/link.service';
-import {FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators} from '@angular/forms';
+import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validators} from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.component';
 import {ToolbarService} from '../../services/toolbar.service';
@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
   public chart;
   public chartFilter: ChartFilter;
 
-  public event: FormGroup;
+  public event: UntypedFormGroup;
   public userIsLoggedIn = this.authenticationService.userIsLoggedIn();
   public baseUrl = UrlUtil.getBaseUrl();
 
@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
   /**
    *
    */
-  constructor(public linkService: LinkService, private formBuilder: FormBuilder,
+  constructor(public linkService: LinkService, private formBuilder: UntypedFormBuilder,
               private dialog: MatDialog, private authenticationService: AuthenticationService,
               private toolbarService: ToolbarService, private route: ActivatedRoute) {
     this.toolbarService.setTitle('Home');
@@ -62,8 +62,8 @@ export class DashboardComponent implements OnInit {
    */
   public ngOnInit() {
     this.event = this.formBuilder.group({
-      link: new FormControl('', [Validators.required]),
-      short: new FormControl({value: '', disabled: !this.userIsLoggedIn}, [Validators.minLength(3)]),
+      link: new UntypedFormControl('', [Validators.required]),
+      short: new UntypedFormControl({value: '', disabled: !this.userIsLoggedIn}, [Validators.minLength(3)]),
     });
 
     this.totalStats$ = this.linkService.loadGlobalLinkStatistics(this.chartFilter);

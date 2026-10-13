@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {UrlUtil} from '../../_util/Url.util';
 
 interface ReportDialogData {
@@ -16,8 +16,8 @@ export class ReportDialogComponent {
   public short: string;
   public baseUrl = UrlUtil.getBaseUrl();
 
-  public event = new FormGroup({
-    short: new FormControl('', [Validators.required]),
+  public event = new UntypedFormGroup({
+    short: new UntypedFormControl('', [Validators.required]),
   });
 
   constructor(
