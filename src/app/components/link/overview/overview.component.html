@@ -1,47 +1,51 @@
 <main>
-  <div class="header" *ngIf="loaded && links.length > 0">
-    <mat-select [(value)]="filter" (valueChange)="changedFilter()">
-      <mat-option value="iat">Erstelldatum</mat-option>
-      <mat-option value="calls">Aufrufe gesamt</mat-option>
-      <mat-option value="calls_version">Aufrufe aktuelle Version</mat-option>
-    </mat-select>
-    <mat-icon (click)="changedOrder()">keyboard_arrow_down</mat-icon>
-  </div>
+  @if (loaded && links.length > 0) {
+    <div class="header">
+      <mat-select [(value)]="filter" (valueChange)="changedFilter()">
+        <mat-option value="iat">Erstelldatum</mat-option>
+        <mat-option value="calls">Aufrufe gesamt</mat-option>
+        <mat-option value="calls_version">Aufrufe aktuelle Version</mat-option>
+      </mat-select>
+      <mat-icon (click)="changedOrder()">keyboard_arrow_down</mat-icon>
+    </div>
+  }
 
-  <ng-container *ngIf="loaded; else loading">
-    <ng-container *ngIf="links.length > 0">
+  @if (loaded) {
+    @if (links.length > 0) {
       <div class="link-list"
-           infiniteScroll
-           [immediateCheck]="true"
-           [infiniteScrollDistance]="1"
-           [infiniteScrollThrottle]="50"
-           (scrolled)="onScroll()"
-           [@listAnimation]="links.length">
-        <div class="card-block"
-             *ngFor="let link of links; trackBy: linkTrackBy"
-             (click)="redirectToLink(link)">
-          <span>{{link.short}}</span>
-          <span>{{link.original | truncate: [50, '...']}}</span>
-          <span *ngIf="link.nrOfCalls"
-                class="nrOfCalls">Aufrufe: {{link.nrOfCalls }}</span>
-          <span class="date">{{link.iat | date : 'dd.MM.yyyy'}}</span>
-        </div>
+        infiniteScroll
+        [immediateCheck]="true"
+        [infiniteScrollDistance]="1"
+        [infiniteScrollThrottle]="50"
+        (scrolled)="onScroll()"
+        [@listAnimation]="links.length">
+        @for (link of links; track linkTrackBy($index, link)) {
+          <div class="card-block"
+            (click)="redirectToLink(link)">
+            <span>{{link.short}}</span>
+            <span>{{link.original | truncate: [50, '...']}}</span>
+            @if (link.nrOfCalls) {
+              <span
+              class="nrOfCalls">Aufrufe: {{link.nrOfCalls }}</span>
+            }
+            <span class="date">{{link.iat | date : 'dd.MM.yyyy'}}</span>
+          </div>
+        }
       </div>
-    </ng-container>
-    <ng-container *ngIf="links.length <= 0">
+    }
+    @if (links.length <= 0) {
       <div class="empty">
         <h2>Schade</h2>
         <p>Du hast noch keine Links erstellt. Lege direkt los und erstelle deinen eigenen Link!</p>
         <button [routerLink]="['/']"
-                fragment="create"
-                mat-raised-button>
+          fragment="create"
+          mat-raised-button>
           Link erstellen
         </button>
       </div>
-    </ng-container>
-  </ng-container>
+    }
+  } @else {
+    <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
+  }
 </main>
 
-<ng-template #loading>
-  <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
-</ng-template>

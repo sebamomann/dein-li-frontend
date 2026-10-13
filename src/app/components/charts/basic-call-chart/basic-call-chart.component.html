@@ -21,7 +21,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="!linkStats$$.getValue()">
+  @if (!linkStats$$.getValue()) {
     <app-hexagon-loader [@remove] [message]="'Lade Graph'"></app-hexagon-loader>
-  </ng-container>
+  }
 </div>

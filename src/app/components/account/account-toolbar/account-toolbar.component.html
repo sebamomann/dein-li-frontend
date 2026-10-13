@@ -1,26 +1,34 @@
 <div class="account-menu-wrapper">
   <div class="account-username-button"
-       [matMenuTriggerFor]="menu"
-       #menuTrigger="matMenuTrigger"
-       (click)="accountButtonAction()">
-    <div *ngIf="!refreshing"
-         [@appearSidewards]="{value: '', params: {delay: refreshingOnInit ? (500 + 750) : 500}}"
-         class="stroked-button-colored">
-      <span>{{userIsLoggedIn ? username : "Login"}}</span>
-    </div>
-    <mat-icon *ngIf="!refreshing && userIsLoggedIn"
-              [@appearScale]="{value: '', params: {delay: refreshingOnInit ? 500 : 0}}">
-      account_circle
-    </mat-icon>
-    <mat-icon *ngIf="!refreshing && !userIsLoggedIn"
-              [@appearScale]="{value: '', params: {delay: refreshingOnInit ? 500 : 0}}">
-      login
-    </mat-icon>
-    <mat-icon *ngIf="refreshing"
-              [@removeScale]
-              class="spin">
-      refresh
-    </mat-icon>
+    [matMenuTriggerFor]="menu"
+    #menuTrigger="matMenuTrigger"
+    (click)="accountButtonAction()">
+    @if (!refreshing) {
+      <div
+        [@appearSidewards]="{value: '', params: {delay: refreshingOnInit ? (500 + 750) : 500}}"
+        class="stroked-button-colored">
+        <span>{{userIsLoggedIn ? username : "Login"}}</span>
+      </div>
+    }
+    @if (!refreshing && userIsLoggedIn) {
+      <mat-icon
+        [@appearScale]="{value: '', params: {delay: refreshingOnInit ? 500 : 0}}">
+        account_circle
+      </mat-icon>
+    }
+    @if (!refreshing && !userIsLoggedIn) {
+      <mat-icon
+        [@appearScale]="{value: '', params: {delay: refreshingOnInit ? 500 : 0}}">
+        login
+      </mat-icon>
+    }
+    @if (refreshing) {
+      <mat-icon
+        [@removeScale]
+        class="spin">
+        refresh
+      </mat-icon>
+    }
   </div>
 
   <mat-menu #menu="matMenu" xPosition="before">
@@ -31,17 +39,17 @@
 
 <ng-template #loggedInMenu>
   <button mat-menu-item
-          (click)="openAccountSettings()">
+    (click)="openAccountSettings()">
     <mat-icon>person</mat-icon>
     Profil
   </button>
   <button mat-menu-item
-          [routerLink]="['/link']">
+    [routerLink]="['/link']">
     <mat-icon>link</mat-icon>
     Meine Links
   </button>
   <button mat-menu-item
-          (click)="logout()">
+    (click)="logout()">
     <mat-icon>logout</mat-icon>
     Abmelden
   </button>

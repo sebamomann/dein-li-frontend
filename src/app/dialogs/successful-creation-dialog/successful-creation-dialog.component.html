@@ -5,9 +5,9 @@
     <mat-form-field>
       <label for="link">
         <input id="link"
-               value="{{completeUrl}}"
-               matInput
-               disabled>
+          value="{{completeUrl}}"
+          matInput
+          disabled>
       </label>
     </mat-form-field>
     <button
@@ -18,13 +18,15 @@
       <mat-icon>share</mat-icon>
     </button>
   </div>
-  <div class="open-analytics" *ngIf="userIsLoggedIn">
-    <button mat-raised-button
-            (click)="close()"
-            [routerLink]="['/link']" [queryParams]="{l: link.short}">
-      <mat-icon>analytics</mat-icon>
-      Zur Analyseübersicht
-    </button>
-  </div>
+  @if (userIsLoggedIn) {
+    <div class="open-analytics">
+      <button mat-raised-button
+        (click)="close()"
+        [routerLink]="['/link']" [queryParams]="{l: link.short}">
+        <mat-icon>analytics</mat-icon>
+        Zur Analyseübersicht
+      </button>
+    </div>
+  }
   <p>Weiterleitung zu: <a href="{{link.original}}">{{link.original}}</a></p>
 </mat-dialog-content>

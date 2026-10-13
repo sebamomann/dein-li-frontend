@@ -4,22 +4,23 @@
     <div>
       <h2>ACHTUNG!</h2>
       <p>Dieser Link ist als potentiell gefährlich eingestuft. Bitte überprüfe zunächst die unten angezeigte
-        Weiterleitungs URL. Bei Zweifeln kontaktiere bitte den Ersteller dieses Links.</p>
+      Weiterleitungs URL. Bei Zweifeln kontaktiere bitte den Ersteller dieses Links.</p>
     </div>
 
-    <div *ngIf="$link | async let link; else loading"
-         class="threat-analysis-wrapper">
-      <div class="preview-wrapper">
-        <span class="original">{{link.original}}</span>
-        <button mat-raised-button
-                (click)="openLinkInNewTab(link.original)">
-          Trotzdem öffnen
-        </button>
+    @if ($link | async; as link) {
+      <div
+        class="threat-analysis-wrapper">
+        <div class="preview-wrapper">
+          <span class="original">{{link.original}}</span>
+          <button mat-raised-button
+            (click)="openLinkInNewTab(link.original)">
+            Trotzdem öffnen
+          </button>
+        </div>
       </div>
-    </div>
+    } @else {
+      <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
+    }
   </mat-card-content>
 </mat-card>
 
-<ng-template #loading>
-  <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
-</ng-template>

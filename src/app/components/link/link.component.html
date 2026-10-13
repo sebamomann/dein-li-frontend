@@ -1,77 +1,80 @@
 <div class="header-statistic-wrapper">
   <div class="header-statistic">
     <app-chart-filter [chartFilter]="chartFilter"
-                      (update)="this.chartRef.loadNewData()">
+      (update)="this.chartRef.loadNewData()">
     </app-chart-filter>
     <app-basic-call-chart [short]="short"
-                          [chartFilter]="chartFilter"
-                          #chartRef>
+      [chartFilter]="chartFilter"
+      #chartRef>
     </app-basic-call-chart>
   </div>
 </div>
 
 <main>
-  <div *ngIf="$link | async let link; else loading">
-    <div class="main-statistic">
-      <div class="header-information-wrapper">
-        <div class="highlighter"></div>
-        <div class="header-information">
-          <div *ngIf="$link | async let link">
-            <mat-expansion-panel #expansionPanel>
-              <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
-                <mat-panel-title>
-                  <mat-icon class="copy-to-clipboard"
-                            [shareObject]="shareObject"
-                            (click)="closeExpansionPanel()"
-                            appShare>
-                    share
-                  </mat-icon>
-                  <span class="url-with-base"><!--
-                    --><span class="baseUrl">{{baseUrl}}</span><!--
-                    --><span class="short">{{link.short}}</span>
-                  </span>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <div class="content">
-                <span>{{link.original}}</span>
-              </div>
-            </mat-expansion-panel>
-          </div>
-        </div>
-        <div class="highlighter"></div>
-      </div>
-      <div class="version-history">
-        <ng-container *ngIf="$linkVersions | async let linkVersions">
-          <div class="version-wrapper" [@listAnimation]>
-            <div class="date-information solo">
-              <div class="main-information">
-                <span>NOW</span>
-              </div>
-              <div class="line-after"></div>
-            </div>
-            <div class="version-information new-version">
+  @if ($link | async; as link) {
+    <div>
+      <div class="main-statistic">
+        <div class="header-information-wrapper">
+          <div class="highlighter"></div>
+          <div class="header-information">
+            @if ($link | async; as link) {
               <div>
-                <button class="add-version-button stroked-button-colored"
-                        mat-stroked-button
-                        (click)="openAddVersionDialog()">
-                  <mat-icon>add_box</mat-icon>
-                  <span class="value">Neue Version</span>
-                </button>
-              </div>
-            </div>
-            <ng-container *ngIf="linkVersions.length > 1; else emptyVersions">
-              <ng-container *ngFor="let linkVersion of linkVersions">
-                <div class="date-information">
-                  <div class="line-before"></div>
-                  <div class="main-information">
-                    <span>{{getDay(linkVersion)}}.&nbsp;</span>
-                    <span>{{getMonthName(linkVersion)}}</span>
+                <mat-expansion-panel #expansionPanel>
+                  <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
+                    <mat-panel-title>
+                      <mat-icon class="copy-to-clipboard"
+                        [shareObject]="shareObject"
+                        (click)="closeExpansionPanel()"
+                        appShare>
+                        share
+                      </mat-icon>
+                      <span class="url-with-base"><!--
+                        --><span class="baseUrl">{{baseUrl}}</span><!--
+                        --><span class="short">{{link.short}}</span>
+                      </span>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div class="content">
+                    <span>{{link.original}}</span>
                   </div>
-                  <div class="line-after"></div>
+                </mat-expansion-panel>
+              </div>
+            }
+          </div>
+          <div class="highlighter"></div>
+        </div>
+        <div class="version-history">
+          @if ($linkVersions | async; as linkVersions) {
+            <div class="version-wrapper" [@listAnimation]>
+              <div class="date-information solo">
+                <div class="main-information">
+                  <span>NOW</span>
                 </div>
-                <div class="version-information">
-                  <span></span>
-                  <span>
+                <div class="line-after"></div>
+              </div>
+              <div class="version-information new-version">
+                <div>
+                  <button class="add-version-button stroked-button-colored"
+                    mat-stroked-button
+                    (click)="openAddVersionDialog()">
+                    <mat-icon>add_box</mat-icon>
+                    <span class="value">Neue Version</span>
+                  </button>
+                </div>
+              </div>
+              @if (linkVersions.length > 1) {
+                @for (linkVersion of linkVersions; track linkVersion) {
+                  <div class="date-information">
+                    <div class="line-before"></div>
+                    <div class="main-information">
+                      <span>{{getDay(linkVersion)}}.&nbsp;</span>
+                      <span>{{getMonthName(linkVersion)}}</span>
+                    </div>
+                    <div class="line-after"></div>
+                  </div>
+                  <div class="version-information">
+                    <span></span>
+                    <span>
                       <mat-icon (click)="openLinkInNewTab(linkVersion.original)">
                         open_in_new
                       </mat-icon>
@@ -79,35 +82,34 @@
                         {{linkVersion.original}}
                       </span>
                     </span>
-                  <span class="date">{{linkVersion.iat | date : 'dd.MM.y HH:mm'}}</span>
+                    <span class="date">{{linkVersion.iat | date : 'dd.MM.y HH:mm'}}</span>
+                  </div>
+                }
+              } @else {
+                <div class="date-information">
+                  <div class="line-before"></div>
+                  <div class="main-information">
+                    <span>?</span>
+                    <span></span>
+                  </div>
+                  <div class="line-after"></div>
                 </div>
-              </ng-container>
-            </ng-container>
-          </div>
-        </ng-container>
+                <div class="empty decent left">
+                  <h2>Ich konnte nichts finden</h2>
+                  <p>
+                    Wusstest du, dass du neue Versionen für einen Link erstellen kannst? Eine neue Version heißt, dass eine neue
+                    Weiterleitung eingestellt werden kann. Die alten Versionen werden dir hier als Historie angezeigt.
+                  </p>
+                </div>
+              }
+            </div>
+          }
+        </div>
       </div>
     </div>
-  </div>
+  } @else {
+    <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
+  }
 </main>
 
-<ng-template #emptyVersions>
-  <div class="date-information">
-    <div class="line-before"></div>
-    <div class="main-information">
-      <span>?</span>
-      <span></span>
-    </div>
-    <div class="line-after"></div>
-  </div>
-  <div class="empty decent left">
-    <h2>Ich konnte nichts finden</h2>
-    <p>
-      Wusstest du, dass du neue Versionen für einen Link erstellen kannst? Eine neue Version heißt, dass eine neue
-      Weiterleitung eingestellt werden kann. Die alten Versionen werden dir hier als Historie angezeigt.
-    </p>
-  </div>
-</ng-template>
 
-<ng-template #loading>
-  <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
-</ng-template>

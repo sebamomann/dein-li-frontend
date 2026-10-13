@@ -1,10 +1,10 @@
 <div class="header-statistic-wrapper">
   <div class="header-statistic">
     <app-chart-filter [chartFilter]="chartFilter"
-                      (update)="this.chartRef.loadNewData()">
+      (update)="this.chartRef.loadNewData()">
     </app-chart-filter>
     <app-basic-call-chart [chartFilter]="chartFilter"
-                          #chartRef>
+      #chartRef>
     </app-basic-call-chart>
   </div>
 </div>
@@ -16,9 +16,9 @@
       <mat-form-field>
         <label for="link">
           <input formControlName="link"
-                 id="link"
-                 placeholder="Link zum Kürzen"
-                 matInput>
+            id="link"
+            placeholder="Link zum Kürzen"
+            matInput>
         </label>
         <mat-error>{{getLinkErrorMessage()}}</mat-error>
       </mat-form-field>
@@ -26,51 +26,59 @@
       <mat-form-field (click)="clickedShortInputField()">
         <mat-label>Eigener Kurzlink</mat-label>
         <input formControlName="short"
-               id="short"
-               autocomplete="off"
-               matInput>
-        <mat-hint *ngIf="get('short').value">{{baseUrl}}{{get('short').value}}</mat-hint>
+          id="short"
+          autocomplete="off"
+          matInput>
+        @if (get('short').value) {
+          <mat-hint>{{baseUrl}}{{get('short').value}}</mat-hint>
+        }
         <mat-error>{{getShortErrorMessage()}}</mat-error>
       </mat-form-field>
 
       <button (click)="saveFnc(formDirective)"
-              color="primary"
-              mat-raised-button>
+        color="primary"
+        mat-raised-button>
         <mat-icon>settings</mat-icon>
         Los!
       </button>
     </form>
-    <p *ngIf="!userIsLoggedIn" [ngClass]="{'highlight' : highlightHint}">
-      Ein eigener Kurzlink ist nur für angemeldete Benutzer möglich. Logge dich ein, um deinen gewünschten Kurzlink
-      anzugeben.
-    </p>
+    @if (!userIsLoggedIn) {
+      <p [ngClass]="{'highlight' : highlightHint}">
+        Ein eigener Kurzlink ist nur für angemeldete Benutzer möglich. Logge dich ein, um deinen gewünschten Kurzlink
+        anzugeben.
+      </p>
+    }
     <p>
       Dein Link ist nach der Generierung sofot gültig. Du kannst ihn direkt teilen.
     </p>
   </div>
-  <div class="link-management" *ngIf="userIsLoggedIn">
-    <h3>Deine Links</h3>
-    <button [routerLink]="'/link/overview'"
-            mat-raised-button>
-      <mat-icon>launch</mat-icon>
-      Zu meinen Links
-    </button>
-    <button (click)="logout()"
-            mat-button>
-      <mat-icon>logout</mat-icon>
-      Abmelden
-    </button>
-  </div>
-  <div class="link-management login" *ngIf="!userIsLoggedIn">
-    <h3>Deine Links</h3>
-    <button (click)="login()"
-            mat-raised-button>
-      <mat-icon>login</mat-icon>
-      Login
-    </button>
-    <p>Logge dich ein um deine Links zu sehen. Ebenso werden deine generierten Links dir zugeordnet, damit du deine
+  @if (userIsLoggedIn) {
+    <div class="link-management">
+      <h3>Deine Links</h3>
+      <button [routerLink]="'/link/overview'"
+        mat-raised-button>
+        <mat-icon>launch</mat-icon>
+        Zu meinen Links
+      </button>
+      <button (click)="logout()"
+        mat-button>
+        <mat-icon>logout</mat-icon>
+        Abmelden
+      </button>
+    </div>
+  }
+  @if (!userIsLoggedIn) {
+    <div class="link-management login">
+      <h3>Deine Links</h3>
+      <button (click)="login()"
+        mat-raised-button>
+        <mat-icon>login</mat-icon>
+        Login
+      </button>
+      <p>Logge dich ein um deine Links zu sehen. Ebenso werden deine generierten Links dir zugeordnet, damit du deine
       Analysen anschauen kannst.</p>
-  </div>
+    </div>
+  }
 </main>
 
 <div class="contribution">
