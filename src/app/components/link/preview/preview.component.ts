@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
 import { ILink } from '../../../models/ILink.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LinkService } from '../../../services/link.service';
@@ -39,7 +40,9 @@ export class PreviewComponent implements OnInit {
    * When view is loaded, load link by passed URL query parameter
    */
   public ngOnInit() {
-    this.$link = this.linkService.loadLinkByShort(this.short);
+    // shareReplay: the template's async pipe and the subscription below share one request,
+    // so the button exists by the time we focus it
+    this.$link = this.linkService.loadLinkByShort(this.short).pipe(shareReplay(1));
     this.$link.subscribe((data) => {
       if (data == null) {
         this.router.navigate(['/redirect'], {
@@ -49,7 +52,7 @@ export class PreviewComponent implements OnInit {
         });
       } else {
         setTimeout(() => {
-          this.gotoLinkBtn.focus();
+          this.gotoLinkBtn?.focus();
         }, 100)
       }
     })
