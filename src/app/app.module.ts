@@ -4,7 +4,7 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './_helper/interceptor/authentication.interceptor';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
@@ -22,41 +22,35 @@ import { AccountToolbarModule } from './components/account/account-toolbar/accou
 
 registerLocaleData(localeDe);
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    ImpressumComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: true, registrationStrategy: 'registerImmediately' }),
-    AuthConfigModule,
-    AccountToolbarModule,
-    PageNotFoundModule,
-  ],
-  providers: [
-    WINDOW_PROVIDERS,
-    {
-      multi: true,
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-    },
-    { provide: LOCALE_ID, useValue: 'de-DE' },
-    UpdateService,
-  ],
-  exports: [],
-  bootstrap: [
-    AppComponent
-  ]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        ImpressumComponent,
+    ],
+    exports: [],
+    bootstrap: [
+        AppComponent
+    ], imports: [BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+        MatSnackBarModule,
+        ServiceWorkerModule.register('ngsw-worker.js', { enabled: true, registrationStrategy: 'registerImmediately' }),
+        AuthConfigModule,
+        AccountToolbarModule,
+        PageNotFoundModule], providers: [
+        WINDOW_PROVIDERS,
+        {
+            multi: true,
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+        },
+        { provide: LOCALE_ID, useValue: 'de-DE' },
+        UpdateService,
+        provideHttpClient(withInterceptorsFromDi()),
+    ] })
 export class AppModule {
   constructor() {
   }

@@ -13,7 +13,7 @@ import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-cha
 import {UrlUtil} from '../../_util/Url.util';
 import {ChartFilter} from '../../models/ChartFilter/ChartFilter';
 import {ILink} from '../../models/ILink.model';
-import {HttpErrorResponse} from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import {AuthenticationService} from '../../services/authentication.service';
 import {ActivatedRoute} from '@angular/router';
 

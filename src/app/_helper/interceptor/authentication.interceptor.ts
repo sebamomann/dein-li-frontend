@@ -1,4 +1,4 @@
-import {HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import { HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {AuthenticationService} from '../../services/authentication.service';
 import {Injectable} from '@angular/core';
