@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { ToolbarService } from './toolbar.service';
 
 describe('ToolbarService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => TestBed.configureTestingModule({ teardown: { destroyAfterEach: false } }));
 
   it('should be created', () => {
     const service: ToolbarService = TestBed.get(ToolbarService);

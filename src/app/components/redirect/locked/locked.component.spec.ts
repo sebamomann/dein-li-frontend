@@ -8,8 +8,9 @@ describe('LockedComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LockedComponent ]
-    })
+    declarations: [LockedComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

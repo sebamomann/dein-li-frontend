@@ -8,8 +8,9 @@ describe('LinkRouterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LinkRouterComponent ]
-    })
+    declarations: [LinkRouterComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

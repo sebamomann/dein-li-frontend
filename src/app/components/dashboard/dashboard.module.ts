@@ -21,28 +21,25 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDialogModule,
-    SuccessfulCreationDialogModule,
-    ChartFilterModule,
-    BasicCallChartModule,
-    ReportBlockModule,
-    AccountToolbarModule
-  ],
-  exports: [
-    DashboardComponent
-  ],
-  entryComponents: [
-    SuccessfulCreationDialogComponent
-  ]
+    declarations: [DashboardComponent],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatButtonModule,
+        MatIconModule,
+        MatDialogModule,
+        SuccessfulCreationDialogModule,
+        ChartFilterModule,
+        BasicCallChartModule,
+        ReportBlockModule,
+        AccountToolbarModule
+    ],
+    exports: [
+        DashboardComponent
+    ]
 })
 export class DashboardModule {
 }

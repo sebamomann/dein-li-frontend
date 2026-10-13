@@ -25,7 +25,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LinkComponent],
+    declarations: [LinkComponent],
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
@@ -40,10 +40,7 @@ const routes: Routes = [
         BasicCallChartModule,
         MatButtonModule,
         ShareModule
-    ],
-  entryComponents: [
-    AddVersionDialogComponent
-  ]
+    ]
 })
 export class LinkModule {
 }

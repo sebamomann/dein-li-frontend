@@ -8,8 +8,9 @@ describe('ChartFilterComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChartFilterComponent ]
-    })
+    declarations: [ChartFilterComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

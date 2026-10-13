@@ -8,8 +8,9 @@ describe('ThreatComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ThreatComponent ]
-    })
+    declarations: [ThreatComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

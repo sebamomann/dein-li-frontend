@@ -8,8 +8,9 @@ describe('ImpressumComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ImpressumComponent ]
-    })
+    declarations: [ImpressumComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

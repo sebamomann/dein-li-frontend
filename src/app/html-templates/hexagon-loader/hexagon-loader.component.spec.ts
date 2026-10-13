@@ -8,8 +8,9 @@ describe('HexagonLoaderComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [HexagonLoaderComponent]
-    })
+    declarations: [HexagonLoaderComponent],
+    teardown: { destroyAfterEach: false }
+})
       .compileComponents();
   }));
 

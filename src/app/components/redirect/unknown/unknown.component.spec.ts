@@ -8,8 +8,9 @@ describe('UnknownComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UnknownComponent ]
-    })
+    declarations: [UnknownComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

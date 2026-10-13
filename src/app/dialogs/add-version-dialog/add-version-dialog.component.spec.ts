@@ -8,8 +8,9 @@ describe('AddVersionDialogComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddVersionDialogComponent ]
-    })
+    declarations: [AddVersionDialogComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

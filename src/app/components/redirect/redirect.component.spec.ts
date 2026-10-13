@@ -8,8 +8,9 @@ describe('RedirectComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RedirectComponent ]
-    })
+    declarations: [RedirectComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

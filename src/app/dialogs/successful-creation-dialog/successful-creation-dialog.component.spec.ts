@@ -8,8 +8,9 @@ describe('SuccessfulCreationDialogComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SuccessfulCreationDialogComponent ]
-    })
+    declarations: [SuccessfulCreationDialogComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 

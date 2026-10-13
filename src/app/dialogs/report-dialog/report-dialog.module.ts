@@ -10,18 +10,17 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
-  declarations: [ReportDialogComponent],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatDialogModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatInputModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  entryComponents: [ReportDialogComponent]
+    declarations: [ReportDialogComponent],
+    imports: [
+        CommonModule,
+        MatIconModule,
+        MatDialogModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule
+    ]
 })
 export class ReportDialogModule {
 }

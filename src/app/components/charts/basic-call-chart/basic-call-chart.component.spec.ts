@@ -8,8 +8,9 @@ describe('BasicCallChartComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ BasicCallChartComponent ]
-    })
+    declarations: [BasicCallChartComponent],
+    teardown: { destroyAfterEach: false }
+})
     .compileComponents();
   }));
 
