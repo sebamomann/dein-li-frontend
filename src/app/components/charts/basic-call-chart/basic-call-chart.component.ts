@@ -4,14 +4,16 @@ import {ChartDataParser} from '../../../_helper/chart-data.parser';
 
 import moment from 'moment';
 
-import {Chart} from 'chart.js';
-import {BehaviorSubject} from 'rxjs';
+import {Chart, registerables} from 'chart.js';
+import {BehaviorSubject, Subscription} from 'rxjs';
 import {BreakpointObserver} from '@angular/cdk/layout';
 import {Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ChartFilter} from '../../../models/ChartFilter/ChartFilter';
 import {animate, style, transition, trigger} from '@angular/animations';
 
 moment.locale('de');
+
+Chart.register(...registerables);
 
 @Component({
     selector: 'app-basic-call-chart',
@@ -35,7 +37,9 @@ export class BasicCallChartComponent implements OnInit {
 
   public linkStats$$ = new BehaviorSubject<ILinkStats>(undefined);
 
-  public chart;
+  public chart: Chart;
+
+  private dataSubscription: Subscription;
 
   private isSmallScreen: boolean;
   private initialized = false;
@@ -95,50 +99,56 @@ export class BasicCallChartComponent implements OnInit {
   }
 
   private initializeChart() {
+    // Chart.js >= 3 refuses to reuse a canvas that still has a chart attached
+    this.chart?.destroy();
+
     this.chart = new Chart('canvas', {
       type: 'line',
       data: {
-        labels: [] = [],
+        labels: [],
         datasets: [{
-          data: [] = [],
+          data: [],
           borderColor: '#2976c4',
-          fill: false
+          fill: false,
+          tension: 0.4, // Chart.js 2 drew curved lines by default
         }],
       },
       options: {
-        legend: {
-          display: false
-        },
         maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+        },
         scales: {
-          yAxes: [{
+          y: {
             display: true,
-            gridLines: {
+            beginAtZero: true,
+            grid: {
               color: '#3e3e3e'
             },
             ticks: {
-              fontColor: 'white',
+              color: 'white',
               stepSize: 1,
-              beginAtZero: true,
               maxTicksLimit: 10
             },
-            scaleLabel: {}
-          }],
-          xAxes: [{
-            gridLines: {
+          },
+          x: {
+            grid: {
               color: '#3e3e3e'
             },
             ticks: {
-              fontColor: 'white',
+              color: 'white',
               maxRotation: 90,
               minRotation: 0,
               maxTicksLimit: (this.isSmallScreen ? 10 : 50)
             },
-            scaleLabel: {
+            // The Chart.js 2 config showed an (empty) axis label, which reserves space below the axis
+            title: {
               display: true,
-              fontSize: 20,
+              font: {size: 20},
             },
-          }]
+          }
         },
       }
     });
@@ -149,7 +159,9 @@ export class BasicCallChartComponent implements OnInit {
   }
 
   private listenToDataChanges() {
-    this.linkStats$$.subscribe((sLinkStats) => {
+    // initializeChart() runs again on breakpoint changes - don't stack subscriptions
+    this.dataSubscription?.unsubscribe();
+    this.dataSubscription = this.linkStats$$.subscribe((sLinkStats) => {
       if (sLinkStats && this.chart.canvas) {
         const calls = sLinkStats.calls;
 

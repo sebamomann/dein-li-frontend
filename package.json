@@ -25,7 +25,7 @@
     "@angular/service-worker": "^22.2.2",
     "angular-oauth2-oidc": "^22.0.2",
     "atob": "^2.1.2",
-    "chart.js": "^2.9.4",
+    "chart.js": "^4.5.1",
     "http-status-codes": "^2.2.0",
     "moment": "^2.29.1",
     "ngx-infinite-scroll": "^22.0.0",

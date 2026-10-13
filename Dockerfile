@@ -1,4 +1,4 @@
-FROM node:18-alpine AS build
+FROM node:24-alpine AS build
 
 WORKDIR /usr/src/app
 
@@ -16,7 +16,7 @@ COPY . .
 RUN npm run-script build:prod
 ## STAGE 2
 
-FROM nginx:1.17.1-alpine
+FROM nginx:1.30-alpine
 #COPY --from=build /usr/src/app/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /usr/src/app/dist/dein-li-frontend/browser /usr/share/nginx/html
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
