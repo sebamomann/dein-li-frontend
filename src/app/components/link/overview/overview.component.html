@@ -1,51 +1,64 @@
-<main>
-  @if (loaded && links.length > 0) {
-    <div class="header">
-      <mat-select [(value)]="filter" (valueChange)="changedFilter()">
-        <mat-option value="iat">Erstelldatum</mat-option>
-        <mat-option value="calls">Aufrufe gesamt</mat-option>
-        <mat-option value="calls_version">Aufrufe aktuelle Version</mat-option>
-      </mat-select>
-      <mat-icon (click)="changedOrder()">keyboard_arrow_down</mat-icon>
+<div class="page">
+  <header class="head">
+    <h1>Deine Links</h1>
+    <div class="controls">
+      <mat-form-field class="sort">
+        <mat-label>Sortieren nach</mat-label>
+        <mat-select [value]="filter" (valueChange)="setFilter($event)">
+          <mat-option value="iat">Erstellt</mat-option>
+          <mat-option value="calls">Aufrufe gesamt</mat-option>
+          <mat-option value="calls_version">Aufrufe aktuelle Version</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-icon-button
+        (click)="changedOrder()"
+        [attr.aria-label]="order === 'DESC' ? 'Absteigend sortiert, umkehren' : 'Aufsteigend sortiert, umkehren'">
+        <mat-icon>{{ order === 'DESC' ? 'arrow_downward' : 'arrow_upward' }}</mat-icon>
+      </button>
+      <a mat-flat-button [routerLink]="['/']" fragment="create">
+        <mat-icon>add</mat-icon>
+        Neuer Link
+      </a>
     </div>
-  }
+  </header>
 
   @if (loaded) {
     @if (links.length > 0) {
-      <div class="link-list"
+      <ul class="list panel"
         infiniteScroll
         [immediateCheck]="true"
         [infiniteScrollDistance]="1"
         [infiniteScrollThrottle]="50"
         (scrolled)="onScroll()"
         [@listAnimation]="links.length">
+        <li class="cols" aria-hidden="true">
+          <span>Kurzlink</span><span>Ziel</span><span class="n">Aufrufe</span><span class="d">Erstellt</span>
+        </li>
         @for (link of links; track linkTrackBy($index, link)) {
-          <div class="card-block"
-            (click)="redirectToLink(link)">
-            <span>{{link.short}}</span>
-            <span>{{link.original | truncate: [50, '...']}}</span>
-            @if (link.nrOfCalls) {
-              <span
-              class="nrOfCalls">Aufrufe: {{link.nrOfCalls }}</span>
-            }
-            <span class="date">{{link.iat | date : 'dd.MM.yyyy'}}</span>
-          </div>
+          <li>
+            <a class="row" [routerLink]="['/link']" [queryParams]="{l: link.short}">
+              <span class="name">
+                <span class="star-point quiet" aria-hidden="true"></span>
+                <span class="short-label">{{ link.short }}</span>
+              </span>
+              <span class="dest" [title]="link.original">{{ domainOf(link.original) }}</span>
+              <span class="n num">{{ (link.nrOfCalls || 0) | number }}</span>
+              <span class="d num">{{ link.iat | date: 'dd.MM.yyyy' }}</span>
+            </a>
+          </li>
         }
-      </div>
-    }
-    @if (links.length <= 0) {
-      <div class="empty">
-        <h2>Schade</h2>
-        <p>Du hast noch keine Links erstellt. Lege direkt los und erstelle deinen eigenen Link!</p>
-        <button [routerLink]="['/']"
-          fragment="create"
-          mat-raised-button>
-          Link erstellen
-        </button>
+      </ul>
+    } @else {
+      <div class="notice empty">
+        <span class="status-mark" aria-hidden="true"><mat-icon>auto_awesome</mat-icon></span>
+        <h1>Noch keine Links.</h1>
+        <p>Sobald du angemeldet einen Link kürzt, erscheint er hier, mit Aufrufen und Verlauf.</p>
+        <div class="actions">
+          <a mat-flat-button [routerLink]="['/']" fragment="create">Ersten Link kürzen</a>
+        </div>
       </div>
     }
   } @else {
-    <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
+    <p class="loading" role="status">Links werden geladen …</p>
   }
-</main>
-
+</div>

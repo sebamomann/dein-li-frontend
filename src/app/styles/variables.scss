@@ -1,10 +1,32 @@
-$background: #232222;
-$background-opacity: rgba(35, 34, 34, 0.8);
-$dark-background: #1c1b1b;
-$median-background: #534f4f;
-$light-background: #c2b8b8;
+// dein.li – night sky tokens
 
-$blue: #2976C4;
+$sky-0: #070A13;
+$sky: #0A0E1A;      // page ground
+$sky-1: #0F1424;    // panels
+$sky-2: #151B2E;    // raised controls, menus
+$line: #1E2638;     // hairlines
+$line-2: #2C3652;   // stronger hairlines, outlines
+
+$star: #F2F4FF;     // primary text
+$text-2: #C3C9DC;   // secondary text
+$muted: #8B95B2;    // labels, meta
+$muted-2: #5D6684;  // disabled
+
+$gold: #FFD27A;     // the one accent: your star, primary action
+$gold-ink: #1A1300;
+$amber: #FFB347;    // reported / warning
+$coral: #FF7A72;    // locked / error
+
+$font-sans: 'Sora', system-ui, sans-serif;
+$font-mono: 'Martian Mono', ui-monospace, monospace;
+
+// Legacy names still used by a few component styles
+$blue: $gold;
+$background: $sky;
+$dark-background: $sky-0;
+$median-background: $sky-1;
+$light-background: $text-2;
+
 
 @mixin md-icon-size($size: 24px) {
   font-size: $size;
@@ -12,4 +34,3 @@ $blue: #2976C4;
   width: $size;
   line-height: $size;
 }
-

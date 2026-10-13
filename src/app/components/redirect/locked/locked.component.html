@@ -1,17 +1,8 @@
-<mat-card appearance="outlined" class="float solo-notification">
-  <mat-card-content>
-    <img src="assets/img/404.svg" alt="">
-    <div>
-      <h2>Hmmm ...</h2>
-      <p>Sorry - Dieser Link ist wohl aktuell gesperrt. Versuche es später nochmal oder melde dich beim Ersteller dieses
-        Links.</p>
-    </div>
-    <mat-card-actions>
-      <button [routerLink]="['/']"
-              mat-raised-button>
-        <mat-icon>home</mat-icon>
-        Zurück
-      </button>
-    </mat-card-actions>
-  </mat-card-content>
-</mat-card>
+<article class="notice">
+  <span class="status-mark coral" aria-hidden="true"><mat-icon>lock</mat-icon></span>
+  <h1>Dieser Link ist gesperrt.</h1>
+  <p>Der Link wurde vorübergehend oder dauerhaft deaktiviert. Wenn du ihn erwartet hast, frag beim Absender nach.</p>
+  <div class="actions">
+    <a mat-flat-button routerLink="/">Zur Startseite</a>
+  </div>
+</article>

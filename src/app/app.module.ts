@@ -9,6 +9,7 @@ import { AuthInterceptor } from './_helper/interceptor/authentication.intercepto
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -19,6 +20,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { UpdateService } from './services/update.service';
 import { AuthConfigModule } from './auth-config/auth-config.module';
 import { AccountToolbarModule } from './components/account/account-toolbar/account-toolbar.module';
+import { ReportBlockModule } from './components/link/report-block/report-block.module';
 
 registerLocaleData(localeDe);
 
@@ -40,6 +42,7 @@ registerLocaleData(localeDe);
         ServiceWorkerModule.register('ngsw-worker.js', { enabled: true, registrationStrategy: 'registerImmediately' }),
         AuthConfigModule,
         AccountToolbarModule,
+        ReportBlockModule,
         PageNotFoundModule], providers: [
         WINDOW_PROVIDERS,
         {
@@ -48,6 +51,7 @@ registerLocaleData(localeDe);
             useClass: AuthInterceptor,
         },
         { provide: LOCALE_ID, useValue: 'de-DE' },
+        { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'outline', subscriptSizing: 'dynamic' } },
         UpdateService,
         provideHttpClient(withXhr(), withInterceptorsFromDi()),
     ] })

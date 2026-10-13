@@ -49,7 +49,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 
 export class AccountToolbarComponent implements OnInit {
 
-  @ViewChild('menuTrigger', {static: true}) menu: MatMenuTrigger;
+  @ViewChild('menuTrigger') menu: MatMenuTrigger;
 
   public username = '';
   public userIsLoggedIn = false;
@@ -74,7 +74,6 @@ export class AccountToolbarComponent implements OnInit {
     });
     this.refreshingOnInit = this.authenticationValuesService.refreshingSubject$.getValue();
 
-    console.log(this.refreshingOnInit);
   }
 
   public login() {
@@ -89,11 +88,4 @@ export class AccountToolbarComponent implements OnInit {
     this.authenticationService.openAccountSettings();
   }
 
-  public accountButtonAction() {
-    if (!this.userIsLoggedIn) {
-      this.menu.closeMenu();
-
-      this.login();
-    }
-  }
 }

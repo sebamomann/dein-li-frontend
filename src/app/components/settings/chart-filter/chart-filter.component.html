@@ -1,107 +1,85 @@
-<mat-icon (click)="toggleFilter()"
-  class="show-filter-button">
-  filter_list
-</mat-icon>
+<div class="range">
+  <mat-button-toggle-group class="presets"
+    [value]="chartFilter.preset"
+    (change)="selectPreset($event.value)"
+    hideSingleSelectionIndicator
+    aria-label="Zeitraum">
+    <mat-button-toggle value="last_15_minutes">15 Min</mat-button-toggle>
+    <mat-button-toggle value="last_hour">1 Std</mat-button-toggle>
+    <mat-button-toggle value="last_12_hours">12 Std</mat-button-toggle>
+    <mat-button-toggle value="last_day">24 Std</mat-button-toggle>
+    <mat-button-toggle value="custom">Eigener</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  @if (chartFilter.isAutoUpdate) {
+    <span class="live" title="Aktualisiert automatisch">
+      <mat-progress-spinner mode="determinate" [value]="barPercentage" diameter="16" strokeWidth="2.5"></mat-progress-spinner>
+      Live
+    </span>
+  }
+
+  <button mat-icon-button type="button"
+    class="settings"
+    [class.on]="showFilter"
+    [attr.aria-expanded]="showFilter"
+    aria-label="Weitere Einstellungen"
+    (click)="toggleFilter()">
+    <mat-icon>tune</mat-icon>
+  </button>
+</div>
 
 @if (showFilter) {
-  <div
-    [@fade]
-    class="chart-filter-wrapper">
-    <ng-container *ngTemplateOutlet="content"></ng-container>
-  </div>
-}
-
-<ng-template #content>
-  <div>
-    <span>Automatisches Update</span>
-    <mat-checkbox [(ngModel)]="chartFilter.isAutoUpdate"
-      (click)="changedUpdateInterval(!chartFilter.isAutoUpdate)">
-      {{chartFilter.isAutoUpdate ? "Eingeschaltet" : "Ausgeschaltet"}}
-      @if (chartFilter.isAutoUpdate) {
-        <div class="progress-spinner-wrapper">
-          <mat-progress-spinner mode="determinate"
-            [value]="barPercentage"
-            diameter="20"
-            strokeWidth="10">
-          </mat-progress-spinner>
-          <span>{{barPercentage}}%</span>
-        </div>
-      }
-    </mat-checkbox>
-  </div>
-
-  <div>
-    <span>Updateintervall</span>
-    <mat-select class="update-interval-select"
-      [(value)]="chartFilter.updateInterval"
-      (valueChange)="changedUpdateInterval(chartFilter.isAutoUpdate)">
-      <mat-option [value]="15">15 Sekunden</mat-option>
-      <mat-option [value]="30">30 Sekunden</mat-option>
-      <mat-option [value]="60">1 Minute</mat-option>
-      <mat-option [value]="300">5 Minuten</mat-option>
-      <mat-option [value]="9000">15 Minuten</mat-option>
-    </mat-select>
-  </div>
-
-  <div>
-    <span>Datenzeitraum</span>
-    <mat-select class="default-update-interval-select"
-      [(value)]="chartFilter.preset"
-      (valueChange)="changedFilter()">
-      <mat-option [value]="'custom'">Benutzerdefiniert</mat-option>
-      <mat-option [value]="'last_15_minutes'">Letzte 15 Minuten</mat-option>
-      <mat-option [value]="'last_hour'">Letzte Stunde</mat-option>
-      <mat-option [value]="'last_12_hours'">Letzte 12 Stunden</mat-option>
-      <mat-option [value]="'last_day'">Letzte 24 Stunden</mat-option>
-    </mat-select>
-  </div>
-
-  @if (chartFilter.preset == 'custom') {
-    <div>
-      <span>Darstellungseinheit</span>
-      <mat-select class="interval-select"
-        [(value)]="chartFilter.customInterval.timeUnit"
-        (valueChange)="changedFilter()">
-        @for (option of timeIntervalOptions; track option) {
-          <mat-option
-            [value]="option.value">
-            {{option.text}}
-          </mat-option>
-        }
-      </mat-select>
+  <div class="options" [@fade]>
+    <div class="group">
+      <mat-slide-toggle [checked]="chartFilter.isAutoUpdate" (change)="toggleAutoUpdate($event.checked)">
+        Automatisch aktualisieren
+      </mat-slide-toggle>
+      <mat-form-field class="compact">
+        <mat-label>Alle</mat-label>
+        <mat-select [(value)]="chartFilter.updateInterval"
+          [disabled]="!chartFilter.isAutoUpdate"
+          (valueChange)="changedUpdateInterval(chartFilter.isAutoUpdate)">
+          <mat-option [value]="15">15 Sekunden</mat-option>
+          <mat-option [value]="30">30 Sekunden</mat-option>
+          <mat-option [value]="60">1 Minute</mat-option>
+          <mat-option [value]="300">5 Minuten</mat-option>
+          <mat-option [value]="900">15 Minuten</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
-    <div class="datetime">
-      <mat-form-field>
-        <mat-label>Startdatum</mat-label>
-        <label for="dateStart">
+
+    @if (chartFilter.preset === 'custom') {
+      <div class="group custom">
+        <mat-form-field>
+          <mat-label>Von</mat-label>
           <input [(ngModel)]="chartFilter.customInterval.start"
             (change)="changedFilter()"
-            id="dateStart"
             type="datetime-local"
             matInput
             required>
-        </label>
-      </mat-form-field>
-    </div>
-    <div class="datetime checkbox">
-      <mat-form-field>
-        <mat-label>Enddatum</mat-label>
-        <label for="dateEnd">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Bis</mat-label>
           <input [(ngModel)]="chartFilter.customInterval.end"
-            [disabled]="this.chartFilter.customInterval.isLive"
+            [disabled]="chartFilter.customInterval.isLive"
             (change)="changedFilter()"
-            id="dateEnd"
             type="datetime-local"
             matInput
             required>
-        </label>
-      </mat-form-field>
-      <div>
+        </mat-form-field>
         <mat-checkbox [(ngModel)]="chartFilter.customInterval.isLive"
-          (click)="changedUpdateInterval(!chartFilter.isAutoUpdate)">
-          Live
+          (change)="changedFilter()">
+          Bis jetzt
         </mat-checkbox>
+        <mat-form-field class="compact">
+          <mat-label>Einheit</mat-label>
+          <mat-select [(value)]="chartFilter.customInterval.timeUnit" (valueChange)="changedFilter()">
+            @for (option of timeIntervalOptions; track option.value) {
+              <mat-option [value]="option.value">{{ option.text }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
       </div>
-    </div>
-  }
-</ng-template>
+    }
+  </div>
+}

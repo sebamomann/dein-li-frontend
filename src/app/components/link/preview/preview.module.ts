@@ -2,8 +2,8 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PreviewComponent} from './preview.component';
 import {RouterModule, Routes} from '@angular/router';
-import {HexagonLoaderModule} from '../../../html-templates/hexagon-loader/hexagon-loader.module';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import {ReportBlockModule} from '../report-block/report-block.module';
 
 const routes: Routes = [
@@ -21,8 +21,8 @@ const routes: Routes = [
     imports: [
         CommonModule,
         RouterModule.forChild(routes),
-        HexagonLoaderModule,
         MatButtonModule,
+        MatIconModule,
         ReportBlockModule,
     ]
 })

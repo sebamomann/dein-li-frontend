@@ -3,6 +3,7 @@ import {Observable} from 'rxjs';
 import {ILink} from '../../../models/ILink.model';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LinkService} from '../../../services/link.service';
+import {UrlUtil} from '../../../_util/Url.util';
 
 @Component({
     selector: 'app-threat',
@@ -25,6 +26,10 @@ export class ThreatComponent implements OnInit {
 
   ngOnInit() {
     this.$link = this.linkService.loadLinkByShort(this.short);
+  }
+
+  domainOf(url: string): string {
+    return UrlUtil.domainOf(url);
   }
 
   openLinkInNewTab(original: any) {

@@ -1,26 +1,21 @@
-<mat-card appearance="outlined" class="float solo-notification">
-  <mat-card-content>
-    <img src="assets/img/404.svg" alt="">
-    <div>
-      <h2>ACHTUNG!</h2>
-      <p>Dieser Link ist als potentiell gefährlich eingestuft. Bitte überprüfe zunächst die unten angezeigte
-      Weiterleitungs URL. Bei Zweifeln kontaktiere bitte den Ersteller dieses Links.</p>
+<article class="notice">
+  <span class="status-mark amber" aria-hidden="true"><mat-icon>flag</mat-icon></span>
+  <h1>Vorsicht: Dieser Link wurde gemeldet.</h1>
+  <p>Jemand hält dieses Ziel für gefährlich oder unseriös. Prüfe die Adresse genau und öffne sie nur, wenn du dem Absender vertraust.</p>
+
+  @if ($link | async; as link) {
+    <p class="dest-label">Der Link führt zu</p>
+    <p class="dest">{{ domainOf(link.original) }}</p>
+    <div class="url panel mono">{{ link.original }}</div>
+
+    <div class="actions">
+      <a mat-flat-button routerLink="/">Zurück zur Startseite</a>
+      <button mat-stroked-button class="risky" (click)="openLinkInNewTab(link.original)">
+        Trotzdem öffnen
+        <mat-icon iconPositionEnd>open_in_new</mat-icon>
+      </button>
     </div>
-
-    @if ($link | async; as link) {
-      <div
-        class="threat-analysis-wrapper">
-        <div class="preview-wrapper">
-          <span class="original">{{link.original}}</span>
-          <button mat-raised-button
-            (click)="openLinkInNewTab(link.original)">
-            Trotzdem öffnen
-          </button>
-        </div>
-      </div>
-    } @else {
-      <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
-    }
-  </mat-card-content>
-</mat-card>
-
+  } @else {
+    <p class="dest-label" role="status">Ziel wird geladen …</p>
+  }
+</article>

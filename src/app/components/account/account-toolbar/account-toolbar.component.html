@@ -1,56 +1,31 @@
-<div class="account-menu-wrapper">
-  <div class="account-username-button"
-    [matMenuTriggerFor]="menu"
-    #menuTrigger="matMenuTrigger"
-    (click)="accountButtonAction()">
-    @if (!refreshing) {
-      <div
-        [@appearSidewards]="{value: '', params: {delay: refreshingOnInit ? (500 + 750) : 500}}"
-        class="stroked-button-colored">
-        <span>{{userIsLoggedIn ? username : "Login"}}</span>
-      </div>
-    }
-    @if (!refreshing && userIsLoggedIn) {
-      <mat-icon
-        [@appearScale]="{value: '', params: {delay: refreshingOnInit ? 500 : 0}}">
-        account_circle
-      </mat-icon>
-    }
-    @if (!refreshing && !userIsLoggedIn) {
-      <mat-icon
-        [@appearScale]="{value: '', params: {delay: refreshingOnInit ? 500 : 0}}">
-        login
-      </mat-icon>
-    }
-    @if (refreshing) {
-      <mat-icon
-        [@removeScale]
-        class="spin">
-        refresh
-      </mat-icon>
-    }
-  </div>
-
-  <mat-menu #menu="matMenu" xPosition="before">
-    <ng-container [ngTemplateOutlet]="loggedInMenu">
-    </ng-container>
-  </mat-menu>
-</div>
-
-<ng-template #loggedInMenu>
-  <button mat-menu-item
-    (click)="openAccountSettings()">
-    <mat-icon>person</mat-icon>
-    Profil
+@if (refreshing) {
+  <span class="refreshing" role="status" aria-label="Anmeldung wird geprüft">
+    <mat-icon class="spin">sync</mat-icon>
+  </span>
+} @else if (userIsLoggedIn) {
+  <button mat-stroked-button class="account" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
+    <span class="avatar" aria-hidden="true">{{ (username || '?').charAt(0).toUpperCase() }}</span>
+    <span class="name">{{ username }}</span>
+    <mat-icon class="chev">expand_more</mat-icon>
   </button>
-  <button mat-menu-item
-    [routerLink]="['/link']">
+} @else {
+  <button mat-stroked-button class="login" (click)="login()">
+    <mat-icon>login</mat-icon>
+    Anmelden
+  </button>
+}
+
+<mat-menu #menu="matMenu" xPosition="before">
+  <button mat-menu-item [routerLink]="['/link/overview']">
     <mat-icon>link</mat-icon>
     Meine Links
   </button>
-  <button mat-menu-item
-    (click)="logout()">
+  <button mat-menu-item (click)="openAccountSettings()">
+    <mat-icon>person</mat-icon>
+    Konto verwalten
+  </button>
+  <button mat-menu-item (click)="logout()">
     <mat-icon>logout</mat-icon>
     Abmelden
   </button>
-</ng-template>
+</mat-menu>

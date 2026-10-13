@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {AccountToolbarModule} from '../../account/account-toolbar/account-toolbar.module';
 
@@ -26,6 +27,7 @@ const routes: Routes = [
     HexagonLoaderModule,
     TextPipesModule,
     MatSelectModule,
+    MatFormFieldModule,
     MatIconModule,
     InfiniteScrollModule,
     AccountToolbarModule,

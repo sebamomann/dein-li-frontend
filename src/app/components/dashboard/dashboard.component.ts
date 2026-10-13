@@ -6,8 +6,8 @@ import {Observable} from 'rxjs';
 import {ILinkStats} from '../../models/ILinkStats.model';
 import {LinkService} from '../../services/link.service';
 import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.component';
+import {animate, query, style, transition, trigger} from '@angular/animations';
+import {ShareObject} from '../../models/ShareObejct';
 import {ToolbarService} from '../../services/toolbar.service';
 import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';
 import {UrlUtil} from '../../_util/Url.util';
@@ -23,6 +23,21 @@ moment.locale('de');
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
+    animations: [
+        // A created link lights up: the point overshoots once, the label writes in after it
+        trigger('lightUp', [
+            transition('* => *', [
+                query('.star-point', [
+                    style({ transform: 'scale(0)' }),
+                    animate('400ms cubic-bezier(.34, 1.4, .64, 1)', style({ transform: 'scale(1)' })),
+                ], { optional: true }),
+                query('.label', [
+                    style({ opacity: 0, transform: 'translateX(-8px)' }),
+                    animate('400ms cubic-bezier(.16, 1, .3, 1)', style({ opacity: 1, transform: 'none' })),
+                ], { optional: true }),
+            ]),
+        ]),
+    ],
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
@@ -37,6 +52,10 @@ export class DashboardComponent implements OnInit {
   public baseUrl = UrlUtil.getBaseUrl();
 
   public highlightHint = false;
+  public creating = false;
+
+  // Links created in this visit, newest first
+  public created: ILink[] = [];
   @ViewChild('chartRef', {static: true})
   public chartRef: BasicCallChartComponent;
   @ViewChild('create', {static: true}) create: ElementRef;
@@ -46,7 +65,7 @@ export class DashboardComponent implements OnInit {
    *
    */
   constructor(public linkService: LinkService, private formBuilder: UntypedFormBuilder,
-              private dialog: MatDialog, private authenticationService: AuthenticationService,
+              private authenticationService: AuthenticationService,
               private toolbarService: ToolbarService, private route: ActivatedRoute) {
     this.toolbarService.setTitle('Home');
 
@@ -91,17 +110,20 @@ export class DashboardComponent implements OnInit {
       return;
     }
 
-    if (!this.event.valid) {
+    if (!this.event.valid || this.creating) {
       return;
     }
 
+    this.creating = true;
     const creation$$ = this.linkService
       .create(link, short)
       .subscribe(
         (sResponse) => {
+          this.creating = false;
           this.handleCreationSuccess({original: link, short: sResponse.short} as ILink, formDirective);
         },
         (err) => {
+          this.creating = false;
           this.handleCreationError(err);
         },
         () => {
@@ -135,9 +157,9 @@ export class DashboardComponent implements OnInit {
    */
   public getLinkErrorMessage(): string {
     if (this.get('link').hasError('invalid')) {
-      return 'Gebe einen gültigen Link ein ';
+      return 'Das sieht nicht nach einer Web-Adresse aus (https://…)';
     } else if (this.get('link').hasError('required')) {
-      return 'Bitte gebe einen Link ein';
+      return 'Füge eine Adresse ein';
     }
   }
 
@@ -146,12 +168,22 @@ export class DashboardComponent implements OnInit {
    */
   public getShortErrorMessage(): string {
     if (this.get('short').hasError('inUse')) {
-      return 'Dieser Kurzlink ist bereits vergeben';
+      return 'Diesen Namen gibt es schon';
     } else if (this.get('short').hasError('unprocessable')) {
-      return 'Invalide Zeichen';
+      return 'Nur Buchstaben, Zahlen, - und _';
     } else if (this.get('short').hasError('minlength')) {
-      return 'Der Kurzlink muss mindestens 3 Zeichen lang sein';
+      return 'Mindestens 3 Zeichen';
     }
+  }
+
+  public domainOf(url: string): string {
+    return UrlUtil.domainOf(url);
+  }
+
+  public shareObjectFor(link: ILink): ShareObject {
+    const share = new ShareObject();
+    share.url = UrlUtil.getBaseDomain() + link.short;
+    return share;
   }
 
   public logout() {
@@ -164,8 +196,8 @@ export class DashboardComponent implements OnInit {
 
   /**
    * Called on successful link creation.<br/>
-   * Open {@link SuccessfulCreationDialogComponent}.<br/>
-   * Component contains next steps for user to take after link creation.<br/>
+   * Show the new link as the lit star in the sky panel.<br/>
+   * The panel offers copy, preview and statistics as next steps.<br/>
    * <br/>
    * Also reset the entire form
    *
@@ -173,13 +205,7 @@ export class DashboardComponent implements OnInit {
    * @param formDirective FormGroupDirective  Needed for properly resetting Validators
    */
   private handleCreationSuccess(sResponse: ILink, formDirective: FormGroupDirective): void {
-    this.dialog.open(SuccessfulCreationDialogComponent, {
-      id: 'successful-creation-dialog',
-      width: '95%',
-      maxWidth: '500px',
-      height: 'auto',
-      data: sResponse,
-    });
+    this.created = [sResponse, ...this.created];
 
     formDirective.resetForm();
     this.event.reset();

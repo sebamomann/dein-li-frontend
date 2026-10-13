@@ -1,25 +1,4 @@
-<div class="spinner-wrapper">
-  <div class="block-wrapper">
-    <section class="container">
-      <div>
-        <div>
-          <span class="one h6"></span>
-          <span class="two h3"></span>
-        </div>
-      </div>
-      <div>
-        <div>
-          <span class="one h1"></span>
-          <span class="two h4"></span>
-        </div>
-      </div>
-      <div>
-        <div>
-          <span class="one h5"></span>
-          <span class="two h2"></span>
-        </div>
-      </div>
-    </section>
-    <div class="message">{{message}}</div>
-  </div>
+<div class="loader" role="status">
+  <span class="point" aria-hidden="true"></span>
+  <span>{{ message || 'Einen Moment …' }}</span>
 </div>

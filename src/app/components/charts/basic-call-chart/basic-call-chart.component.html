@@ -1,27 +1,21 @@
-<div class="statistic-chart-wrapper">
-  <div class="statistic-chart">
-    <canvas id="canvas" width="100%" height="30vh" #canvas>
-      {{chart}}
-    </canvas>
-  </div>
-  <div class="statistic-information">
-    <div>
-      <span>{{linkStats$$.getValue()?.total ? linkStats$$.getValue().total : "-"}}</span>
-      <span>Aufrufe Gesamt</span>
-    </div>
-
-    <div class="report-link-wrapper">
-      <app-report-block>
-      </app-report-block>
-    </div>
-
-    <div>
-      <span>{{linkStats$$.getValue()?.distinctCalls ? linkStats$$.getValue().distinctCalls : "-"}}</span>
-      <span>Geräte Gesamt</span>
-    </div>
+<div class="chart">
+  <div class="plot">
+    <canvas #canvas role="img" aria-label="Aufrufe im gewählten Zeitraum"></canvas>
+    @if (!stats) {
+      <div class="state" role="status">Aufrufe werden geladen …</div>
+    } @else if (!stats.total) {
+      <div class="state">Noch keine Aufrufe in diesem Zeitraum</div>
+    }
   </div>
 
-  @if (!linkStats$$.getValue()) {
-    <app-hexagon-loader [@remove] [message]="'Lade Graph'"></app-hexagon-loader>
-  }
+  <dl class="totals">
+    <div>
+      <dt>Aufrufe</dt>
+      <dd class="num">{{ stats?.total ? (stats.total | number) : '0' }}</dd>
+    </div>
+    <div>
+      <dt>Geräte</dt>
+      <dd class="num">{{ stats?.distinctCalls ? (stats.distinctCalls | number) : '0' }}</dd>
+    </div>
+  </dl>
 </div>

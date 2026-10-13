@@ -45,3 +45,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Impeccable working files
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/build/
+.impeccable/questions/

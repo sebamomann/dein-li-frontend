@@ -63,6 +63,10 @@ export class PreviewComponent implements OnInit {
   /**
    * Take passed link an open it in a new browser tab
    */
+  public domainOf(url: string): string {
+    return UrlUtil.domainOf(url);
+  }
+
   public redirectToHome() {
     this.router.navigate(["/"])
   }

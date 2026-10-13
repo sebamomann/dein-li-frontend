@@ -1,183 +1,81 @@
-@import "src/app/styles/variables";
+@use "src/app/styles/variables" as *;
 
-.show-filter-button {
-  position: absolute;
-  background-color: gray;
-  right: 0;
-  padding: 2px;
-  border-radius: 3px;
-  z-index: 1;
-  color: white;
-  transform: translateY(-100%);
+:host {
+  display: block;
 }
 
-.chart-filter-wrapper {
-  width: 100%;
-  max-width: 1275px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  color: white;
-  margin: 0 auto 50px;
-  align-items: start;
-  grid-gap: 20% 10%;
-  font-size: 1.125em;
+.range {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.presets {
+  border-color: $line-2;
+  border-radius: 12px;
+
+  ::ng-deep .mat-button-toggle {
+    background: transparent;
+    color: $muted;
+    font-size: 13px;
+  }
+
+  ::ng-deep .mat-button-toggle-checked {
+    background: $sky-2;
+    color: $star;
+  }
+
+  ::ng-deep .mat-button-toggle + .mat-button-toggle {
+    border-left-color: $line-2;
+  }
+
+  ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+    line-height: 34px;
+    padding: 0 12px;
+  }
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: $gold;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.settings {
+  color: $muted;
+
+  &.on {
+    color: $gold;
+  }
+}
+
+.options {
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid $line;
+  border-radius: 14px;
+  background: $sky-0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   overflow: hidden;
-
-  div {
-    span {
-      display: block;
-      color: lightgray;
-      margin-bottom: 4px;
-      font-size: 0.75em;
-      font-weight: 200;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    ::ng-deep .mat-form-field-wrapper {
-      margin-bottom: -0.4em;
-    }
-
-    mat-form-field {
-      width: 100%;
-    }
-
-    .mat-mdc-select {
-      align-self: center;
-      /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
-      ::ng-deep .mat-select-value {
-        color: white;
-      }
-      /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
-      ::ng-deep .mat-select-arrow {
-        color: white;
-      }
-    }
-
-    ::ng-deep .mat-mdc-input-element:disabled {
-      color: gray;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    ::ng-deep .mat-mdc-form-field .mat-form-field-label {
-      color: lightgray;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    ::ng-deep .mat-form-field-disabled .mat-form-field-label {
-      color: gray;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    ::ng-deep .mat-mdc-form-field.mat-focused .mat-form-field-label {
-      color: white;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    ::ng-deep .mat-form-field-underline .mat-form-field-ripple {
-      background-color: lightgray;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    ::ng-deep .mat-form-field-underline {
-      background-color: lightgray;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-    ::ng-deep .mat-form-field-underline {
-      background-color: lightgray;
-    }
-
-    ::-webkit-calendar-picker-indicator {
-      filter: invert(1);
-    }
-
-    .mat-mdc-checkbox {
-      /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
-      ::ng-deep .mat-checkbox-frame {
-        border-color: rgba(255, 255, 255, 0.5);
-      }
-    }
-
-    &.datetime {
-      &.checkbox {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        grid-column-gap: 20px;
-
-        & > div {
-          top: 20px;
-          position: relative;
-        }
-      }
-    }
-  }
-
-  .progress-spinner-wrapper {
-    display: inline-block;
-    margin-left: 10px;
-    position: relative;
-    text-align: center;
-    margin-top: 0;
-    transform: translateY(-2px);
-
-    span {
-      position: absolute;
-      display: inline-block;
-      z-index: 10;
-      margin-bottom: 0;
-      left: 1px;
-      top: 1px;
-    }
-
-    mat-progress-spinner {
-      display: inline-block;
-      vertical-align: middle;
-    }
-  }
 }
 
-@media all and (max-width: 1024px) {
-  .show-filter-button {
-    transform: translateY(0);
-    opacity: 0.5;
+.group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+
+  mat-form-field {
+    width: 220px;
   }
 
-  ::ng-deep #report-dialog {
-    width: 95%;
-    margin: 0 auto;
-  }
-
-  .chart-filter-wrapper {
-    position: relative;
-    box-shadow: none;
-    background-color: $median-background;
-    color: white;
-    box-sizing: border-box;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 10px 16px;
-    padding: 16px 16px 16px;
-    margin: 0 auto 25px;
-    font-size: 0.9em;
-    border-radius: 5px;
-    overflow: hidden;
-
-    div {
-      &.datetime {
-        grid-column-start: 1;
-        grid-column-end: 3;
-      }
-
-      span {
-        margin-bottom: 0;
-        font-size: 0.85em;
-      }
-      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-      ::ng-deep .mat-form-field-wrapper {
-        &:last-of-type {
-          margin-bottom: -1.25em;
-        }
-      }
-    }
-
-    .interval-select {
-      grid-column-start: 1;
-      grid-column-end: 3;
-      margin-bottom: 8px;
-    }
+  .compact {
+    width: 170px;
   }
 }

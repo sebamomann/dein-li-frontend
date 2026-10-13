@@ -1,28 +1,23 @@
-<h2 mat-dialog-title>Neue Version</h2>
+<h2 mat-dialog-title>Neues Ziel</h2>
 <mat-dialog-content>
-  <p>
-    Setze einen neuen Link zu dem
-    <br/>
-    <a href="{{link}}">{{link}}</a>
-    <br/>
-    beim Aufruf weiterleitet.
-  </p>
+  <p>Der Kurzlink zeigt danach auf die neue Adresse. Bisher führt er zu:</p>
+  <p class="current mono">{{ link }}</p>
 
-  <form [formGroup]="event">
+  <form [formGroup]="event" (ngSubmit)="saveFnc()" id="add-version-form">
     <mat-form-field>
-      <label for="link">
-        <input formControlName="link"
-               id="link"
-               placeholder="Link zum Kürzen"
-               matInput>
-      </label>
-      <mat-error>{{getLinkErrorMessage()}}</mat-error>
+      <mat-label>Neue Adresse</mat-label>
+      <input formControlName="link"
+        class="mono"
+        type="url"
+        inputmode="url"
+        placeholder="https://…"
+        cdkFocusInitial
+        matInput>
+      <mat-error>{{ getLinkErrorMessage() }}</mat-error>
     </mat-form-field>
-    <button
-      (click)="saveFnc()"
-      color="primary"
-      mat-raised-button>
-      Speichern
-    </button>
   </form>
 </mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close type="button">Abbrechen</button>
+  <button mat-flat-button type="submit" form="add-version-form">Ziel ändern</button>
+</mat-dialog-actions>

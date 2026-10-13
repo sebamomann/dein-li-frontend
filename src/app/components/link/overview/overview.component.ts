@@ -2,6 +2,8 @@ import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ILink} from '../../../models/ILink.model';
 import {LinkService} from '../../../services/link.service';
 import {Router} from '@angular/router';
+import {UrlUtil} from '../../../_util/Url.util';
+import {ToolbarService} from '../../../services/toolbar.service';
 import {animate, query, sequence, stagger, style, transition, trigger} from '@angular/animations';
 
 const staggerInms = 40;
@@ -43,9 +45,12 @@ export class OverviewComponent implements OnInit {
 
   public links = [];
   public loaded = false;
+  // Set once a page comes back short; stops infinite scroll from requesting empty pages forever
+  public endReached = false;
   private refreshing = false;
 
-  constructor(private linkService: LinkService, private router: Router) {
+  constructor(private linkService: LinkService, private router: Router, toolbarService: ToolbarService) {
+    toolbarService.setTitle('Deine Links');
   }
 
   /**
@@ -88,10 +93,14 @@ export class OverviewComponent implements OnInit {
           this.links.push(link);
         });
 
+        if (res.length < this.limit) {
+          this.endReached = true;
+        }
+
         setTimeout(() => {
           this.refreshing = false;
 
-          if (!this.containerHasScrollBar()) {
+          if (!this.endReached && !this.containerHasScrollBar()) {
             this.onScroll();
           }
         }, staggerInms * this.limit);
@@ -102,7 +111,7 @@ export class OverviewComponent implements OnInit {
    * Load new data due to changed filter
    */
   public onScroll() {
-    if (!this.refreshing) {
+    if (!this.refreshing && !this.endReached) {
 
       this.offset += this.limit;
 
@@ -124,6 +133,15 @@ export class OverviewComponent implements OnInit {
    * @param index   Index of current element
    * @param item    Current link in loop
    */
+  public setFilter(value: string) {
+    this.filter = value;
+    this.changedFilter();
+  }
+
+  public domainOf(url: string): string {
+    return UrlUtil.domainOf(url);
+  }
+
   public linkTrackBy(index: number, item: ILink) {
     if (!item) {
       return null;
@@ -144,6 +162,7 @@ export class OverviewComponent implements OnInit {
    */
   private reset() {
     this.loaded = false;
+    this.endReached = false;
     this.links = [];
     this.limit = 10;
     this.offset = 0;

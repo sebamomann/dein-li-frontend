@@ -1,33 +1,32 @@
-<main>
+<article class="notice preview">
   @if ($link | async; as link) {
-    <div>
-      <div class="preview-wrapper">
-        <h2 class="title">Vorschau</h2>
-        <p>
-          Der von Ihnen angeklickte Link leitet sie auf folgende Webiste weiter.
-        </p>
-        <span class="original">{{ link.original }}</span>
-        <p>Sind sie damit einverstanden?</p>
-        <div class="actions">
-          <button mat-raised-button (click)="redirectToHome()">Zurück</button>
-          <button
-            mat-raised-button
-            color="primary"
-            cdkFocusInitial
-            #btnRef
-            (click)="openLinkInSameTab(link.short)"
-            >
-            Link öffnen
-          </button>
-        </div>
-        <app-report-block [short]="link.short"></app-report-block>
-        <span class="date"
-          >Link erstellt: {{ link.iat | date: "dd.MM.yyyy HH:mm:ss" }}</span
-          >
-        </div>
-      </div>
-    } @else {
-      <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
-    }
-  </main>
+    <p class="from"><span class="short-label"><span class="base">dein.li/</span>{{ link.short }}</span> führt zu</p>
 
+    <h1 class="dest">
+      <span class="star-point" aria-hidden="true"></span>
+      <span>{{ domainOf(link.original) }}</span>
+    </h1>
+
+    <div class="url panel mono">{{ link.original }}</div>
+
+    <p class="meta">Erstellt am {{ link.iat | date: 'dd.MM.yyyy' }} um {{ link.iat | date: 'HH:mm' }} Uhr. Prüfe die Adresse, bevor du weitergehst.</p>
+
+    <div class="actions">
+      <button mat-flat-button
+        cdkFocusInitial
+        #btnRef
+        (click)="openLinkInSameTab(link.short)">
+        Link öffnen
+        <mat-icon iconPositionEnd>arrow_forward</mat-icon>
+      </button>
+      <button mat-stroked-button (click)="redirectToHome()">Zurück</button>
+    </div>
+
+    <div class="report">
+      <app-report-block [short]="link.short"></app-report-block>
+    </div>
+  } @else {
+    <p class="from loading" role="status">Ziel wird geladen …</p>
+    <div class="skeleton" aria-hidden="true"></div>
+  }
+</article>

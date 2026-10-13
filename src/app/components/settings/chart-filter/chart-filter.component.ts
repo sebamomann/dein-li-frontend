@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
 import moment from 'moment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {animate, style, transition, trigger} from '@angular/animations';
@@ -28,7 +28,7 @@ moment.locale('de');
     changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
-export class ChartFilterComponent implements OnInit {
+export class ChartFilterComponent implements OnInit, OnDestroy {
   /**
    * Number of datapoints the chart should be capable of showing
    */
@@ -107,6 +107,22 @@ export class ChartFilterComponent implements OnInit {
   /**
    * Open or close filter based on current state
    */
+  public ngOnDestroy() {
+    // Timers outlive the component otherwise and keep reloading data on other pages
+    this.resetIntervals();
+  }
+
+  public selectPreset(preset: string) {
+    this.chartFilter.preset = preset as any;
+    this.showFilter = preset === 'custom' ? true : this.showFilter;
+    this.changedFilter();
+  }
+
+  public toggleAutoUpdate(enabled: boolean) {
+    this.chartFilter.isAutoUpdate = enabled;
+    this.changedUpdateInterval(enabled);
+  }
+
   public toggleFilter() {
     this.showFilter = !this.showFilter;
   }

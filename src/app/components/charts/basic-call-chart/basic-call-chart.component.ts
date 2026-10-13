@@ -60,14 +60,17 @@ export class BasicCallChartComponent implements OnInit {
       });
   }
 
+  private canvas: HTMLCanvasElement;
+
   /**
    * Upon successful canvas load, initialize the chart
    *
    * @param content ElementRef    HTML Element of the canvas
    */
   @ViewChild('canvas', {static: false})
-  set content(content: ElementRef) {
+  set content(content: ElementRef<HTMLCanvasElement>) {
     if (content) {
+      this.canvas = content.nativeElement;
       setTimeout(() => {
         this.initializeChart();
       });
@@ -102,51 +105,72 @@ export class BasicCallChartComponent implements OnInit {
     // Chart.js >= 3 refuses to reuse a canvas that still has a chart attached
     this.chart?.destroy();
 
-    this.chart = new Chart('canvas', {
+    const peak = (ctx: any) => this.isPeak(ctx);
+
+    // The activity reads as a constellation: a thin line, a point of light where calls
+    // happened, and the busiest moment as the one gold star
+    this.chart = new Chart(this.canvas, {
       type: 'line',
       data: {
         labels: [],
         datasets: [{
           data: [],
-          borderColor: '#2976c4',
+          borderColor: '#5D6684',
+          borderWidth: 1.5,
           fill: false,
-          tension: 0.4, // Chart.js 2 drew curved lines by default
+          tension: 0.35,
+          pointRadius: (ctx: any) => peak(ctx) ? 5 : (ctx.raw > 0 ? 2.5 : 0),
+          pointHoverRadius: 6,
+          pointBackgroundColor: (ctx: any) => peak(ctx) ? '#FFD27A' : '#F2F4FF',
+          pointBorderColor: (ctx: any) => peak(ctx) ? 'rgba(255, 210, 122, .35)' : 'transparent',
+          pointBorderWidth: (ctx: any) => peak(ctx) ? 6 : 0,
         }],
       },
       options: {
         maintainAspectRatio: false,
+        animation: {duration: 400},
+        // headroom so the peak star and its ring are never clipped by the top edge
+        layout: {padding: {top: 14, right: 8}},
+        interaction: {mode: 'index', intersect: false},
         plugins: {
-          legend: {
-            display: false
+          legend: {display: false},
+          tooltip: {
+            backgroundColor: '#151B2E',
+            borderColor: '#2C3652',
+            borderWidth: 1,
+            titleColor: '#8B95B2',
+            bodyColor: '#F2F4FF',
+            titleFont: {family: 'Sora', size: 12, weight: 400},
+            bodyFont: {family: 'Sora', size: 14, weight: 600},
+            padding: 10,
+            displayColors: false,
+            callbacks: {
+              label: (item: any) => `${item.formattedValue} ${item.raw === 1 ? 'Aufruf' : 'Aufrufe'}`,
+            },
           },
         },
         scales: {
           y: {
-            display: true,
             beginAtZero: true,
-            grid: {
-              color: '#3e3e3e'
-            },
+            border: {display: false},
+            grid: {color: '#1E2638'},
             ticks: {
-              color: 'white',
-              stepSize: 1,
-              maxTicksLimit: 10
+              color: '#8B95B2',
+              font: {family: 'Sora', size: 12},
+              precision: 0,
+              maxTicksLimit: 5,
+              padding: 8,
             },
           },
           x: {
-            grid: {
-              color: '#3e3e3e'
-            },
+            border: {color: '#2C3652'},
+            grid: {display: false},
             ticks: {
-              color: 'white',
-              maxRotation: 90,
-              minRotation: 0,
-              maxTicksLimit: (this.isSmallScreen ? 10 : 50)
-            },
-            // The Chart.js 2 config showed an (empty) axis label, which reserves space below the axis
-            title: {
-              display: true,
-              font: {size: 20},
+              color: '#8B95B2',
+              font: {family: 'Sora', size: 12},
+              maxRotation: 0,
+              autoSkipPadding: 18,
+              maxTicksLimit: (this.isSmallScreen ? 5 : 12),
             },
           }
         },
@@ -156,6 +180,18 @@ export class BasicCallChartComponent implements OnInit {
     this.listenToDataChanges();
 
     this.initialized = true;
+  }
+
+  public get stats(): ILinkStats {
+    return this.linkStats$$.getValue();
+  }
+
+  private isPeak(ctx: any): boolean {
+    const data = ctx.dataset?.data as number[];
+    if (!data || !data.length || !(ctx.raw > 0)) {
+      return false;
+    }
+    return ctx.dataIndex === data.indexOf(Math.max(...data));
   }
 
   private listenToDataChanges() {

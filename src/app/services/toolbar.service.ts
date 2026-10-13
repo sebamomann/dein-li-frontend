@@ -8,7 +8,7 @@ export class ToolbarService {
   constructor() {
   }
 
-  private _title$: BehaviorSubject<string> = new BehaviorSubject<string>('Dein Link - In Kurzform');
+  private _title$: BehaviorSubject<string> = new BehaviorSubject<string>('Home');
 
   get title$(): BehaviorSubject<string> {
     return this._title$;

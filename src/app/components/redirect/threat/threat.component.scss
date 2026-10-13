@@ -1,13 +1,30 @@
-@import "src/app/styles/mat-card";
+@use "src/app/styles/variables" as *;
 
-.threat-analysis-wrapper {
-  grid-column-start: 1;
-  grid-column-end: 3;
-  padding: 0 0 50px;
-  text-align: center;
+.dest-label {
+  margin-top: 32px !important;
+  color: $muted !important;
+  font-size: .9375rem !important;
+}
 
-  button {
-    display: block;
-    margin: 015px auto;
-  }
+.dest {
+  margin-top: 4px !important;
+  color: $star !important;
+  font-size: 1.75rem !important;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  word-break: break-word;
+}
+
+.url {
+  margin-top: 14px;
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: $text-2;
+  word-break: break-all;
+}
+
+.risky {
+  --mat-button-outlined-outline-color: #{rgba($amber, .5)};
+  --mat-button-outlined-label-text-color: #{$amber};
 }

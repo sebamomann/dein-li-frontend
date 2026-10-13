@@ -16,7 +16,7 @@ interface ReportDialogData {
 })
 export class ReportDialogComponent {
   public short: string;
-  public baseUrl = UrlUtil.getBaseUrl();
+  public baseUrl = UrlUtil.getBaseDomain();
 
   public event = new UntypedFormGroup({
     short: new UntypedFormControl('', [Validators.required]),
@@ -49,7 +49,7 @@ export class ReportDialogComponent {
 
   public getShortErrors() {
     if (this.event.get('short').hasError('required')) {
-      return 'Erforderlich';
+      return 'Gib den Kurzlink ein';
     }
   }
 }

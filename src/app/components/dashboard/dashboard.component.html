@@ -1,87 +1,112 @@
-<div class="header-statistic-wrapper">
-  <div class="header-statistic">
-    <app-chart-filter [chartFilter]="chartFilter"
-      (update)="this.chartRef.loadNewData()">
-    </app-chart-filter>
-    <app-basic-call-chart [chartFilter]="chartFilter"
-      #chartRef>
-    </app-basic-call-chart>
-  </div>
-</div>
+<div class="page">
+  <section class="create" #create id="create">
+    <div class="intro">
+      <h1>Lange Links,<br><strong>kurz und sicher.</strong></h1>
+      <p class="lead">Einfügen, kürzen, teilen. Wer deinen Link öffnet, sieht zuerst, wohin er führt.</p>
 
-<main>
-  <div class="link-creation" #create>
-    <h3>Kürze einen Link auf nur 7 Zeichen!</h3>
-    <form [formGroup]="event" #formDirective="ngForm">
-      <mat-form-field>
-        <label for="link">
+      <form class="form panel" [formGroup]="event" #formDirective="ngForm" (ngSubmit)="saveFnc(formDirective)">
+        <mat-form-field class="url">
+          <mat-label>Lange Adresse</mat-label>
           <input formControlName="link"
-            id="link"
-            placeholder="Link zum Kürzen"
+            class="mono"
+            type="url"
+            inputmode="url"
+            autocomplete="off"
+            placeholder="https://…"
             matInput>
-        </label>
-        <mat-error>{{getLinkErrorMessage()}}</mat-error>
-      </mat-form-field>
+          <mat-error>{{ getLinkErrorMessage() }}</mat-error>
+        </mat-form-field>
 
-      <mat-form-field (click)="clickedShortInputField()">
-        <mat-label>Eigener Kurzlink</mat-label>
-        <input formControlName="short"
-          id="short"
-          autocomplete="off"
-          matInput>
-        @if (get('short').value) {
-          <mat-hint>{{baseUrl}}{{get('short').value}}</mat-hint>
+        <div class="row">
+          <mat-form-field class="short" (click)="clickedShortInputField()">
+            <mat-label>Eigener Name (optional)</mat-label>
+            <span matTextPrefix class="prefix mono">dein.li/</span>
+            <input formControlName="short"
+              class="mono"
+              autocomplete="off"
+              matInput>
+            @if (!userIsLoggedIn) {
+              <mat-hint [class.highlight]="highlightHint">Eigene Namen gibt es nach der Anmeldung</mat-hint>
+            }
+            <mat-error>{{ getShortErrorMessage() }}</mat-error>
+          </mat-form-field>
+
+          <button mat-flat-button class="submit" type="submit" [disabled]="creating">
+            @if (creating) {
+              <mat-icon class="spin">sync</mat-icon>
+            }
+            Kürzen
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="sky panel" aria-live="polite">
+      @if (created.length) {
+        @let newest = created[0];
+        <div class="newest" [@lightUp]="newest.short">
+          <span class="star-point" aria-hidden="true"></span>
+          <div class="label">
+            <span class="short-label"><span class="base">dein.li/</span>{{ newest.short }}</span>
+            <span class="dest">führt zu <strong>{{ domainOf(newest.original) }}</strong></span>
+            <span class="full mono">{{ newest.original }}</span>
+            <div class="actions">
+              <button mat-flat-button type="button" [shareObject]="shareObjectFor(newest)" appShare>
+                <mat-icon>content_copy</mat-icon>
+                Kopieren
+              </button>
+              <a mat-stroked-button [routerLink]="['/link/preview', newest.short]">Vorschau</a>
+              @if (userIsLoggedIn) {
+                <a mat-button [routerLink]="['/link']" [queryParams]="{l: newest.short}">
+                  <mat-icon>insights</mat-icon>
+                  Statistik
+                </a>
+              }
+            </div>
+          </div>
+        </div>
+
+        @if (created.length > 1) {
+          <ul class="earlier" aria-label="Vorher erstellt">
+            @for (link of created.slice(1, 5); track link.short) {
+              <li>
+                <span class="star-point quiet" aria-hidden="true"></span>
+                <span class="short-label"><span class="base">dein.li/</span>{{ link.short }}</span>
+                <span class="to">→ {{ domainOf(link.original) }}</span>
+              </li>
+            }
+          </ul>
         }
-        <mat-error>{{getShortErrorMessage()}}</mat-error>
-      </mat-form-field>
-
-      <button (click)="saveFnc(formDirective)"
-        color="primary"
-        mat-raised-button>
-        <mat-icon>settings</mat-icon>
-        Los!
-      </button>
-    </form>
-    @if (!userIsLoggedIn) {
-      <p [ngClass]="{'highlight' : highlightHint}">
-        Ein eigener Kurzlink ist nur für angemeldete Benutzer möglich. Logge dich ein, um deinen gewünschten Kurzlink
-        anzugeben.
-      </p>
-    }
-    <p>
-      Dein Link ist nach der Generierung sofot gültig. Du kannst ihn direkt teilen.
-    </p>
-  </div>
-  @if (userIsLoggedIn) {
-    <div class="link-management">
-      <h3>Deine Links</h3>
-      <button [routerLink]="'/link/overview'"
-        mat-raised-button>
-        <mat-icon>launch</mat-icon>
-        Zu meinen Links
-      </button>
-      <button (click)="logout()"
-        mat-button>
-        <mat-icon>logout</mat-icon>
-        Abmelden
-      </button>
+      } @else {
+        <div class="waiting">
+          <span class="ring" aria-hidden="true"></span>
+          <p>Hier erscheint dein Link, sobald du ihn kürzt.</p>
+          <p class="small">Er ist sofort gültig, auch ohne Konto.</p>
+        </div>
+      }
     </div>
-  }
+  </section>
+
   @if (!userIsLoggedIn) {
-    <div class="link-management login">
-      <h3>Deine Links</h3>
-      <button (click)="login()"
-        mat-raised-button>
+    <section class="account panel">
+      <div>
+        <h2>Deine Links an einem Ort</h2>
+        <p>Mit Konto findest du alle deine Links wieder, vergibst eigene Namen und siehst, wie oft sie geöffnet wurden.</p>
+      </div>
+      <button mat-stroked-button (click)="login()">
         <mat-icon>login</mat-icon>
-        Login
+        Anmelden
       </button>
-      <p>Logge dich ein um deine Links zu sehen. Ebenso werden deine generierten Links dir zugeordnet, damit du deine
-      Analysen anschauen kannst.</p>
-    </div>
+    </section>
   }
-</main>
 
-<div class="contribution">
-  Created by <a href="https://sebamomann.de">Seba Momann</a>
+  <section class="activity">
+    <header>
+      <h2>Aufrufe auf dein.li</h2>
+      <app-chart-filter [chartFilter]="chartFilter" (update)="chartRef.loadNewData()"></app-chart-filter>
+    </header>
+    <div class="panel body">
+      <app-basic-call-chart [chartFilter]="chartFilter" #chartRef></app-basic-call-chart>
+    </div>
+  </section>
 </div>
-

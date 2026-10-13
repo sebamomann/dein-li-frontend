@@ -1,4 +1,5 @@
-<div (click)="this.openDialog()">
-  <mat-icon>report</mat-icon>
-  <span>Link Melden</span>
-</div>
+<button mat-button type="button" class="report" [class.nav]="variant === 'nav'" (click)="openDialog()"
+  [attr.aria-label]="short ? 'Diesen Link melden' : 'Link melden'">
+  <mat-icon>flag</mat-icon>
+  <span class="text">{{ short ? 'Diesen Link melden' : 'Link melden' }}</span>
+</button>

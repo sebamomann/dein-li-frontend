@@ -1,113 +1,134 @@
-@import "src/app/styles/variables";
+@use "src/app/styles/variables" as *;
 
-.link-list {
-  width: 100%;
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 24px;
+  margin-bottom: 24px;
+
+  h1 {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 300;
+    letter-spacing: -.03em;
+  }
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .sort {
+    width: 230px;
+  }
+
+  a[mat-flat-button] {
+    margin-left: 8px;
+  }
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+}
+
+.cols,
+.row {
   display: grid;
-  grid-gap: 35px 35px;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr) 110px 120px;
+  gap: 16px;
+  align-items: center;
+  padding: 0 24px;
+}
 
-  .card-block {
-    border-radius: 8px;
-    background-color: $median-background;
-    color: white;
-    padding: 15px 25px 25px;
-    transition: 0.5s all;
-    position: relative;
+.cols {
+  height: 40px;
+  color: $muted;
+  font-size: .8125rem;
+}
 
-    &:hover {
-      transform: scale(1.1);
-      transition: 0.25s all;
-    }
+.row {
+  height: 60px;
+  border-top: 1px solid $line;
+  color: $star;
+  text-decoration: none;
+  transition: background .15s;
 
-    span {
-      display: block;
-      text-align: center;
+  &:hover,
+  &:focus-visible {
+    background: $sky-2;
 
-      &:first-child {
-        font-size: 1.5em;
-        font-weight: bolder;
-        color: #2976c4;
-      }
-
-      &:nth-child(2) {
-        font-size: 0.75em;
-        margin-top: 15px;
-        margin-bottom: 10px;
-        color: lightgray;
-        font-style: italic;
-        line-break: anywhere;
-      }
-
-      &.date {
-        bottom: 5px;
-        right: 5px;
-      }
-
-      &.nrOfCalls {
-        color: gray;
-        font-size: 0.75em;
-        font-style: italic;
-        position: absolute;
-        bottom: 5px;
-        left: 5px;
-      }
+    .star-point {
+      background: $gold;
     }
   }
 }
 
-.header {
-  display: grid;
-  grid-template-columns: 1fr minmax(25%, auto);
-  width: 100%;
-  margin: 0 auto 15px;
+.name {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
 
-  .mat-mdc-select {
-    align-self: center;
-    padding: 5px;
-    /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
-    ::ng-deep .mat-select-value {
-      color: white;
-    }
-    /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
-    ::ng-deep .mat-select-arrow {
-      color: white;
-    }
-  }
-
-  mat-icon {
-    text-align: center;
-    vertical-align: middle;
-    padding: 5px;
-    float: right;
-    color: white;
-    justify-self: right;
-    @include md-icon-size(30px);
+  .short-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: normal;
   }
 }
 
-@media all and (max-width: 1024px) {
-  .link-list {
-    margin: 0 auto;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 15px;
-    font-size: 0.9em;
+.dest {
+  color: $text-2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
-    .card-block {
-      padding: 16px;
-      overflow: scroll;
+.n {
+  text-align: right;
+}
 
-      span {
-        &:first-child {
-          word-wrap: break-word;
-          font-size: 1.25em;
-          font-weight: bolder;
-        }
+.d {
+  color: $muted;
+  text-align: right;
+}
 
-        &:nth-child(2) {
-          margin-top: 10px;
-          margin-bottom: 10px;
-        }
-      }
+.loading {
+  color: $muted;
+}
+
+.empty {
+  margin-top: 4vh;
+}
+
+@media (max-width: 720px) {
+  .controls {
+    width: 100%;
+
+    .sort {
+      flex: 1;
+      width: auto;
     }
   }
+
+  .cols {
+    display: none;
+  }
+
+  .row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "name n" "dest d";
+    height: auto;
+    padding: 14px 18px;
+    row-gap: 4px;
+  }
+
+  .name { grid-area: name; }
+  .dest { grid-area: dest; padding-left: 21px; font-size: .875rem; }
+  .n { grid-area: n; }
+  .d { grid-area: d; font-size: .8125rem; }
 }

@@ -1,71 +1,63 @@
-@import "src/app/styles/variables";
+@use "src/app/styles/variables" as *;
 
-.account-menu-wrapper {
-  text-align: right;
-  margin: 0 0 0 auto;
+:host {
+  display: inline-flex;
+  margin-left: 8px;
+}
 
-  .account-username-button {
-    width: fit-content;
-    display: unset;
+.account {
+  padding: 0 10px 0 6px;
 
-    div {
-      border: 3px solid $blue;
-      border-right: none;
-      padding: 2px calc(23px + 6px) 2px 12px;
-      border-radius: 4px 0 0 4px;
-      line-height: normal;
-      display: inline-block;
-      vertical-align: middle;
-      font-weight: 400;
-      font-size: 0.85em;
-    }
-
-    mat-icon {
-      background-color: $dark-background;
-      border-radius: 100%;
-      @include md-icon-size(40px);
-      outline: none;
-      margin: 0 0 0 -23px;
-      display: inline-block;
-      vertical-align: middle;
-
-      &:first-child {
-        margin: 0 0 0 0;
-      }
-
-      &.spin {
-        animation: spin 2s infinite linear;
-      }
-    }
+  .avatar {
+    display: inline-grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: $gold;
+    color: $gold-ink;
+    font-size: 13px;
+    font-weight: 700;
+    margin-right: 8px;
   }
 
+  .name {
+    max-width: 14ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-  button {
-    line-height: 32px;
-    font-weight: normal;
-    vertical-align: middle;
-
-    mat-icon {
-      @include md-icon-size(28px);
-      outline: none;
-      margin: 0 0 0 10px;
-
-      &:first-child {
-        margin: 0 0 0 0;
-      }
-    }
-
-    &:nth-of-type(2) {
-      text-align: right;
-    }
+  .chev {
+    margin: 0 0 0 2px;
+    color: $muted;
   }
 }
 
+.refreshing {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: $muted;
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}
+
 @keyframes spin {
-  0% {
-    transform: rotate(0);
-  }
-  100% {
+  to {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 720px) {
+  .account .name {
+    display: none;
+  }
+
+  .login {
+    min-width: 0;
   }
 }

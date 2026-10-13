@@ -61,9 +61,9 @@ export class AddVersionDialogComponent implements OnInit, OnDestroy {
 
   public getLinkErrorMessage(): string {
     if (this.get('link').hasError('invalid')) {
-      return 'Gebe einen gültigen Link ein ';
+      return 'Das sieht nicht nach einer Web-Adresse aus (https://…)';
     } else if (this.get('link').hasError('required')) {
-      return 'Bitte gebe einen Link ein';
+      return 'Füge eine Adresse ein';
     }
   }
 

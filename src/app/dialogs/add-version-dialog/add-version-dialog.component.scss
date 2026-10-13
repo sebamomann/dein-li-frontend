@@ -1,17 +1,12 @@
-p {
-  a {
-    margin: 8px 0;
-    outline: none;
-  }
-}
+@use "src/app/styles/variables" as *;
 
-form {
-  margin-top: 25px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-gap: 16px;
-
-  button {
-    align-self: center;
-  }
+.current {
+  margin: 0 0 20px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: $sky-0;
+  border: 1px solid $line;
+  font-size: 13px;
+  word-break: break-all;
+  color: $text-2;
 }

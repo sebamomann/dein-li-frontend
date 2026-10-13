@@ -1,82 +1,126 @@
-@import "src/app/styles/variables";
+@use "src/app/styles/variables" as *;
 
-mat-toolbar {
-  background-image: linear-gradient($dark-background 0%, $dark-background calc(100% - 15px), $background 100%);
-  color: $blue;
-  margin-bottom: 50px;
-  z-index: 2;
-  position: relative;
-  padding: 7px 0 15px;
-  height: auto;
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
-  .toolbar-wrapper {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    max-width: 1275px;
-    margin: 0 auto;
-    align-items: center;
-    width: 95%;
+.skip-link {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 10;
+  background: $gold;
+  color: $gold-ink;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
 
+  &:focus {
+    top: 12px;
+  }
+}
 
-    .logo-wrapper {
-      outline: none;
-      width: fit-content;
-      cursor: pointer;
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: rgba(10, 14, 26, .82);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid $line;
+}
 
-      img {
-        vertical-align: middle;
-        height: 34px;
-        width: 34px;
-        outline: none;
-        display: inline-block;
-      }
+.bar {
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
-      .logo-name {
-        margin-left: 10px;
-        display: inline-block;
-        font-size: 1.25em;
-        vertical-align: middle;
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: $star;
+  border-radius: 10px;
 
-        span {
-          span {
-            color: $light-background;
-          }
-        }
-      }
+  .mark {
+    width: 32px;
+    height: 32px;
+
+    .hex {
+      fill: $sky-2;
+      stroke: $gold;
+      stroke-width: 1.5;
     }
 
-    .title {
-      font-size: 1.75em;
-      text-align: center;
-      font-weight: bolder;
+    .chain rect {
+      fill: none;
+      stroke: $star;
+      stroke-width: 2.4;
+    }
+  }
+
+  .word {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -.01em;
+
+    .fade {
+      color: $muted-2;
     }
   }
 }
 
-@media all and (max-width: 1024px) {
-  mat-toolbar {
-    margin-bottom: 15px;
+nav {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 
-    .toolbar-wrapper {
-      width: 95%;
-      grid-template-columns: 1fr  1fr;
-
-      .title {
-        display: none;
-      }
-    }
+  a.active {
+    color: $gold;
   }
 }
 
+.content {
+  flex: 1;
+  padding: 48px 0 96px;
+}
 
-footer {
-  position: relative;
-  margin: 10px auto;
-  z-index: 1;
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 32px;
+  padding: 28px 0 36px;
+  border-top: 1px solid $line;
+  color: $muted;
+  font-size: .875rem;
+
+  .links {
+    display: flex;
+    gap: 24px;
+  }
 
   a {
-    color: white;
+    color: $text-2;
+  }
+}
+
+@media (max-width: 720px) {
+  .bar {
+    gap: 8px;
   }
 
-  text-align: center;
+  .brand .word {
+    font-size: 1.1rem;
+  }
+
+  .content {
+    padding-top: 28px;
+  }
 }

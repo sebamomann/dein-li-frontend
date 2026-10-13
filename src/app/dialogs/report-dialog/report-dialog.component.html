@@ -1,30 +1,26 @@
-<h1 mat-dialog-title>Link melden</h1>
+<h2 mat-dialog-title>Link melden</h2>
 
-@if (short) {
-  <div mat-dialog-content
-    >
-    <p>Bist du sicher, dass du den Link <span>{{baseUrl}}{{short}}</span> melden möchtest?</p>
-  </div>
-}
-
-@if (!short) {
-  <div mat-dialog-content
-    >
-    <p>Gebe hier den Kurzlink ein den du melden möchtest</p>
-    <form [formGroup]="event">
+<mat-dialog-content>
+  @if (short) {
+    <p>Du meldest <span class="short-label"><span class="base">{{ baseUrl }}</span>{{ short }}</span>. Wer ihn danach öffnet, sieht zuerst eine Warnung.</p>
+  } @else {
+    <p>Welcher Kurzlink führt auf etwas Gefährliches oder Unseriöses? Wer ihn danach öffnet, sieht zuerst eine Warnung.</p>
+    <form [formGroup]="event" (ngSubmit)="onYesClick()" id="report-form">
       <mat-form-field>
-        <mat-label> Link zu melden</mat-label>
-        <label>
-          <input matInput formControlName="short">
-        </label>
-        <mat-error>{{getShortErrors()}}</mat-error>
+        <mat-label>Kurzlink</mat-label>
+        <span matTextPrefix class="mono prefix">dein.li/</span>
+        <input matInput class="mono" formControlName="short" cdkFocusInitial autocomplete="off">
+        <mat-error>{{ getShortErrors() }}</mat-error>
       </mat-form-field>
     </form>
-  </div>
-}
+  }
+</mat-dialog-content>
 
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Abbrechen</button>
-  <button mat-button (click)="onYesClick()" cdkFocusInitial>Melden</button>
-</div>
-
+<mat-dialog-actions align="end">
+  <button mat-button type="button" (click)="onNoClick()">Abbrechen</button>
+  @if (short) {
+    <button mat-flat-button type="button" (click)="onYesClick()" cdkFocusInitial>Melden</button>
+  } @else {
+    <button mat-flat-button type="submit" form="report-form">Melden</button>
+  }
+</mat-dialog-actions>

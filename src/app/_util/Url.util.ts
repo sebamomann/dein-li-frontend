@@ -46,4 +46,17 @@ export class UrlUtil {
   public static getBaseUrl(): string {
     return environment.BASE_URL;
   }
+
+  /**
+   * Host name of a URL without "www.", for showing where a link leads
+   *
+   * @param url String   Full URL
+   */
+  public static domainOf(url: string): string {
+    try {
+      return new URL(url).hostname.replace(/^www\./, '');
+    } catch {
+      return url;
+    }
+  }
 }

@@ -1,115 +1,67 @@
-<div class="header-statistic-wrapper">
-  <div class="header-statistic">
-    <app-chart-filter [chartFilter]="chartFilter"
-      (update)="this.chartRef.loadNewData()">
-    </app-chart-filter>
-    <app-basic-call-chart [short]="short"
-      [chartFilter]="chartFilter"
-      #chartRef>
-    </app-basic-call-chart>
-  </div>
-</div>
-
-<main>
+<div class="page">
   @if ($link | async; as link) {
-    <div>
-      <div class="main-statistic">
-        <div class="header-information-wrapper">
-          <div class="highlighter"></div>
-          <div class="header-information">
-            @if ($link | async; as link) {
-              <div>
-                <mat-expansion-panel #expansionPanel>
-                  <mat-expansion-panel-header [collapsedHeight]="'auto'" [expandedHeight]="'auto'">
-                    <mat-panel-title>
-                      <mat-icon class="copy-to-clipboard"
-                        [shareObject]="shareObject"
-                        (click)="closeExpansionPanel()"
-                        appShare>
-                        share
-                      </mat-icon>
-                      <span class="url-with-base"><!--
-                        --><span class="baseUrl">{{baseUrl}}</span><!--
-                        --><span class="short">{{link.short}}</span>
-                      </span>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <div class="content">
-                    <span>{{link.original}}</span>
-                  </div>
-                </mat-expansion-panel>
-              </div>
-            }
-          </div>
-          <div class="highlighter"></div>
-        </div>
-        <div class="version-history">
-          @if ($linkVersions | async; as linkVersions) {
-            <div class="version-wrapper" [@listAnimation]>
-              <div class="date-information solo">
-                <div class="main-information">
-                  <span>NOW</span>
-                </div>
-                <div class="line-after"></div>
-              </div>
-              <div class="version-information new-version">
-                <div>
-                  <button class="add-version-button stroked-button-colored"
-                    mat-stroked-button
-                    (click)="openAddVersionDialog()">
-                    <mat-icon>add_box</mat-icon>
-                    <span class="value">Neue Version</span>
-                  </button>
-                </div>
-              </div>
-              @if (linkVersions.length > 1) {
-                @for (linkVersion of linkVersions; track linkVersion) {
-                  <div class="date-information">
-                    <div class="line-before"></div>
-                    <div class="main-information">
-                      <span>{{getDay(linkVersion)}}.&nbsp;</span>
-                      <span>{{getMonthName(linkVersion)}}</span>
-                    </div>
-                    <div class="line-after"></div>
-                  </div>
-                  <div class="version-information">
-                    <span></span>
-                    <span>
-                      <mat-icon (click)="openLinkInNewTab(linkVersion.original)">
-                        open_in_new
-                      </mat-icon>
-                      <span>
-                        {{linkVersion.original}}
-                      </span>
-                    </span>
-                    <span class="date">{{linkVersion.iat | date : 'dd.MM.y HH:mm'}}</span>
-                  </div>
-                }
-              } @else {
-                <div class="date-information">
-                  <div class="line-before"></div>
-                  <div class="main-information">
-                    <span>?</span>
-                    <span></span>
-                  </div>
-                  <div class="line-after"></div>
-                </div>
-                <div class="empty decent left">
-                  <h2>Ich konnte nichts finden</h2>
-                  <p>
-                    Wusstest du, dass du neue Versionen für einen Link erstellen kannst? Eine neue Version heißt, dass eine neue
-                    Weiterleitung eingestellt werden kann. Die alten Versionen werden dir hier als Historie angezeigt.
-                  </p>
-                </div>
-              }
-            </div>
-          }
+    <header class="head">
+      <div class="title">
+        <span class="star-point" aria-hidden="true"></span>
+        <div>
+          <h1 class="short-label"><span class="base">dein.li/</span>{{ link.short }}</h1>
+          <p class="dest">führt zu <strong>{{ domainOf(link.original) }}</strong> <span class="mono full">{{ link.original }}</span></p>
         </div>
       </div>
-    </div>
+      <div class="actions">
+        <button mat-flat-button [shareObject]="shareObject" appShare>
+          <mat-icon>content_copy</mat-icon>
+          Kopieren
+        </button>
+        <a mat-stroked-button [routerLink]="['/link/preview', link.short]">Vorschau</a>
+        <button mat-stroked-button (click)="openAddVersionDialog()">
+          <mat-icon>edit</mat-icon>
+          Neues Ziel
+        </button>
+      </div>
+    </header>
   } @else {
-    <app-hexagon-loader [message]="'Lade Daten'"></app-hexagon-loader>
+    <p class="loading" role="status">Link wird geladen …</p>
   }
-</main>
 
+  <section class="stats">
+    <header>
+      <h2>Aufrufe</h2>
+      <app-chart-filter [chartFilter]="chartFilter" (update)="chartRef.loadNewData()"></app-chart-filter>
+    </header>
+    <div class="panel body">
+      <app-basic-call-chart [short]="short" [chartFilter]="chartFilter" #chartRef></app-basic-call-chart>
+    </div>
+  </section>
 
+  <section class="history">
+    <h2>Verlauf</h2>
+    @if ($linkVersions | async; as linkVersions) {
+      <ol class="timeline panel" [@listAnimation]>
+        @for (linkVersion of linkVersions; track linkVersion.iat; let first = $first) {
+          <li [class.current]="first">
+            <span class="when num">
+              <span class="day">{{ linkVersion.iat | date: 'dd.MM.yyyy' }}</span>
+              <span class="time">{{ linkVersion.iat | date: 'HH:mm' }}</span>
+            </span>
+            <span class="point" aria-hidden="true"></span>
+            <span class="what">
+              @if (first) {
+                <span class="tag">Aktuelles Ziel</span>
+              }
+              <span class="url mono">{{ linkVersion.original }}</span>
+            </span>
+            <button mat-icon-button (click)="openLinkInNewTab(linkVersion.original)" aria-label="Ziel in neuem Tab öffnen">
+              <mat-icon>open_in_new</mat-icon>
+            </button>
+          </li>
+        }
+      </ol>
+      @if (linkVersions.length < 2) {
+        <p class="hint">Mit „Neues Ziel“ kannst du diesen Kurzlink auf eine andere Adresse zeigen lassen. Frühere Ziele bleiben hier als Verlauf sichtbar.</p>
+      }
+    } @else {
+      <p class="loading" role="status">Verlauf wird geladen …</p>
+    }
+  </section>
+</div>

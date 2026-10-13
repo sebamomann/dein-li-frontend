@@ -1,22 +1,36 @@
-<div class="wrapper">
-  <mat-toolbar>
-    <div class="toolbar-wrapper">
-      <div class="logo-wrapper" [routerLink]="['/']">
-        <img src="assets/icons/icon_stripped.png" alt="dein.li logo">
-        <div class="logo-name">
-          <span>dein.li<span>nk</span></span>
-        </div>
-      </div>
-      <h2 class="title">
-        {{title}}
-      </h2>
-      <app-account-toolbar #account id="account"></app-account-toolbar>
-    </div>
-  </mat-toolbar>
+<a class="skip-link" href="#main">Zum Inhalt springen</a>
 
-  <div class="main-wrapper">
-    <router-outlet></router-outlet>
+<header class="topbar">
+  <div class="page bar">
+    <a class="brand" routerLink="/" aria-label="dein.li – zur Startseite">
+      <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+        <path class="hex" d="M20 2.5 35.2 11.25v17.5L20 37.5 4.8 28.75v-17.5Z"/>
+        <g class="chain" transform="rotate(-45 20 20)">
+          <rect x="9.5" y="16" width="12" height="8" rx="4"/>
+          <rect x="18.5" y="16" width="12" height="8" rx="4"/>
+        </g>
+      </svg>
+      <span class="word">dein.li<span class="fade">nk</span></span>
+    </a>
+
+    <nav aria-label="Hauptnavigation">
+      @if (authenticationValuesService.loginStatus$ | async) {
+        <a mat-button routerLink="/link/overview" routerLinkActive="active">Meine Links</a>
+      }
+      <app-report-block variant="nav"></app-report-block>
+      <app-account-toolbar></app-account-toolbar>
+    </nav>
   </div>
+</header>
 
-  <footer><a routerLink="/impressum">Impressum</a></footer>
-</div>
+<main id="main" class="content">
+  <router-outlet></router-outlet>
+</main>
+
+<footer class="page footer">
+  <span>dein.li – Kurzlinks ohne Werbung und ohne Tracking</span>
+  <span class="links">
+    <span>Gemacht von <a href="https://sebamomann.de">Seba Momann</a></span>
+    <a routerLink="/impressum">Impressum</a>
+  </span>
+</footer>

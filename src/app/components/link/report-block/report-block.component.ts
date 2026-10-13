@@ -17,6 +17,10 @@ export class ReportBlockComponent {
   @Input()
   short: string;
 
+  // 'nav' renders a compact top-bar action, 'inline' a quiet text action inside a page
+  @Input()
+  variant: 'nav' | 'inline' = 'inline';
+
   constructor(public dialog: MatDialog, private linkService: LinkService,
               private snackBar: MatSnackBar) {
   }
@@ -39,16 +43,16 @@ export class ReportBlockComponent {
           .subscribe((sResponse) => {
             if (sResponse instanceof HttpErrorResponse) {
               if (sResponse.status === 404) {
-                this.snackBar.open('Link konnte gefunden werden', 'OK', {
+                this.snackBar.open('Diesen Kurzlink gibt es nicht', 'OK', {
                   panelClass: 'snackbar-default'
                 });
               } else {
-                this.snackBar.open('Link konnte nicht gemeldet werden', 'OK', {
+                this.snackBar.open('Melden hat nicht geklappt. Versuche es gleich noch einmal.', 'OK', {
                   panelClass: 'snackbar-default'
                 });
               }
             } else {
-              this.snackBar.open('Link erfolgreich gemeldet!', null, {
+              this.snackBar.open('Danke! Der Link wurde gemeldet.', null, {
                 duration: 2000,
                 panelClass: 'snackbar-default'
               });

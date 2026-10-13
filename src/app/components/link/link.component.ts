@@ -7,13 +7,13 @@ import {Observable} from 'rxjs';
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { MatExpansionPanel } from '@angular/material/expansion';
 import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';
 import {UrlUtil} from '../../_util/Url.util';
 import {DateUtil} from '../../_util/Date.util';
 import {LinkUtil} from '../../_util/Link.util';
 import {ChartFilter} from '../../models/ChartFilter/ChartFilter';
 import {ShareObject} from '../../models/ShareObejct';
+import {ToolbarService} from '../../services/toolbar.service';
 
 export const fadeAnimation = trigger('listAnimation', [
   transition('* <=> *', [
@@ -55,14 +55,15 @@ export class LinkComponent implements OnInit {
   public short: string;
 
   @ViewChild('chartRef', {static: true}) public chartRef: BasicCallChartComponent;
-  @ViewChild('expansionPanel') public expansionPanelRef: MatExpansionPanel;
 
   constructor(private route: ActivatedRoute, private linkService: LinkService,
-              private dialog: MatDialog) {
+              private dialog: MatDialog, toolbarService: ToolbarService) {
     this.route.queryParams.subscribe(params => {
       this.short = params.l;
       this.completeUrl = UrlUtil.getBaseUrl() + this.short;
     });
+
+    toolbarService.setTitle(this.short ? `dein.li/${this.short}` : 'Link');
 
     this.chartFilter = new ChartFilter();
 
@@ -137,14 +138,9 @@ export class LinkComponent implements OnInit {
   }
 
   /**
-   * Close expansion panel of link preview.<br/>
-   * Expansion panel gets triggered on share click.<br/>
-   *
-   * Timeout mandatory due to slight delay.<br/>
+   * Host name of the destination, shown next to the short link
    */
-  public closeExpansionPanel() {
-    setTimeout(() => {
-      this.expansionPanelRef.close();
-    });
+  public domainOf(url: string): string {
+    return UrlUtil.domainOf(url);
   }
 }

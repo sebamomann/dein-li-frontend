@@ -1,15 +1,28 @@
-div {
-  text-align: center;
+@use "src/app/styles/variables" as *;
+
+.report {
+  color: $muted;
+
+  &:hover {
+    color: $amber;
+  }
+
+  &.nav {
+    color: $star;
+  }
 }
 
-mat-icon {
-  margin: 0 auto;
-  display: block;
-  color: white;
-}
+@media (max-width: 720px) {
+  .report.nav {
+    min-width: 0;
+    padding: 0 10px;
 
-span {
-  display: block;
-  color: white;
-  margin-top: 10px;
+    .text {
+      display: none;
+    }
+
+    mat-icon {
+      margin: 0;
+    }
+  }
 }
