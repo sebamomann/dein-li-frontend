@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LinkService } from '../../../services/link.service';
 import { UrlUtil } from '../../../_util/Url.util';
 import { LinkUtil } from '../../../_util/Link.util';
-import { MatButton } from '@angular/material/button';
+import { MatLegacyButton as MatButton } from '@angular/material/legacy-button';
 
 @Component({
   selector: 'app-preview',

@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';
 import {UrlUtil} from '../../_util/Url.util';

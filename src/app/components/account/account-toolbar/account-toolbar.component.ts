@@ -3,7 +3,7 @@ import {AuthenticationService} from '../../../services/authentication.service';
 import {IUser} from '../../../models/IUser.model';
 import {AuthenticationValuesService} from '../../../services/authentication.values.service';
 import {animate, style, transition, trigger} from '@angular/animations';
-import { MatMenuTrigger } from '@angular/material/menu';
+import { MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
 
 
 @Component({

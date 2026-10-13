@@ -1,7 +1,7 @@
 import {Directive, HostListener, Input} from '@angular/core';
 import {ShareObject} from '../../models/ShareObejct';
 import {StringUtil} from '../../_util/String.util';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 @Directive({
   selector: '[appShare]'

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import * as moment from 'moment';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {ChartFilter} from '../../../models/ChartFilter/ChartFilter';
 import {DateUtil} from '../../../_util/Date.util';

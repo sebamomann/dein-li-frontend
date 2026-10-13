@@ -8,10 +8,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './_helper/interceptor/authentication.interceptor';
 import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatLegacyMenuModule as MatMenuModule } from '@angular/material/legacy-menu';
+import { MatLegacySnackBarModule as MatSnackBarModule } from '@angular/material/legacy-snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { WINDOW_PROVIDERS } from './provider/window.provider';
 import { ImpressumComponent } from './components/impressum/impressum.component';
@@ -19,7 +19,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { UpdateService } from './services/update.service';
 import { AuthConfigModule } from './auth-config/auth-config.module';
 import { AccountToolbarModule } from './components/account/account-toolbar/account-toolbar.module';
-import { MatomoModule } from 'ngx-matomo';
 
 registerLocaleData(localeDe);
 
@@ -41,7 +40,6 @@ registerLocaleData(localeDe);
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: true, registrationStrategy: 'registerImmediately' }),
     AuthConfigModule,
     AccountToolbarModule,
-    MatomoModule,
     PageNotFoundModule,
   ],
   providers: [
