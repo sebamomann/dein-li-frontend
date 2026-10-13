@@ -6,7 +6,7 @@ import {Observable} from 'rxjs';
 import {ILinkStats} from '../../models/ILinkStats.model';
 import {LinkService} from '../../services/link.service';
 import {UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validators} from '@angular/forms';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatDialog } from '@angular/material/dialog';
 import {SuccessfulCreationDialogComponent} from '../../dialogs/successful-creation-dialog/successful-creation-dialog.component';
 import {ToolbarService} from '../../services/toolbar.service';
 import {BasicCallChartComponent} from '../charts/basic-call-chart/basic-call-chart.component';

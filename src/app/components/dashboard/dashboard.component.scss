@@ -52,24 +52,24 @@ main {
   .link-creation {
     background-color: $median-background;
     color: lightgray;
-
-    ::ng-deep .mat-form-field .mat-form-field-label {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+    ::ng-deep .mat-mdc-form-field .mat-form-field-label {
       color: lightgray;
     }
-
-    ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+    ::ng-deep .mat-mdc-form-field.mat-focused .mat-form-field-label {
       color: white;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     ::ng-deep .mat-form-field-underline .mat-form-field-ripple {
       background-color: lightgray;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     ::ng-deep .mat-form-field-underline {
       background-color: lightgray;
     }
-
-    ::ng-deep .mat-form-field .mat-form-field-label {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+    ::ng-deep .mat-mdc-form-field .mat-form-field-label {
     }
 
     & .short {

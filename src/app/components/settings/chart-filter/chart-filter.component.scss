@@ -31,7 +31,7 @@
       font-size: 0.75em;
       font-weight: 200;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     ::ng-deep .mat-form-field-wrapper {
       margin-bottom: -0.4em;
     }
@@ -40,42 +40,42 @@
       width: 100%;
     }
 
-    .mat-select {
+    .mat-mdc-select {
       align-self: center;
-
+      /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
       ::ng-deep .mat-select-value {
         color: white;
       }
-
+      /* TODO(mdc-migration): The following rule targets internal classes of select that may no longer apply for the MDC version. */
       ::ng-deep .mat-select-arrow {
         color: white;
       }
     }
 
-    ::ng-deep .mat-input-element:disabled {
+    ::ng-deep .mat-mdc-input-element:disabled {
       color: gray;
     }
-
-    ::ng-deep .mat-form-field .mat-form-field-label {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+    ::ng-deep .mat-mdc-form-field .mat-form-field-label {
       color: lightgray;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     ::ng-deep .mat-form-field-disabled .mat-form-field-label {
       color: gray;
     }
-
-    ::ng-deep .mat-form-field.mat-focused .mat-form-field-label {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
+    ::ng-deep .mat-mdc-form-field.mat-focused .mat-form-field-label {
       color: white;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     ::ng-deep .mat-form-field-underline .mat-form-field-ripple {
       background-color: lightgray;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     ::ng-deep .mat-form-field-underline {
       background-color: lightgray;
     }
-
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
     ::ng-deep .mat-form-field-underline {
       background-color: lightgray;
     }
@@ -84,7 +84,8 @@
       filter: invert(1);
     }
 
-    .mat-checkbox {
+    .mat-mdc-checkbox {
+      /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
       ::ng-deep .mat-checkbox-frame {
         border-color: rgba(255, 255, 255, 0.5);
       }
@@ -165,7 +166,7 @@
         margin-bottom: 0;
         font-size: 0.85em;
       }
-
+      /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
       ::ng-deep .mat-form-field-wrapper {
         &:last-of-type {
           margin-bottom: -1.25em;
