@@ -6,7 +6,7 @@ describe('LinkService', () => {
   beforeEach(() => TestBed.configureTestingModule({ teardown: { destroyAfterEach: false } }));
 
   it('should be created', () => {
-    const service: LinkService = TestBed.get(LinkService);
+    const service: LinkService = TestBed.inject(LinkService);
     expect(service).toBeTruthy();
   });
 });

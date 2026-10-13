@@ -6,7 +6,7 @@ describe('ToolbarService', () => {
   beforeEach(() => TestBed.configureTestingModule({ teardown: { destroyAfterEach: false } }));
 
   it('should be created', () => {
-    const service: ToolbarService = TestBed.get(ToolbarService);
+    const service: ToolbarService = TestBed.inject(ToolbarService);
     expect(service).toBeTruthy();
   });
 });

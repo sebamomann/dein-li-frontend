@@ -6,7 +6,7 @@ describe('AuthenticationService', () => {
   beforeEach(() => TestBed.configureTestingModule({ teardown: { destroyAfterEach: false } }));
 
   it('should be created', () => {
-    const service: AuthenticationService = TestBed.get(AuthenticationService);
+    const service: AuthenticationService = TestBed.inject(AuthenticationService);
     expect(service).toBeTruthy();
   });
 });
