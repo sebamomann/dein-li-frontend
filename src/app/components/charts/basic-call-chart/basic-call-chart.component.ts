@@ -161,7 +161,7 @@ export class BasicCallChartComponent implements OnInit {
         plugins: {
           legend: {display: false},
           tooltip: {
-            backgroundColor: '#151B2E',
+            backgroundColor: '#182036',
             borderColor: '#2C3652',
             borderWidth: 1,
             titleColor: '#8B95B2',

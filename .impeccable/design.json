@@ -1,0 +1,483 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-14T00:00:00Z",
+  "title": "Design System: dein.li",
+  "extensions": {
+    "colorMeta": {
+      "gold": {
+        "role": "primary",
+        "displayName": "Your-Star Gold",
+        "tonalRamp": [
+          "#210000",
+          "#3E1900",
+          "#5D3600",
+          "#7D5500",
+          "#9F750D",
+          "#C2973D",
+          "#FFD27A",
+          "#FFE88F"
+        ],
+        "canonical": "oklch(88.5% 0.118 83)"
+      },
+      "gold-ink": {
+        "role": "primary",
+        "displayName": "Gold Ink",
+        "tonalRamp": [
+          "#0D0900",
+          "#1A1300",
+          "#3A2C00",
+          "#5D3600",
+          "#7D5500",
+          "#9F750D",
+          "#C2973D",
+          "#FFD27A"
+        ]
+      },
+      "amber": {
+        "role": "secondary",
+        "displayName": "Warning Amber",
+        "tonalRamp": [
+          "#250000",
+          "#441100",
+          "#653000",
+          "#8F4A00",
+          "#B26B00",
+          "#D68D06",
+          "#FFB347",
+          "#FFDD75"
+        ],
+        "canonical": "oklch(82.1% 0.149 72)"
+      },
+      "coral": {
+        "role": "tertiary",
+        "displayName": "Locked Coral",
+        "tonalRamp": [
+          "#2D0000",
+          "#4F0000",
+          "#721C1C",
+          "#A62729",
+          "#CC4C48",
+          "#F36F68",
+          "#FF968C",
+          "#FFC1B5"
+        ],
+        "canonical": "oklch(73.3% 0.164 25)"
+      },
+      "sky-0": {
+        "role": "neutral",
+        "displayName": "Deep Sky",
+        "tonalRamp": [
+          "#070A13",
+          "#0A0E1A",
+          "#121829",
+          "#182036",
+          "#1E2638",
+          "#2C3652",
+          "#5D6684",
+          "#8B95B2"
+        ]
+      },
+      "sky": {
+        "role": "neutral",
+        "displayName": "Night Sky",
+        "tonalRamp": [
+          "#070A13",
+          "#0A0E1A",
+          "#121829",
+          "#182036",
+          "#1E2638",
+          "#2C3652",
+          "#5D6684",
+          "#8B95B2"
+        ]
+      },
+      "sky-1": {
+        "role": "neutral",
+        "displayName": "Panel Sky",
+        "tonalRamp": [
+          "#070A13",
+          "#0A0E1A",
+          "#121829",
+          "#182036",
+          "#1E2638",
+          "#2C3652",
+          "#5D6684",
+          "#8B95B2"
+        ]
+      },
+      "sky-2": {
+        "role": "neutral",
+        "displayName": "Raised Sky",
+        "tonalRamp": [
+          "#070A13",
+          "#0A0E1A",
+          "#121829",
+          "#182036",
+          "#1E2638",
+          "#2C3652",
+          "#5D6684",
+          "#8B95B2"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "tonalRamp": [
+          "#070A13",
+          "#0A0E1A",
+          "#121829",
+          "#182036",
+          "#1E2638",
+          "#2C3652",
+          "#5D6684",
+          "#8B95B2"
+        ]
+      },
+      "line-2": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "tonalRamp": [
+          "#070A13",
+          "#0A0E1A",
+          "#121829",
+          "#182036",
+          "#1E2638",
+          "#2C3652",
+          "#5D6684",
+          "#8B95B2"
+        ]
+      },
+      "star": {
+        "role": "neutral",
+        "displayName": "Star White",
+        "tonalRamp": [
+          "#2C3652",
+          "#5D6684",
+          "#8B95B2",
+          "#A7AFC7",
+          "#C3C9DC",
+          "#DCE0EE",
+          "#F2F4FF",
+          "#FAFBFF"
+        ],
+        "canonical": "oklch(96.9% 0.015 278)"
+      },
+      "text-2": {
+        "role": "neutral",
+        "displayName": "Soft Text",
+        "tonalRamp": [
+          "#2C3652",
+          "#5D6684",
+          "#8B95B2",
+          "#A7AFC7",
+          "#C3C9DC",
+          "#DCE0EE",
+          "#F2F4FF",
+          "#FAFBFF"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted Slate",
+        "tonalRamp": [
+          "#2C3652",
+          "#5D6684",
+          "#8B95B2",
+          "#A7AFC7",
+          "#C3C9DC",
+          "#DCE0EE",
+          "#F2F4FF",
+          "#FAFBFF"
+        ],
+        "canonical": "oklch(67.2% 0.045 270)"
+      },
+      "muted-2": {
+        "role": "neutral",
+        "displayName": "Faint Slate",
+        "tonalRamp": [
+          "#2C3652",
+          "#5D6684",
+          "#8B95B2",
+          "#A7AFC7",
+          "#C3C9DC",
+          "#DCE0EE",
+          "#F2F4FF",
+          "#FAFBFF"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Home headline only; second line may switch to 600 for the promise."
+      },
+      "destination": {
+        "displayName": "Destination",
+        "purpose": "Destination domain on the preview page; the largest type in the system."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Status pages, link overview and empty-state titles."
+      },
+      "numeral": {
+        "displayName": "Numeral",
+        "purpose": "Chart totals (Aufrufe, Geräte), tabular figures."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section headings (Aufrufe auf dein.li, Statistik, Verlauf)."
+      },
+      "title-sm": {
+        "displayName": "Title Small",
+        "purpose": "Account band heading and the wordmark."
+      },
+      "lead": {
+        "displayName": "Lead",
+        "purpose": "Line under the display headline, text-2, max 46ch."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Default text."
+      },
+      "button": {
+        "displayName": "Button",
+        "purpose": "Material button labels (theme typography level)."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Column heads, meta, totals' terms, footer, in muted."
+      },
+      "short-label": {
+        "displayName": "Short Label",
+        "purpose": "Every short link; dein.li/ base at 400 in muted. Size shown is the fresh-link size in the sky panel."
+      },
+      "mono-url": {
+        "displayName": "Mono URL",
+        "purpose": "Full destination URLs and the URL/custom-name inputs (12-14px)."
+      }
+    },
+    "shadows": [
+      {
+        "name": "current-point-ring",
+        "value": "0 0 0 5px #121829, 0 0 0 6px rgba(255, 210, 122, .45)",
+        "purpose": "Solid gap ring plus 1px gold ring around the current version point in the link history; a drawn ring, not a shadow."
+      },
+      {
+        "name": "topbar-glass",
+        "value": "background: rgba(10, 14, 26, .82); backdrop-filter: blur(10px)",
+        "purpose": "Sticky top bar only, so content passes under it."
+      },
+      {
+        "name": "focus-ring",
+        "value": "outline: 2px solid #FFD27A; outline-offset: 3px; border-radius: 6px",
+        "purpose": "Global :focus-visible on every focusable element."
+      }
+    ],
+    "motion": [
+      {
+        "name": "light-up-point",
+        "value": "400ms cubic-bezier(.34, 1.4, .64, 1)",
+        "purpose": "Created link's star point scales 0 to 1 with one small overshoot."
+      },
+      {
+        "name": "light-up-label",
+        "value": "400ms cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Created link's label fades in from translateX(-8px)."
+      },
+      {
+        "name": "ring-expand",
+        "value": "1.2s cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Star point ring expands once from scale(.4)."
+      },
+      {
+        "name": "twinkle",
+        "value": "1.2s cubic-bezier(.16, 1, .3, 1) infinite alternate",
+        "purpose": "Loader point: opacity .25 to 1, scale .7 to 1."
+      },
+      {
+        "name": "row-hover",
+        "value": "background .15s",
+        "purpose": "Overview list row hover/focus fill."
+      },
+      {
+        "name": "link-underline",
+        "value": "text-decoration-color .2s",
+        "purpose": "Inline links: underline at 40% star white turns gold on hover."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation-duration/transition-duration .01ms !important",
+        "purpose": "prefers-reduced-motion: final state shows at once."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "560px"
+      },
+      {
+        "name": "compact-nav",
+        "value": "720px"
+      },
+      {
+        "name": "chart-stack",
+        "value": "760px"
+      },
+      {
+        "name": "hero-stack",
+        "value": "900px"
+      },
+      {
+        "name": "chart-js-compact",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Gold flat button; one per view (Kürzen, Kopieren, Link öffnen).",
+      "html": "<button class=\"ds-btn-primary\">Link öffnen <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z\"/></svg></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; height: 52px; padding: 0 24px; background: #FFD27A; color: #1A1300; border: 0; border-radius: 12px; font: 600 16px/1 Sora, system-ui, sans-serif; cursor: pointer; transition: filter .2s; } .ds-btn-primary:hover { filter: brightness(1.06); } .ds-btn-primary:focus-visible { outline: 2px solid #FFD27A; outline-offset: 3px; }"
+    },
+    {
+      "name": "Outlined Button",
+      "kind": "button",
+      "refersTo": "button-outlined",
+      "description": "Secondary action with a strong-hairline outline (Vorschau, Zurück, Anmelden).",
+      "html": "<button class=\"ds-btn-outlined\">Zurück</button>",
+      "css": ".ds-btn-outlined { height: 36px; padding: 0 16px; background: transparent; color: #F2F4FF; border: 1px solid #2C3652; border-radius: 12px; font: 600 15px/1 Sora, system-ui, sans-serif; cursor: pointer; transition: background .15s; } .ds-btn-outlined:hover { background: rgba(242, 244, 255, .06); } .ds-btn-outlined:focus-visible { outline: 2px solid #FFD27A; outline-offset: 3px; }"
+    },
+    {
+      "name": "Risky Outlined Button",
+      "kind": "button",
+      "refersTo": "button-outlined-risky",
+      "description": "Amber outlined button for opening a reported link anyway.",
+      "html": "<button class=\"ds-btn-risky\">Trotzdem öffnen</button>",
+      "css": ".ds-btn-risky { height: 36px; padding: 0 16px; background: transparent; color: #FFB347; border: 1px solid rgba(255, 179, 71, .5); border-radius: 12px; font: 600 15px/1 Sora, system-ui, sans-serif; cursor: pointer; } .ds-btn-risky:hover { background: rgba(255, 179, 71, .08); } .ds-btn-risky:focus-visible { outline: 2px solid #FFD27A; outline-offset: 3px; }"
+    },
+    {
+      "name": "URL Field",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Outlined field; mono input for pasted URLs; gold on focus.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Lange Adresse</span><input class=\"ds-field-input\" placeholder=\"https://…\"></label>",
+      "css": ".ds-field { position: relative; display: block; width: 360px; } .ds-field-label { position: absolute; top: -8px; left: 12px; padding: 0 4px; background: #121829; color: #8B95B2; font: 400 12px/16px Sora, system-ui, sans-serif; } .ds-field-input { width: 100%; box-sizing: border-box; height: 56px; padding: 0 16px; background: transparent; color: #F2F4FF; caret-color: #FFD27A; border: 1px solid #2C3652; border-radius: 12px; font: 400 14px/1 'Martian Mono', ui-monospace, monospace; font-variant-ligatures: none; outline: none; } .ds-field-input::placeholder { color: #8B95B2; } .ds-field-input:hover { border-color: #8B95B2; } .ds-field-input:focus { border: 2px solid #FFD27A; } .ds-field:focus-within .ds-field-label { color: #FFD27A; }"
+    },
+    {
+      "name": "Top Bar",
+      "kind": "nav",
+      "refersTo": "nav-link-active",
+      "description": "Sticky translucent bar: hexagon-and-chain mark, wordmark with faded nk, text links, account control.",
+      "html": "<header class=\"ds-bar\"><a class=\"ds-brand\" href=\"#\"><svg class=\"ds-mark\" viewBox=\"0 0 40 40\" aria-hidden=\"true\"><path d=\"M20 2.5 35.2 11.25v17.5L20 37.5 4.8 28.75v-17.5Z\" fill=\"#182036\" stroke=\"#FFD27A\" stroke-width=\"1.5\"/><g transform=\"rotate(-45 20 20)\" fill=\"none\" stroke=\"#F2F4FF\" stroke-width=\"2.4\"><rect x=\"9.5\" y=\"16\" width=\"12\" height=\"8\" rx=\"4\"/><rect x=\"18.5\" y=\"16\" width=\"12\" height=\"8\" rx=\"4\"/></g></svg><span class=\"ds-word\">dein.li<span class=\"ds-fade\">nk</span></span></a><nav class=\"ds-nav\"><a class=\"ds-nav-link ds-active\" href=\"#\">Meine Links</a><a class=\"ds-nav-link\" href=\"#\">Link melden</a><span class=\"ds-account\"><span class=\"ds-avatar\">S</span>streamteam</span></nav></header>",
+      "css": ".ds-bar { display: flex; align-items: center; gap: 16px; height: 64px; padding: 0 16px; background: rgba(10, 14, 26, .82); backdrop-filter: blur(10px); border-bottom: 1px solid #1E2638; font-family: Sora, system-ui, sans-serif; } .ds-brand { display: inline-flex; align-items: center; gap: 10px; color: #F2F4FF; text-decoration: none; } .ds-mark { width: 32px; height: 32px; } .ds-word { font-size: 1.25rem; font-weight: 600; letter-spacing: -.01em; } .ds-fade { color: #5D6684; } .ds-nav { margin-left: auto; display: flex; align-items: center; gap: 4px; } .ds-nav-link { padding: 0 12px; line-height: 36px; border-radius: 12px; color: #F2F4FF; font-weight: 600; font-size: 15px; text-decoration: none; } .ds-nav-link:hover { background: rgba(242, 244, 255, .06); } .ds-nav-link:focus-visible { outline: 2px solid #FFD27A; outline-offset: 3px; } .ds-active { color: #FFD27A; } .ds-account { display: inline-flex; align-items: center; gap: 8px; margin-left: 8px; padding: 0 10px 0 6px; height: 36px; border: 1px solid #2C3652; border-radius: 12px; color: #F2F4FF; font-weight: 600; font-size: 15px; } .ds-avatar { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #FFD27A; color: #1A1300; font-size: 13px; font-weight: 700; }"
+    },
+    {
+      "name": "Range Toggle",
+      "kind": "chip",
+      "refersTo": "range-toggle-selected",
+      "description": "Segmented time-range control above the chart; selected fills raised sky.",
+      "html": "<div class=\"ds-range\" role=\"group\"><button class=\"ds-range-btn ds-on\">15 Min</button><button class=\"ds-range-btn\">1 Std</button><button class=\"ds-range-btn\">12 Std</button><button class=\"ds-range-btn\">24 Std</button><button class=\"ds-range-btn\">Eigener</button></div>",
+      "css": ".ds-range { display: inline-flex; border: 1px solid #2C3652; border-radius: 12px; overflow: hidden; } .ds-range-btn { height: 34px; padding: 0 12px; background: transparent; color: #8B95B2; border: 0; font: 400 13px/34px Sora, system-ui, sans-serif; cursor: pointer; } .ds-range-btn + .ds-range-btn { border-left: 1px solid #2C3652; } .ds-range-btn:hover { color: #F2F4FF; } .ds-range-btn:focus-visible { outline: 2px solid #FFD27A; outline-offset: -2px; } .ds-on { background: #182036; color: #F2F4FF; }"
+    },
+    {
+      "name": "Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Flat panel one tonal step above the sky with a hairline.",
+      "html": "<section class=\"ds-panel\"><h2 class=\"ds-panel-title\">Deine Links an einem Ort</h2><p class=\"ds-panel-text\">Mit Konto findest du alle deine Links wieder, vergibst eigene Namen und siehst, wie oft sie geöffnet wurden.</p></section>",
+      "css": ".ds-panel { max-width: 560px; padding: 24px 28px; background: #121829; border: 1px solid #1E2638; border-radius: 18px; font-family: Sora, system-ui, sans-serif; } .ds-panel-title { margin: 0; color: #F2F4FF; font-size: 1.25rem; font-weight: 600; } .ds-panel-text { margin: 6px 0 0; color: #C3C9DC; line-height: 1.55; }"
+    },
+    {
+      "name": "Sky Panel with Fresh Star",
+      "kind": "custom",
+      "refersTo": "sky-panel",
+      "description": "Signature: recessed grid panel where a created link lights up as a gold star with its mono label.",
+      "html": "<div class=\"ds-sky\"><div class=\"ds-newest\"><span class=\"ds-star\" aria-hidden=\"true\"></span><div class=\"ds-label\"><span class=\"ds-short\"><span class=\"ds-base\">dein.li/</span>x7Kp2Qa</span><span class=\"ds-dest\">führt zu <strong>youtube.com</strong></span><span class=\"ds-full\">https://www.youtube.com/live/R7Qv4ekmN-0?feature=share</span></div></div></div>",
+      "css": ".ds-sky { width: 480px; padding: 32px; background: linear-gradient(rgba(44, 54, 82, .35) 1px, transparent 1px) 0 0 / 48px 48px, linear-gradient(90deg, rgba(44, 54, 82, .35) 1px, transparent 1px) 0 0 / 48px 48px, #070A13; border: 1px solid #1E2638; border-radius: 18px; font-family: Sora, system-ui, sans-serif; } .ds-newest { display: flex; gap: 22px; align-items: flex-start; } .ds-star { position: relative; flex: none; width: 12px; height: 12px; margin-top: 14px; border-radius: 50%; background: #FFD27A; animation: ds-pop 400ms cubic-bezier(.34, 1.4, .64, 1) both; } .ds-star::after { content: ''; position: absolute; inset: -7px; border-radius: 50%; border: 1px solid rgba(255, 210, 122, .45); animation: ds-ring 1.2s cubic-bezier(.16, 1, .3, 1) both; } .ds-label { min-width: 0; display: flex; flex-direction: column; gap: 6px; animation: ds-write 400ms cubic-bezier(.16, 1, .3, 1) both; } .ds-short { font: 500 2rem/1.2 'Martian Mono', ui-monospace, monospace; font-variant-ligatures: none; color: #FFD27A; } .ds-base { color: #8B95B2; font-weight: 400; } .ds-dest { color: #C3C9DC; font-size: 1.0625rem; } .ds-dest strong { color: #F2F4FF; font-weight: 600; } .ds-full { font: 400 12px/1.5 'Martian Mono', ui-monospace, monospace; color: #8B95B2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } @keyframes ds-pop { from { transform: scale(0); } to { transform: scale(1); } } @keyframes ds-ring { from { transform: scale(.4); } to { transform: scale(1); } } @keyframes ds-write { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; } } @media (prefers-reduced-motion: reduce) { .ds-star, .ds-star::after, .ds-label { animation: none; } }"
+    },
+    {
+      "name": "Status Stars",
+      "kind": "custom",
+      "refersTo": "status-star",
+      "description": "Status marks for notice pages: neutral, locked (coral ring), empty (dashed ring), and the amber point for a reported destination.",
+      "html": "<div class=\"ds-states\"><span class=\"ds-ss\"></span><span class=\"ds-ss ds-locked\"></span><span class=\"ds-ss ds-empty\"></span><span class=\"ds-threat\"><span class=\"ds-amber\"></span>example.com</span></div>",
+      "css": ".ds-states { display: flex; align-items: center; gap: 24px; font-family: Sora, system-ui, sans-serif; } .ds-ss { position: relative; display: block; width: 56px; height: 56px; } .ds-ss::before, .ds-ss::after { content: ''; position: absolute; border-radius: 50%; } .ds-ss::before { inset: 22px; background: #8B95B2; } .ds-ss::after { inset: 8px; border: 1px solid #2C3652; } .ds-locked::before { inset: 24px; background: #5D6684; } .ds-locked::after { border-color: #FF7A72; } .ds-empty::before { display: none; } .ds-empty::after { border: 1px dashed #2C3652; } .ds-threat { display: inline-flex; align-items: center; gap: 16px; color: #F2F4FF; font-size: 1.75rem; font-weight: 600; letter-spacing: -.02em; } .ds-amber { width: 10px; height: 10px; border-radius: 50%; background: #FFB347; }"
+    },
+    {
+      "name": "Link List Row",
+      "kind": "custom",
+      "refersTo": "list-row",
+      "description": "Overview row: quiet star point, mono short label, destination, calls, date; hover lights the point gold.",
+      "html": "<a class=\"ds-row\" href=\"#\"><span class=\"ds-name\"><span class=\"ds-q\"></span><span class=\"ds-sl\">godi</span></span><span class=\"ds-d\">youtube.com</span><span class=\"ds-n\">8.899</span><span class=\"ds-t\">19.07.2026</span></a>",
+      "css": ".ds-row { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr) 110px 120px; gap: 16px; align-items: center; width: 720px; height: 60px; padding: 0 24px; background: #121829; border-top: 1px solid #1E2638; color: #F2F4FF; text-decoration: none; font: 400 16px/1.55 Sora, system-ui, sans-serif; transition: background .15s; } .ds-row:hover, .ds-row:focus-visible { background: #182036; outline: none; } .ds-name { display: flex; align-items: center; gap: 14px; } .ds-q { width: 7px; height: 7px; border-radius: 50%; background: #F2F4FF; } .ds-row:hover .ds-q, .ds-row:focus-visible .ds-q { background: #FFD27A; } .ds-sl { font: 500 16px/1 'Martian Mono', ui-monospace, monospace; } .ds-d { color: #C3C9DC; } .ds-n { text-align: right; font-variant-numeric: tabular-nums; } .ds-t { text-align: right; color: #8B95B2; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Star Chart",
+    "overview": "**Creative North Star: \"The Star Chart\"**\n\ndein.li is a calm night sky with the familiar layout of a link shortener laid over it. The page ground is a deep night blue; content sits on flat panels one step lighter, separated by 1px hairlines. Light is drawn, never emitted: a link is a small solid point with one thin ring, a chart is a constellation of white points joined by a thin slate line, a missing link is an empty dashed ring. There is one warm colour in the whole sky, gold, and it belongs to \"your star\": the primary action, the freshly created link, the selected item, the chart's peak.\n\nThe system is task-first and quiet. Standard Angular Material controls (M2 dark theme, MDC) keep every interaction familiar; the star-chart world supplies the palette, a light geometric sans (Sora) with a monospace (Martian Mono) for anything a person pastes or copies, the low density, and one signature move: a created link lights up. Status is said with star states (an amber point for a reported link, a coral ring for a locked one, an empty dashed ring for \"nothing here\") rather than icons or banners.\n\nThe world rejects two category defaults by construction: the white page with a centred input, and neon-on-black tech styling. There is no glow, no gradient beyond the sky itself, no coloured shadow.\n\n**As built, against the direction contract.** The contract placed a barely visible coordinate grid on the page ground and called for panels one step lighter. The build keeps the page ground plain and draws the grid only inside the home page's sky panel, which is one step *darker* (`sky-0`) than the page: a recessed window into deeper sky rather than a raised panel. The build adds a logged-out account band (\"Deine Links an einem Ort\") between the hero and the activity chart that the contract's first viewport did not name. \"Anmelden\" is a 12px-radius outlined button, not a pill. The range chips became a segmented toggle group on the activity heading row, with further options behind a tune icon. A reported link is marked by an amber point beside its destination rather than by a status star. These are recorded as the shipped system.",
+    "keyCharacteristics": [
+      "Night-blue ground, flat panels one tonal step up, 1px hairlines; depth by tone, not shadow.",
+      "One accent (gold) used only for the user's own star and the single primary action on a view.",
+      "Sora at light 300 for display and numbers, 600 for titles and emphasis; Martian Mono for short codes and URLs.",
+      "Points and thin rings as the only graphic vocabulary; status speaks through star states.",
+      "One motion grammar: 400ms with one small overshoot; reduced motion shows the final state."
+    ],
+    "rules": [
+      {
+        "name": "The One Star Rule",
+        "body": "Gold marks the user's own star and the single primary action on a view; nothing else is gold. A screen with two gold areas competing for the eye is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The State-Only Colour Rule",
+        "body": "Amber and coral appear only when a link is reported, locked or in error. They are never used to decorate or to signal ordinary emphasis.",
+        "section": "colors"
+      },
+      {
+        "name": "The Light-and-Bold Rule",
+        "body": "Large type is Sora 300; emphasis is Sora 600. Mid weights do not carry hierarchy.",
+        "section": "typography"
+      },
+      {
+        "name": "The Pasted-String Rule",
+        "body": "Anything a person pastes, copies or compares character by character (short codes, URLs, the `dein.li/` prefix) is Martian Mono with ligatures off; nothing else is.",
+        "section": "typography"
+      },
+      {
+        "name": "The Familiar Frame Rule",
+        "body": "Layout follows the category standard (top bar, create form first, results beside it, statistics below); the star-chart world lives in palette, type, marks and motion, not in an unusual page structure.",
+        "section": "layout"
+      },
+      {
+        "name": "The Drawn-Light Rule",
+        "body": "Light is a small solid point and thin 1px rings. No glow, no blur halos, no coloured shadows.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Tonal Step Rule",
+        "body": "To raise something, move it one step along `sky-0`, `sky`, `sky-1`, `sky-2` and give it a hairline; do not add a shadow.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** keep gold for the user's own star and the single primary action on a view (The One Star Rule).",
+      "**Do** write every short code and URL as a Short Label or Mono URL in Martian Mono, with the `dein.li/` base faded to `muted`.",
+      "**Do** show the destination before any forward action, with the destination domain as the largest type on the page.",
+      "**Do** express status with star states (amber point, coral ring, dashed empty ring) on the shared notice layout.",
+      "**Do** raise surfaces by one tonal step plus a 1px hairline (`sky-0`, `sky`, `sky-1`, `sky-2`).",
+      "**Do** animate with the 400ms light-up grammar and let reduced motion show the final state.",
+      "**Do** keep standard Material controls and re-skin them through the token overrides in the global stylesheet."
+    ],
+    "donts": [
+      "**Don't** add glow, blur halos, coloured shadows or neon accents; light is points and 1px rings (The Drawn-Light Rule).",
+      "**Don't** use gradients for surfaces or decoration; the sky panel's coordinate grid is the only patterned ground (the loading skeleton's shimmer is a transient state, not a surface).",
+      "**Don't** use amber or coral outside a reported, locked or error state.",
+      "**Don't** set body copy or headings in the monospace, or short codes in Sora.",
+      "**Don't** set display-size Sora at mid weights (400 or 500); large type is 300, emphasis 600.",
+      "**Don't** replace the hexagon-and-chain mark or drop the faded \"nk\" of the wordmark."
+    ]
+  }
+}
