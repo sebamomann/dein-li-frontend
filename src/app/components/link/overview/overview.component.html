@@ -3,7 +3,7 @@
     <h1>Deine Links</h1>
     <div class="controls">
       <mat-form-field class="sort">
-        <mat-label>Sortieren nach</mat-label>
+        <mat-label>Sortierung</mat-label>
         <mat-select [value]="filter" (valueChange)="setFilter($event)">
           <mat-option value="iat">Erstellt</mat-option>
           <mat-option value="calls">Aufrufe gesamt</mat-option>
@@ -50,7 +50,7 @@
       </ul>
     } @else {
       <div class="notice empty">
-        <span class="status-mark" aria-hidden="true"><mat-icon>auto_awesome</mat-icon></span>
+        <span class="status-star empty" aria-hidden="true"></span>
         <h1>Noch keine Links.</h1>
         <p>Sobald du angemeldet einen Link kürzt, erscheint er hier, mit Aufrufen und Verlauf.</p>
         <div class="actions">

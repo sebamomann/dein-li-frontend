@@ -64,8 +64,8 @@ html {
     outlined-caret-color: $gold,
     outlined-container-shape: 12px,
     outlined-disabled-outline-color: $line,
-    outlined-disabled-label-text-color: $muted-2,
-    outlined-disabled-input-text-color: $muted-2,
+    outlined-disabled-label-text-color: $muted,
+    outlined-disabled-input-text-color: $muted,
     outlined-error-outline-color: $coral,
     outlined-error-label-text-color: $coral,
     outlined-error-focus-outline-color: $coral,
@@ -116,18 +116,7 @@ body {
   font-size: 16px;
   line-height: 1.55;
   color: $star;
-  // The night sky: a sparse, fixed field of points (the coordinate grid lives only on the sky panel)
-  background:
-    radial-gradient(1px 1px at 8% 14%, rgba(242, 244, 255, .55) 50%, transparent 51%),
-    radial-gradient(1px 1px at 23% 61%, rgba(242, 244, 255, .35) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 41% 27%, rgba(242, 244, 255, .5) 50%, transparent 51%),
-    radial-gradient(1px 1px at 57% 83%, rgba(242, 244, 255, .3) 50%, transparent 51%),
-    radial-gradient(1px 1px at 69% 9%, rgba(242, 244, 255, .45) 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 84% 47%, rgba(242, 244, 255, .4) 50%, transparent 51%),
-    radial-gradient(1px 1px at 93% 76%, rgba(242, 244, 255, .3) 50%, transparent 51%),
-    radial-gradient(1px 1px at 33% 92%, rgba(242, 244, 255, .25) 50%, transparent 51%),
-    $sky;
-  background-attachment: fixed;
+  background: $sky;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -281,24 +270,49 @@ html {
   }
 }
 
-.status-mark {
-  display: inline-grid;
-  place-items: center;
+// Status pages speak in star states instead of icons
+.status-star {
+  position: relative;
+  display: block;
   width: 56px;
   height: 56px;
-  border-radius: 50%;
-  border: 1px solid $line-2;
-  background: $sky-1;
-  color: $muted;
 
-  &.amber {
-    color: $amber;
-    border-color: rgba($amber, .45);
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
   }
 
-  &.coral {
-    color: $coral;
-    border-color: rgba($coral, .45);
+  // the point
+  &::before {
+    inset: 22px;
+    background: $muted;
+  }
+
+  // the ring
+  &::after {
+    inset: 8px;
+    border: 1px solid $line-2;
+  }
+
+  &.threat {
+    &::before { background: $amber; }
+    &::after { border-color: rgba($amber, .6); }
+  }
+
+  &.locked {
+    &::before { background: $muted-2; inset: 24px; }
+    &::after { border-color: $coral; }
+  }
+
+  &.empty {
+    &::before { display: none; }
+    &::after { border: 1px dashed $line-2; }
+  }
+
+  &.muted {
+    &::before { background: $muted-2; }
   }
 }
 
@@ -314,6 +328,14 @@ html {
 
 .mat-mdc-form-field {
   width: 100%;
+}
+
+.mat-mdc-form-field-hint {
+  color: $muted;
+}
+
+.mat-mdc-form-field input::placeholder {
+  color: $muted;
 }
 
 // The icon font is self-hosted, so the ligature class Google's stylesheet used to provide lives here

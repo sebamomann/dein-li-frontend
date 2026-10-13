@@ -118,16 +118,40 @@ export class BasicCallChartComponent implements OnInit {
           borderColor: '#5D6684',
           borderWidth: 1.5,
           fill: false,
-          tension: 0.35,
+          tension: 0, // straight segments between points, like lines on a star chart
           // let the peak star and its ring draw past the plot edge instead of being cut off
           clip: false,
-          pointRadius: (ctx: any) => peak(ctx) ? 5 : (ctx.raw > 0 ? 2.5 : 0),
-          pointHoverRadius: 6,
+          pointRadius: (ctx: any) => peak(ctx) ? 4 : (ctx.raw > 0 ? 2.5 : 0),
+          pointHoverRadius: 5,
           pointBackgroundColor: (ctx: any) => peak(ctx) ? '#FFD27A' : '#F2F4FF',
-          pointBorderColor: (ctx: any) => peak(ctx) ? 'rgba(255, 210, 122, .35)' : 'transparent',
-          pointBorderWidth: (ctx: any) => peak(ctx) ? 6 : 0,
+          pointBorderWidth: 0,
         }],
       },
+      plugins: [{
+        // the busiest moment gets a thin solid ring with a gap, the same mark as "your star"
+        id: 'peakRing',
+        afterDatasetsDraw: (chart: Chart) => {
+          const meta = chart.getDatasetMeta(0);
+          const data = chart.data.datasets[0]?.data as number[];
+          if (!meta || !data?.length) {
+            return;
+          }
+          const max = Math.max(...data);
+          const index = data.indexOf(max);
+          const point = meta.data[index];
+          if (!(max > 0) || !point) {
+            return;
+          }
+          const c = chart.ctx;
+          c.save();
+          c.beginPath();
+          c.arc(point.x, point.y, 9, 0, Math.PI * 2);
+          c.lineWidth = 1;
+          c.strokeStyle = '#FFD27A';
+          c.stroke();
+          c.restore();
+        },
+      }],
       options: {
         maintainAspectRatio: false,
         animation: {duration: 400},

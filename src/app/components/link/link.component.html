@@ -46,10 +46,10 @@
             </span>
             <span class="point" aria-hidden="true"></span>
             <span class="what">
-              @if (first) {
-                <span class="tag">Aktuelles Ziel</span>
-              }
               <span class="url mono">{{ linkVersion.original }}</span>
+              @if (first) {
+                <span class="tag">aktuell</span>
+              }
             </span>
             <button mat-icon-button (click)="openLinkInNewTab(linkVersion.original)" aria-label="Ziel in neuem Tab öffnen">
               <mat-icon>open_in_new</mat-icon>

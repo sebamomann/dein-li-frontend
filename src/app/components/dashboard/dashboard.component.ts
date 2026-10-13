@@ -54,8 +54,12 @@ export class DashboardComponent implements OnInit {
   public highlightHint = false;
   public creating = false;
 
-  // Links created in this visit, newest first
+  // Links created in this browser, newest first (kept in localStorage, never sent anywhere)
   public created: ILink[] = [];
+
+  // Fixed spots in the lower part of the sky panel where earlier links settle as faint stars
+  private static readonly SPOTS = [{x: 12, y: 58}, {x: 34, y: 82}, {x: 58, y: 50}, {x: 82, y: 74}];
+  private static readonly STORAGE_KEY = 'dein-li.created';
   @ViewChild('chartRef', {static: true})
   public chartRef: BasicCallChartComponent;
   @ViewChild('create', {static: true}) create: ElementRef;
@@ -81,7 +85,23 @@ export class DashboardComponent implements OnInit {
   /**
    *
    */
+  public get earlier(): ILink[] {
+    return this.created.slice(1, 1 + DashboardComponent.SPOTS.length);
+  }
+
+  public fieldSpots(): { x: number, y: number, link?: ILink }[] {
+    const earlier = this.earlier;
+    const count = earlier.length || 3;
+    return DashboardComponent.SPOTS.slice(0, count).map((spot, i) => ({...spot, link: earlier[i]}));
+  }
+
+  public fieldLine(): string {
+    return this.fieldSpots().map((spot) => `${spot.x},${spot.y}`).join(' ');
+  }
+
   public ngOnInit() {
+    this.created = this.readCreated();
+
     this.event = this.formBuilder.group({
       link: new UntypedFormControl('', [Validators.required]),
       short: new UntypedFormControl({value: '', disabled: !this.userIsLoggedIn}, [Validators.minLength(3)]),
@@ -186,6 +206,25 @@ export class DashboardComponent implements OnInit {
     return share;
   }
 
+  private readCreated(): ILink[] {
+    try {
+      const raw = localStorage.getItem(DashboardComponent.STORAGE_KEY);
+      const list = raw ? JSON.parse(raw) : [];
+      return Array.isArray(list) ? list.filter((link) => link && link.short && link.original) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  private storeCreated(): void {
+    try {
+      localStorage.setItem(DashboardComponent.STORAGE_KEY,
+        JSON.stringify(this.created.map(({short, original}) => ({short, original}))));
+    } catch {
+      // storage unavailable (private mode): the panel still works for this visit
+    }
+  }
+
   public logout() {
     this.authenticationService.logout();
   }
@@ -205,7 +244,8 @@ export class DashboardComponent implements OnInit {
    * @param formDirective FormGroupDirective  Needed for properly resetting Validators
    */
   private handleCreationSuccess(sResponse: ILink, formDirective: FormGroupDirective): void {
-    this.created = [sResponse, ...this.created];
+    this.created = [sResponse, ...this.created.filter((link) => link.short !== sResponse.short)].slice(0, 6);
+    this.storeCreated();
 
     formDirective.resetForm();
     this.event.reset();

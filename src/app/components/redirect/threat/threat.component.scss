@@ -1,18 +1,29 @@
 @use "src/app/styles/variables" as *;
 
-.dest-label {
-  margin-top: 32px !important;
-  color: $muted !important;
-  font-size: .9375rem !important;
-}
-
-.dest {
-  margin-top: 4px !important;
-  color: $star !important;
-  font-size: 1.75rem !important;
+.notice .dest {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 36px;
+  color: $star;
+  font-size: 1.75rem;
   font-weight: 600;
   letter-spacing: -.02em;
   word-break: break-word;
+
+  &.loading {
+    color: $muted;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .point {
+    flex: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: $amber;
+  }
 }
 
 .url {

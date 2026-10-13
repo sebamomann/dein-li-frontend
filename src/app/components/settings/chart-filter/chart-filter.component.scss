@@ -79,3 +79,28 @@
     width: 170px;
   }
 }
+
+@media (max-width: 560px) {
+  // keep the settings button on the chip row instead of a row of its own
+  .range {
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  .presets {
+    min-width: 0;
+    overflow-x: auto;
+
+    ::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+      padding: 0 9px;
+    }
+  }
+
+  .live {
+    display: none;
+  }
+
+  .settings {
+    flex: none;
+  }
+}

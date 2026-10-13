@@ -66,23 +66,28 @@
           </div>
         </div>
 
-        @if (created.length > 1) {
-          <ul class="earlier" aria-label="Vorher erstellt">
-            @for (link of created.slice(1, 5); track link.short) {
-              <li>
-                <span class="star-point quiet" aria-hidden="true"></span>
-                <span class="short-label"><span class="base">dein.li/</span>{{ link.short }}</span>
-                <span class="to">→ {{ domainOf(link.original) }}</span>
-              </li>
-            }
-          </ul>
-        }
       } @else {
         <div class="waiting">
           <span class="ring" aria-hidden="true"></span>
           <p>Hier erscheint dein Link, sobald du ihn kürzt.</p>
           <p class="small">Er ist sofort gültig, auch ohne Konto.</p>
         </div>
+      }
+
+      <div class="field" aria-hidden="true">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <polyline [attr.points]="fieldLine()" [class.dashed]="!earlier.length"></polyline>
+        </svg>
+        @for (spot of fieldSpots(); track $index) {
+          <span class="faint" [style.left.%]="spot.x" [style.top.%]="spot.y">
+            @if (spot.link) {
+              <span class="name mono">{{ spot.link.short }}</span>
+            }
+          </span>
+        }
+      </div>
+      @if (earlier.length) {
+        <p class="sr-only">Vorher erstellt: @for (link of earlier; track link.short) {dein.li/{{ link.short }} }</p>
       }
     </div>
   </section>

@@ -119,6 +119,11 @@
     display: none;
   }
 
+  // the header row is hidden on phones; the first link row would double the panel's top edge
+  .list li:nth-child(2) .row {
+    border-top: 0;
+  }
+
   .row {
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas: "name n" "dest d";
