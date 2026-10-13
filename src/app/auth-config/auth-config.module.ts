@@ -1,5 +1,5 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import {AuthConfig, OAuthModule} from 'angular-oauth2-oidc';
 
 import {authConfig, OAuthModuleConfig} from './auth.config';
@@ -19,7 +19,7 @@ export function init_app(authConfigService: AuthConfigService) {
             deps: [AuthConfigService],
             multi: true
         },
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withXhr(), withInterceptorsFromDi())
     ] })
 export class AuthConfigModule {
 }

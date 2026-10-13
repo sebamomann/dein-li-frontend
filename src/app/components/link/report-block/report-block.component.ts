@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ChangeDetectionStrategy} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {ReportDialogComponent} from '../../../dialogs/report-dialog/report-dialog.component';
@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     selector: 'app-report-block',
     templateUrl: './report-block.component.html',
     styleUrls: ['./report-block.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ReportBlockComponent {

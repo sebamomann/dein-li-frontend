@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
     selector: 'app-link-router',
     templateUrl: './link-router.component.html',
     styleUrls: ['./link-router.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LinkRouterComponent implements OnInit {

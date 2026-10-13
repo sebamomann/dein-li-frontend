@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ILink} from '../../models/ILink.model';
 import {ActivatedRoute} from '@angular/router';
 import {LinkService} from '../../services/link.service';
@@ -32,6 +32,7 @@ export const fadeAnimation = trigger('listAnimation', [
     templateUrl: './link.component.html',
     styleUrls: ['./link.component.scss'],
     animations: [fadeAnimation],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class LinkComponent implements OnInit {

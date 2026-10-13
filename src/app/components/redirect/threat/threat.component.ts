@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ILink} from '../../../models/ILink.model';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -8,6 +8,7 @@ import {LinkService} from '../../../services/link.service';
     selector: 'app-threat',
     templateUrl: './threat.component.html',
     styleUrls: ['./threat.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ThreatComponent implements OnInit {

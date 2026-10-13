@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { ILink } from '../../../models/ILink.model';
@@ -12,6 +12,7 @@ import { MatButton } from '@angular/material/button';
     selector: 'app-preview',
     templateUrl: './preview.component.html',
     styleUrls: ['./preview.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class PreviewComponent implements OnInit {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output, ChangeDetectionStrategy } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { LinkService } from '../../services/link.service';
@@ -14,6 +14,7 @@ const validUrl = require('valid-url');
     selector: 'app-add-version-dialog',
     templateUrl: './add-version-dialog.component.html',
     styleUrls: ['./add-version-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AddVersionDialogComponent implements OnInit, OnDestroy {

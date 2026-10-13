@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, ChangeDetectionStrategy} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import {UntypedFormControl, UntypedFormGroup, Validators} from '@angular/forms';
 import {UrlUtil} from '../../_util/Url.util';
@@ -11,6 +11,7 @@ interface ReportDialogData {
     selector: 'app-report-dialog',
     templateUrl: './report-dialog.component.html',
     styleUrls: ['./report-dialog.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ReportDialogComponent {

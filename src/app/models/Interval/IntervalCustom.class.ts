@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 import {Interval} from './Interval.class';
 import {IIntervalCustomJSON} from './IIntervalCustomJSON';
 

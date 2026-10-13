@@ -2,12 +2,12 @@ import {LinkService} from '../../../services/link.service';
 import {ILinkStats} from '../../../models/ILinkStats.model';
 import {ChartDataParser} from '../../../_helper/chart-data.parser';
 
-import * as moment from 'moment';
+import moment from 'moment';
 
 import {Chart} from 'chart.js';
 import {BehaviorSubject} from 'rxjs';
 import {BreakpointObserver} from '@angular/cdk/layout';
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {ChartFilter} from '../../../models/ChartFilter/ChartFilter';
 import {animate, style, transition, trigger} from '@angular/animations';
 
@@ -25,6 +25,7 @@ moment.locale('de');
             ]),
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class BasicCallChartComponent implements OnInit {

@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import * as moment from 'moment';
+import {Component, EventEmitter, Input, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
+import moment from 'moment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {ChartFilter} from '../../../models/ChartFilter/ChartFilter';
@@ -25,6 +25,7 @@ moment.locale('de');
             transition('* => void', animate('500ms ease-out', style({ opacity: 0, height: '0px', paddingBottom: 0, paddingTop: 0, marginBottom: 0 })))
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class ChartFilterComponent implements OnInit {

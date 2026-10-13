@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, ChangeDetectionStrategy } from '@angular/core';
 import { ToolbarService } from './services/toolbar.service';
 import { UpdateService } from './services/update.service';
 import { interval } from 'rxjs';
@@ -8,6 +8,7 @@ import { AuthenticationValuesService } from './services/authentication.values.se
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class AppComponent {

@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 import {IBasicChartData} from '../models/IBasicChartData';
 import {ChartMomentFormat} from '../enum/chart-moment-format.enum';
 import {ChartFilter} from '../models/ChartFilter/ChartFilter';

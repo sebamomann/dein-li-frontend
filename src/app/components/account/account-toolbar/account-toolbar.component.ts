@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {IUser} from '../../../models/IUser.model';
 import {AuthenticationValuesService} from '../../../services/authentication.values.service';
@@ -43,6 +43,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
             ]),
         ])
     ],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 

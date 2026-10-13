@@ -1,7 +1,7 @@
-import * as moment from 'moment';
+import moment from 'moment';
 import * as validUrl from 'valid-url';
 
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ILinkStats} from '../../models/ILinkStats.model';
 import {LinkService} from '../../services/link.service';
@@ -23,6 +23,7 @@ moment.locale('de');
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class DashboardComponent implements OnInit {

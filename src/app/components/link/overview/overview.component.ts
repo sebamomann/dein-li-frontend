@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ILink} from '../../../models/ILink.model';
 import {LinkService} from '../../../services/link.service';
 import {Router} from '@angular/router';
@@ -32,6 +32,7 @@ const listAnimation = trigger('listAnimation', [
     templateUrl: './overview.component.html',
     styleUrls: ['./overview.component.scss'],
     animations: [listAnimation],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: false
 })
 export class OverviewComponent implements OnInit {
