@@ -2,7 +2,8 @@ import {Directive, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnI
 import {Subscription} from 'rxjs';
 
 @Directive({
-  selector: '[appLoadingDisable]',
+    selector: '[appLoadingDisable]',
+    standalone: false
 })
 export class LoadingDisableDirective implements OnInit, OnDestroy {
 

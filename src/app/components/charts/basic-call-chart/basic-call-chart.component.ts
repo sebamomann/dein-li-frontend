@@ -14,17 +14,18 @@ import {animate, style, transition, trigger} from '@angular/animations';
 moment.locale('de');
 
 @Component({
-  selector: 'app-basic-call-chart',
-  templateUrl: './basic-call-chart.component.html',
-  styleUrls: ['./basic-call-chart.component.scss'],
-  animations: [
-    trigger('remove', [
-      transition('* => void', [
-        style({opacity: '1'}),
-        animate('250ms ease-in', style({opacity: 0}))
-      ]),
-    ])
-  ]
+    selector: 'app-basic-call-chart',
+    templateUrl: './basic-call-chart.component.html',
+    styleUrls: ['./basic-call-chart.component.scss'],
+    animations: [
+        trigger('remove', [
+            transition('* => void', [
+                style({ opacity: '1' }),
+                animate('250ms ease-in', style({ opacity: 0 }))
+            ]),
+        ])
+    ],
+    standalone: false
 })
 export class BasicCallChartComponent implements OnInit {
 

@@ -13,19 +13,19 @@ import Timer = NodeJS.Timer;
 moment.locale('de');
 
 @Component({
-  selector: 'app-chart-filter',
-  templateUrl: './chart-filter.component.html',
-  styleUrls: ['./chart-filter.component.scss'],
-  animations: [
-    trigger('fade', [
-      transition('void => *', [
-        style({opacity: '0', height: '0px', paddingBottom: 0, paddingTop: 0, marginBottom: 0}),
-        animate('500ms ease-in', style({opacity: 1, height: '*', paddingBottom: '*', paddingTop: '*', marginBottom: '*'}))
-      ]),
-      transition('* => void',
-        animate('500ms ease-out', style({opacity: 0, height: '0px', paddingBottom: 0, paddingTop: 0, marginBottom: 0})))
-    ])
-  ]
+    selector: 'app-chart-filter',
+    templateUrl: './chart-filter.component.html',
+    styleUrls: ['./chart-filter.component.scss'],
+    animations: [
+        trigger('fade', [
+            transition('void => *', [
+                style({ opacity: '0', height: '0px', paddingBottom: 0, paddingTop: 0, marginBottom: 0 }),
+                animate('500ms ease-in', style({ opacity: 1, height: '*', paddingBottom: '*', paddingTop: '*', marginBottom: '*' }))
+            ]),
+            transition('* => void', animate('500ms ease-out', style({ opacity: 0, height: '0px', paddingBottom: 0, paddingTop: 0, marginBottom: 0 })))
+        ])
+    ],
+    standalone: false
 })
 export class ChartFilterComponent implements OnInit {
   /**

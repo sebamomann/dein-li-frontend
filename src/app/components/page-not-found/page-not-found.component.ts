@@ -3,9 +3,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-page-not-found',
-  templateUrl: './page-not-found.component.html',
-  styleUrls: ['./page-not-found.component.scss']
+    selector: 'app-page-not-found',
+    templateUrl: './page-not-found.component.html',
+    styleUrls: ['./page-not-found.component.scss'],
+    standalone: false
 })
 export class PageNotFoundComponent implements OnInit {
   constructor(private router: Router, @Inject(DOCUMENT) private document, private route: ActivatedRoute) {

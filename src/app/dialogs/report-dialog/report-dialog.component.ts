@@ -8,9 +8,10 @@ interface ReportDialogData {
 }
 
 @Component({
-  selector: 'app-report-dialog',
-  templateUrl: './report-dialog.component.html',
-  styleUrls: ['./report-dialog.component.scss']
+    selector: 'app-report-dialog',
+    templateUrl: './report-dialog.component.html',
+    styleUrls: ['./report-dialog.component.scss'],
+    standalone: false
 })
 export class ReportDialogComponent {
   public short: string;

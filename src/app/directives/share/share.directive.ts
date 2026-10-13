@@ -4,7 +4,8 @@ import {StringUtil} from '../../_util/String.util';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Directive({
-  selector: '[appShare]'
+    selector: '[appShare]',
+    standalone: false
 })
 export class ShareDirective {
   @Input()

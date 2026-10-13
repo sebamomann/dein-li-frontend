@@ -7,42 +7,43 @@ import { MatMenuTrigger } from '@angular/material/menu';
 
 
 @Component({
-  selector: 'app-account-toolbar',
-  templateUrl: './account-toolbar.component.html',
-  styleUrls: ['./account-toolbar.component.scss'],
-  animations: [
-    trigger('appearSidewards', [
-      transition('void => *', [
-        style({width: 0, paddingLeft: 0, paddingRight: 0, borderLeft: 'none'}),
-        animate('750ms {{delay}}ms cubic-bezier(0,.48,.52,1.01)', style({
-          width: '*',
-          paddingLeft: '*',
-          paddingRight: '*',
-          borderLeft: '*'
-        }))
-      ], {params: {delay: 0}}),
-    ]),
-    trigger('appearScale', [
-      transition('void => *', [
-        style({
-          transform: 'scale(0)',
-        }),
-        animate('500ms {{delay}}ms ease-out', style({
-          transform: 'scale(1.15)',
-        })),
-        animate('250ms ease-out', style({
-          transform: 'scale(1)',
-        })),
-      ], {params: {delay: 0}}),
-    ]),
-    trigger('removeScale', [
-      transition('* => void', [
-        style({transform: 'scale(1) rotate(*)'}),
-        animate('150ms ease-in', style({transform: 'scale(1.1) rotate(1deg)'})),
-        animate('350ms ease-out', style({transform: 'scale(0) rotate(1deg)'}))
-      ]),
-    ])
-  ]
+    selector: 'app-account-toolbar',
+    templateUrl: './account-toolbar.component.html',
+    styleUrls: ['./account-toolbar.component.scss'],
+    animations: [
+        trigger('appearSidewards', [
+            transition('void => *', [
+                style({ width: 0, paddingLeft: 0, paddingRight: 0, borderLeft: 'none' }),
+                animate('750ms {{delay}}ms cubic-bezier(0,.48,.52,1.01)', style({
+                    width: '*',
+                    paddingLeft: '*',
+                    paddingRight: '*',
+                    borderLeft: '*'
+                }))
+            ], { params: { delay: 0 } }),
+        ]),
+        trigger('appearScale', [
+            transition('void => *', [
+                style({
+                    transform: 'scale(0)',
+                }),
+                animate('500ms {{delay}}ms ease-out', style({
+                    transform: 'scale(1.15)',
+                })),
+                animate('250ms ease-out', style({
+                    transform: 'scale(1)',
+                })),
+            ], { params: { delay: 0 } }),
+        ]),
+        trigger('removeScale', [
+            transition('* => void', [
+                style({ transform: 'scale(1) rotate(*)' }),
+                animate('150ms ease-in', style({ transform: 'scale(1.1) rotate(1deg)' })),
+                animate('350ms ease-out', style({ transform: 'scale(0) rotate(1deg)' }))
+            ]),
+        ])
+    ],
+    standalone: false
 })
 
 export class AccountToolbarComponent implements OnInit {

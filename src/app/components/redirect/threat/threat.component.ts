@@ -5,9 +5,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {LinkService} from '../../../services/link.service';
 
 @Component({
-  selector: 'app-threat',
-  templateUrl: './threat.component.html',
-  styleUrls: ['./threat.component.scss']
+    selector: 'app-threat',
+    templateUrl: './threat.component.html',
+    styleUrls: ['./threat.component.scss'],
+    standalone: false
 })
 export class ThreatComponent implements OnInit {
   public $link: Observable<ILink>;

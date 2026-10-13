@@ -6,9 +6,10 @@ import {LinkService} from '../../../services/link.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-report-block',
-  templateUrl: './report-block.component.html',
-  styleUrls: ['./report-block.component.scss']
+    selector: 'app-report-block',
+    templateUrl: './report-block.component.html',
+    styleUrls: ['./report-block.component.scss'],
+    standalone: false
 })
 export class ReportBlockComponent {
 

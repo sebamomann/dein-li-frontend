@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
-  selector: 'app-redirect',
-  templateUrl: './redirect.component.html',
-  styleUrls: ['./redirect.component.scss']
+    selector: 'app-redirect',
+    templateUrl: './redirect.component.html',
+    styleUrls: ['./redirect.component.scss'],
+    standalone: false
 })
 export class RedirectComponent implements OnInit {
 

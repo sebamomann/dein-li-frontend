@@ -28,10 +28,11 @@ const listAnimation = trigger('listAnimation', [
 ]);
 
 @Component({
-  selector: 'app-overview',
-  templateUrl: './overview.component.html',
-  styleUrls: ['./overview.component.scss'],
-  animations: [listAnimation]
+    selector: 'app-overview',
+    templateUrl: './overview.component.html',
+    styleUrls: ['./overview.component.scss'],
+    animations: [listAnimation],
+    standalone: false
 })
 export class OverviewComponent implements OnInit {
   public filter = 'iat';

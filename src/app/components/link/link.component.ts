@@ -28,10 +28,11 @@ export const fadeAnimation = trigger('listAnimation', [
 ]);
 
 @Component({
-  selector: 'app-link',
-  templateUrl: './link.component.html',
-  styleUrls: ['./link.component.scss'],
-  animations: [fadeAnimation]
+    selector: 'app-link',
+    templateUrl: './link.component.html',
+    styleUrls: ['./link.component.scss'],
+    animations: [fadeAnimation],
+    standalone: false
 })
 export class LinkComponent implements OnInit {
   /**

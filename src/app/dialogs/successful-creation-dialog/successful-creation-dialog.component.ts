@@ -7,9 +7,10 @@ import {UrlUtil} from '../../_util/Url.util';
 import {ShareObject} from '../../models/ShareObejct';
 
 @Component({
-  selector: 'app-successful-creation-dialog',
-  templateUrl: './successful-creation-dialog.component.html',
-  styleUrls: ['./successful-creation-dialog.component.scss']
+    selector: 'app-successful-creation-dialog',
+    templateUrl: './successful-creation-dialog.component.html',
+    styleUrls: ['./successful-creation-dialog.component.scss'],
+    standalone: false
 })
 export class SuccessfulCreationDialogComponent {
   public shareObject: ShareObject;

@@ -9,9 +9,10 @@ import { LinkUtil } from '../../../_util/Link.util';
 import { MatButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-preview',
-  templateUrl: './preview.component.html',
-  styleUrls: ['./preview.component.scss']
+    selector: 'app-preview',
+    templateUrl: './preview.component.html',
+    styleUrls: ['./preview.component.scss'],
+    standalone: false
 })
 export class PreviewComponent implements OnInit {
   public $link: Observable<ILink>;

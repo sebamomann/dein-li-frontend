@@ -11,9 +11,10 @@ import { UrlUtil } from '../../_util/Url.util';
 const validUrl = require('valid-url');
 
 @Component({
-  selector: 'app-add-version-dialog',
-  templateUrl: './add-version-dialog.component.html',
-  styleUrls: ['./add-version-dialog.component.scss']
+    selector: 'app-add-version-dialog',
+    templateUrl: './add-version-dialog.component.html',
+    styleUrls: ['./add-version-dialog.component.scss'],
+    standalone: false
 })
 export class AddVersionDialogComponent implements OnInit, OnDestroy {
   public link: any;
