@@ -41,7 +41,7 @@
       </form>
     </div>
 
-    <div class="sky panel" aria-live="polite">
+    <div class="sky panel" aria-live="polite" [class.compact]="created.length && !earlier.length">
       @if (created.length) {
         @let newest = created[0];
         <div class="newest" [@lightUp]="newest.short">
@@ -74,6 +74,7 @@
         </div>
       }
 
+      @if (earlier.length || !created.length) {
       <div class="field" aria-hidden="true">
         <svg viewBox="0 0 100 100" preserveAspectRatio="none">
           <polyline [attr.points]="fieldLine()" [class.dashed]="!earlier.length"></polyline>
@@ -86,6 +87,7 @@
           </span>
         }
       </div>
+      }
       @if (earlier.length) {
         <p class="sr-only">Vorher erstellt: @for (link of earlier; track link.short) {dein.li/{{ link.short }} }</p>
       }

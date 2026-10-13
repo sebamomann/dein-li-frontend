@@ -91,7 +91,8 @@ export class DashboardComponent implements OnInit {
 
   public fieldSpots(): { x: number, y: number, link?: ILink }[] {
     const earlier = this.earlier;
-    const count = earlier.length || 3;
+    // placeholder points only while nothing has been created yet
+    const count = earlier.length || (this.created.length ? 0 : 3);
     return DashboardComponent.SPOTS.slice(0, count).map((spot, i) => ({...spot, link: earlier[i]}));
   }
 

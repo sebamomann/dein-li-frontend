@@ -39,3 +39,8 @@
   --mat-button-outlined-outline-color: #{rgba($amber, .5)};
   --mat-button-outlined-label-text-color: #{$amber};
 }
+
+// the amber point beside the destination is the page's one status mark
+.notice h1 {
+  margin-top: 0;
+}
