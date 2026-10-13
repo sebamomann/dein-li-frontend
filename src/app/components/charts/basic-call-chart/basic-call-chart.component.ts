@@ -119,6 +119,8 @@ export class BasicCallChartComponent implements OnInit {
           borderWidth: 1.5,
           fill: false,
           tension: 0.35,
+          // let the peak star and its ring draw past the plot edge instead of being cut off
+          clip: false,
           pointRadius: (ctx: any) => peak(ctx) ? 5 : (ctx.raw > 0 ? 2.5 : 0),
           pointHoverRadius: 6,
           pointBackgroundColor: (ctx: any) => peak(ctx) ? '#FFD27A' : '#F2F4FF',

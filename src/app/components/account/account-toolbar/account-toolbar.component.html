@@ -6,7 +6,7 @@
   <button mat-stroked-button class="account" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
     <span class="avatar" aria-hidden="true">{{ (username || '?').charAt(0).toUpperCase() }}</span>
     <span class="name">{{ username }}</span>
-    <mat-icon class="chev">expand_more</mat-icon>
+    <mat-icon class="chev" iconPositionEnd>expand_more</mat-icon>
   </button>
 } @else {
   <button mat-stroked-button class="login" (click)="login()">

@@ -120,6 +120,11 @@ nav {
     font-size: 1.1rem;
   }
 
+  // "Meine Links" is in the account menu; the bar keeps only icon actions on phones
+  nav .my-links {
+    display: none;
+  }
+
   .content {
     padding-top: 28px;
   }

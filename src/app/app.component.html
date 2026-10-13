@@ -15,7 +15,7 @@
 
     <nav aria-label="Hauptnavigation">
       @if (authenticationValuesService.loginStatus$ | async) {
-        <a mat-button routerLink="/link/overview" routerLinkActive="active">Meine Links</a>
+        <a mat-button class="my-links" routerLink="/link/overview" routerLinkActive="active">Meine Links</a>
       }
       <app-report-block variant="nav"></app-report-block>
       <app-account-toolbar></app-account-toolbar>
