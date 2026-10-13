@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {PreviewComponent} from './preview.component';
 import {RouterModule, Routes} from '@angular/router';
 import {HexagonLoaderModule} from '../../../html-templates/hexagon-loader/hexagon-loader.module';
-import {MatButtonModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 import {ReportBlockModule} from '../report-block/report-block.module';
 
 const routes: Routes = [

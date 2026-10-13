@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { LinkService } from '../../services/link.service';
 import { ILink } from '../../models/ILink.model';

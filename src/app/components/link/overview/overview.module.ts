@@ -4,7 +4,10 @@ import {OverviewComponent} from './overview.component';
 import {RouterModule, Routes} from '@angular/router';
 import {HexagonLoaderModule} from '../../../html-templates/hexagon-loader/hexagon-loader.module';
 import {TextPipesModule} from '../../../pipes/text-pipes.module';
-import {MatButtonModule, MatCardModule, MatIconModule, MatSelectModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {AccountToolbarModule} from '../../account/account-toolbar/account-toolbar.module';
 

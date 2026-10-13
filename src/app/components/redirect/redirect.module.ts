@@ -2,7 +2,9 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RedirectComponent} from './redirect.component';
 import {RouterModule, Routes} from '@angular/router';
-import {MatButtonModule, MatCardModule, MatIconModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import {HexagonLoaderModule} from '../../html-templates/hexagon-loader/hexagon-loader.module';
 
 const routes: Routes = [

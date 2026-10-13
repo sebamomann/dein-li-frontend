@@ -1,5 +1,6 @@
 import {Component, Inject} from '@angular/core';
-import {MAT_DIALOG_DATA, MatDialogRef, MatSnackBar} from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {ILink} from '../../models/ILink.model';
 import {AuthenticationService} from '../../services/authentication.service';
 import {UrlUtil} from '../../_util/Url.util';

@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ChartFilterComponent } from './chart-filter.component';
-import {
-  MatCheckboxModule,
-  MatExpansionModule, MatIconModule,
-  MatInputModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatSelectModule
-} from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import {FormsModule} from '@angular/forms';
 
 

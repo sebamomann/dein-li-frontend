@@ -1,7 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AddVersionDialogComponent} from './add-version-dialog.component';
-import {MatButtonModule, MatDialogModule, MatInputModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 import {ReactiveFormsModule} from '@angular/forms';
 
 

@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {MatDialog, MatSnackBar} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {ReportDialogComponent} from '../../../dialogs/report-dialog/report-dialog.component';
 import {LinkService} from '../../../services/link.service';
 import {HttpErrorResponse} from '@angular/common/http';
