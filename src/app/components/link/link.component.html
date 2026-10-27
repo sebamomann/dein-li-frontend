@@ -23,20 +23,25 @@
 
     @if ($account | async; as account) {
       @if (account.trusted) {
-        <section class="direct panel">
+        <section class="direct panel setting">
+          <div class="setting-text">
+            <span class="setting-label" id="direct-label">Ohne Vorschau weiterleiten</span>
+            <p class="setting-desc" id="direct-desc">
+              @if (account.directForAll) {
+                Gilt gerade für alle deine Links. Ändern kannst du das in den <a routerLink="/account">Einstellungen</a>.
+              } @else {
+                Wer <span class="mono">{{ baseUrl }}{{ link.short }}</span> öffnet, landet sofort auf dem Ziel. Gemeldete Links zeigen weiterhin eine Warnung.
+              }
+            </p>
+          </div>
           <mat-slide-toggle
+            hideIcon
+            aria-labelledby="direct-label"
+            aria-describedby="direct-desc"
             [checked]="link.direct || account.directForAll"
-            [disabled]="account.directForAll"
+            [disabled]="account.directForAll || savingDirect"
             (change)="setDirect($event)">
-            Ohne Vorschau weiterleiten
           </mat-slide-toggle>
-          <p class="hint">
-            @if (account.directForAll) {
-              Alle deine Links leiten direkt weiter. Das kannst du in den <a routerLink="/account">Einstellungen</a> ändern.
-            } @else {
-              Wer <span class="mono">{{ baseUrl }}{{ link.short }}</span> öffnet, landet sofort auf dem Ziel. Gemeldete Links zeigen weiterhin eine Warnung.
-            }
-          </p>
         </section>
       }
     }

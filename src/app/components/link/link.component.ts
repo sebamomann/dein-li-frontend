@@ -47,6 +47,7 @@ export class LinkComponent implements OnInit {
   // TODO PAGINATION
   public $linkVersions: Observable<ILink[]>;
   public $account: Observable<IAccount>;
+  public savingDirect = false;
 
   public chartFilter: ChartFilter;
   public shareObject: ShareObject;
@@ -90,12 +91,16 @@ export class LinkComponent implements OnInit {
    * Let this link skip the preview page (trusted accounts only)
    */
   public setDirect(event: MatSlideToggleChange) {
+    this.savingDirect = true;
     this.linkService.setDirect(this.short, event.checked)
       .subscribe({
         next: (link) => {
+          this.savingDirect = false;
           this.$link = of(link);
+          this.snackBar.open(event.checked ? 'Link leitet jetzt direkt weiter' : 'Link zeigt wieder die Vorschau', null, {duration: 3000});
         },
         error: () => {
+          this.savingDirect = false;
           event.source.checked = !event.checked;
           this.snackBar.open('Einstellung konnte nicht gespeichert werden', null, {duration: 3000});
         }

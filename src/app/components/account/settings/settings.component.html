@@ -1,27 +1,70 @@
-<div class="page narrow">
-  <h1>Einstellungen</h1>
+<div class="page settings">
+  <header class="head">
+    <h1>Einstellungen</h1>
+    @if (account) {
+      <p class="who">
+        Angemeldet als <strong>{{ account.username }}</strong>
+        @if (account.email) {
+          <span class="email">{{ account.email }}</span>
+        }
+      </p>
+    }
+  </header>
 
-  @if ($account | async; as account) {
-    <section class="panel block">
-      <h2>Weiterleitung</h2>
-      @if (account.trusted) {
-        <mat-slide-toggle
-          [checked]="account.directForAll"
-          (change)="setDirectForAll($event)">
-          Alle Links ohne Vorschau weiterleiten
-        </mat-slide-toggle>
-        <p class="hint">
-          Wer einen deiner Kurzlinks öffnet, landet sofort auf dem Ziel statt auf der Vorschau.
-          Einzelne Links kannst du auch auf ihrer eigenen Seite umstellen. Gemeldete Links zeigen weiterhin eine Warnung.
-        </p>
-      } @else {
-        <p class="hint">
-          Deine Links zeigen immer zuerst eine Vorschau mit dem Ziel. Vertrauenswürdige Konten können die Vorschau
-          überspringen. Dafür muss ein Admin dein Konto freischalten.
-        </p>
-      }
+  @if (account) {
+    <section aria-labelledby="forwarding-title">
+      <h2 id="forwarding-title">Weiterleitung</h2>
+
+      <div class="panel">
+        <div class="standing" [class.trusted]="account.trusted">
+          <span class="mark" aria-hidden="true"></span>
+          <div>
+            @if (account.trusted) {
+              <p class="standing-title">Vertrauenswürdiges Konto</p>
+              <p class="standing-desc">
+                Freigeschaltet am {{ account.trustedAt | date: 'dd.MM.yyyy' }}. Deine Links dürfen die Vorschau überspringen.
+              </p>
+            } @else {
+              <p class="standing-title">Noch nicht freigeschaltet</p>
+              <p class="standing-desc">
+                Deine Links zeigen immer zuerst die Vorschau. Ein Admin kann dein Konto freischalten, dann kannst du sie
+                hier abschalten.
+              </p>
+            }
+          </div>
+        </div>
+
+        <div class="setting">
+          <div class="setting-text">
+            <span class="setting-label" id="direct-all-label">Alle Links ohne Vorschau weiterleiten</span>
+            <p class="setting-desc" id="direct-all-desc">
+              Wer einen deiner Kurzlinks öffnet, landet sofort auf dem Ziel. Einzelne Links stellst du auf ihrer eigenen
+              Seite um.
+            </p>
+          </div>
+          <mat-slide-toggle
+            hideIcon
+            aria-labelledby="direct-all-label"
+            aria-describedby="direct-all-desc"
+            [checked]="account.directForAll"
+            [disabled]="!account.trusted || saving"
+            (change)="setDirectForAll($event)">
+          </mat-slide-toggle>
+        </div>
+      </div>
+
+      <p class="note">
+        <span class="threat-point" aria-hidden="true"></span>
+        Gemeldete Links zeigen immer eine Warnung, auch ohne Vorschau.
+      </p>
     </section>
+  } @else if (failed) {
+    <div class="state">
+      <span class="status-star muted" aria-hidden="true"></span>
+      <p>Dein Konto konnte nicht geladen werden.</p>
+      <button mat-stroked-button (click)="load()">Erneut versuchen</button>
+    </div>
   } @else {
-    <p class="loading" role="status">Konto wird geladen …</p>
+    <app-hexagon-loader message="Konto wird geladen …"></app-hexagon-loader>
   }
 </div>

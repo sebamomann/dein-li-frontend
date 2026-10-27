@@ -1,44 +1,70 @@
 <div class="page">
   <header class="head">
     <h1>Konten</h1>
-    <p class="hint">
-      Vertrauenswürdige Konten können ihre Links ohne Vorschau weiterleiten. Konten erscheinen hier, sobald sich jemand
-      einmal angemeldet hat.
+    <p class="lead">
+      Vertrauenswürdige Konten können ihre Links ohne Vorschau weiterleiten. Ein Konto erscheint hier, sobald sich
+      jemand einmal angemeldet hat.
     </p>
   </header>
 
-  @if ($accounts | async; as accounts) {
+  @if (accounts) {
     @if (accounts.length > 0) {
+      <p class="summary" aria-live="polite">
+        <span class="num">{{ trustedCount }}</span> von <span class="num">{{ accounts.length }}</span>
+        {{ accounts.length === 1 ? 'Konto' : 'Konten' }} vertrauenswürdig
+      </p>
+
       <ul class="list panel">
         <li class="cols" aria-hidden="true">
-          <span>Konto</span><span class="d">Zuletzt gesehen</span><span class="t">Vertrauenswürdig</span>
+          <span>Konto</span><span class="d">Zuletzt aktiv</span><span class="t">Vertrauenswürdig</span>
         </li>
-        @for (account of accounts; track accountTrackBy($index, account)) {
-          <li class="row">
+        @for (account of accounts; track account.id) {
+          <li class="row" [class.trusted]="account.trusted">
+            <span class="avatar" [class.me]="account.id === meId" aria-hidden="true">
+              {{ (account.username || '?').charAt(0).toUpperCase() }}
+            </span>
             <span class="who">
-              <span class="name">{{ account.username || account.id }}</span>
-              @if (account.email) {
-                <span class="email">{{ account.email }}</span>
-              }
+              <span class="name">
+                <span class="username">{{ account.username || account.id }}</span>
+                @if (account.id === meId) {
+                  <span class="tag">du</span>
+                }
+              </span>
+              <span class="meta">
+                @if (account.email) {
+                  <span class="email">{{ account.email }}</span>
+                }
+                @if (account.trusted && account.directForAll) {
+                  <span class="direct">alle Links ohne Vorschau</span>
+                }
+              </span>
             </span>
             <span class="d num">{{ account.lastSeen | date: 'dd.MM.yyyy' }}</span>
             <span class="t">
               <mat-slide-toggle
+                hideIcon
                 [checked]="account.trusted"
+                [disabled]="pending.has(account.id)"
                 (change)="setTrusted(account, $event)"
-                [attr.aria-label]="(account.username || account.id) + ' vertrauen'">
-                @if (account.directForAll && account.trusted) {
-                  <span class="note">alle Links direkt</span>
-                }
+                [aria-label]="(account.username || account.id) + ' ist vertrauenswürdig'">
               </mat-slide-toggle>
             </span>
           </li>
         }
       </ul>
     } @else {
-      <p class="loading">Noch keine Konten.</p>
+      <div class="state">
+        <span class="status-star empty" aria-hidden="true"></span>
+        <p>Noch hat sich niemand angemeldet.</p>
+      </div>
     }
+  } @else if (failed) {
+    <div class="state">
+      <span class="status-star muted" aria-hidden="true"></span>
+      <p>Die Konten konnten nicht geladen werden. Bist du als Admin eingetragen?</p>
+      <button mat-stroked-button (click)="load()">Erneut versuchen</button>
+    </div>
   } @else {
-    <p class="loading" role="status">Konten werden geladen …</p>
+    <app-hexagon-loader message="Konten werden geladen …"></app-hexagon-loader>
   }
 </div>

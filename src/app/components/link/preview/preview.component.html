@@ -1,6 +1,13 @@
 <article class="notice preview">
-  @if (forwarding) {
-    <p class="from loading" role="status">Du wirst weitergeleitet …</p>
+  @if (forwarding; as link) {
+    <h1 class="dest">
+      <span class="star-point travelling" aria-hidden="true"></span>
+      <span>{{ domainOf(link.original) }}</span>
+    </h1>
+    <p class="from" role="status">
+      Du wirst von <span class="short-label"><span class="base">dein.li/</span>{{ link.short }}</span> weitergeleitet …
+    </p>
+    <div class="url panel mono">{{ link.original }}</div>
   } @else if ($link | async; as link) {
     <h1 class="dest">
       <span class="star-point" aria-hidden="true"></span>

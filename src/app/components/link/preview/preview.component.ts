@@ -19,7 +19,10 @@ export class PreviewComponent implements OnInit {
   public $link: Observable<ILink>;
 
   public short: string;
-  public forwarding = false;
+  /**
+   * Link being forwarded to directly, shown while the browser leaves
+   */
+  public forwarding: ILink = null;
   public baseUrl = UrlUtil.getBaseDomain();
 
   private readonly forcePreview: boolean;
@@ -61,7 +64,7 @@ export class PreviewComponent implements OnInit {
         });
       } else if (data.openDirectly && !this.forcePreview) {
         // trusted owner chose to skip the preview; the API still stops at the threat page for reported links
-        this.forwarding = true;
+        this.forwarding = data;
         LinkUtil.replaceLocation(window['env']['API_URL'] + "redirect/" + data.short);
       } else {
         setTimeout(() => {

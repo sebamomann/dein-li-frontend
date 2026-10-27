@@ -6,9 +6,7 @@ import { ILink } from '../../models/ILink.model';
 import { Subscription } from 'rxjs';
 import { LinkUtil } from '../../_util/Link.util';
 import { UrlUtil } from '../../_util/Url.util';
-
-// @ts-ignore
-const validUrl = require('valid-url');
+import * as validUrl from 'valid-url';
 
 @Component({
     selector: 'app-add-version-dialog',

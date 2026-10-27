@@ -342,6 +342,12 @@ Chart.js line chart in a panel: straight segments (no tension) in a 1.5px `muted
 - **Overview list:** a panel holding a column-head row (40px, 13px `muted`) and 60px rows divided by `line`, columns short label / destination (`text-2`) / calls (right-aligned, tabular) / created date (`muted`). Hover and focus fill `sky-2` (0.15s) and light the row's quiet point gold. On phones each row becomes two lines (name and calls, destination and date).
 - **Version thread:** versions as a vertical timeline joined by a 1px `line-2` thread; past versions are 7px `muted` points, the current version a 12px gold point with its ring and a gold "aktuell" tag at 0.8125rem 600.
 
+### Settings and Switches
+- **Setting row** (global `.setting`): label (Sora 600, `star`) and a `muted` 0.875rem description on the left, the switch on the right, 20px 24px padding (16px on phones); stacked rows divide by a `line` hairline inside one panel. Used on the settings page, the admin account list and the per-link "Ohne Vorschau weiterleiten" row.
+- **Switch:** Material slide toggle without icons on a `line-2` track; the handle is a `muted` point when off and a gold point when on, no shadow. Disabled drops to 50 to 60% opacity.
+- **Account standing:** a 10px solid star-white point for a trusted account, a dashed `muted` ring for one not yet trusted.
+- **Forwarding state:** when a trusted link skips the preview, the preview page still shows the destination domain at Destination size, "Du wirst von dein.li/… weitergeleitet …" and the full URL, while the star point's ring expands and fades on a 1.2s loop.
+
 ### Loader and Feedback
 - **Loader:** a single 9px gold point that twinkles (opacity 0.25 to 1, scale 0.7 to 1, 1.2s alternating) beside `muted` text.
 - **Skeleton:** a 64px, 12px-radius block shimmering between `sky-1` and `sky-2` while the preview target loads.

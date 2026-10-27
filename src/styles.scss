@@ -102,6 +102,46 @@ html {
   ));
 }
 
+// Switches: a point on a hairline track; it turns gold when on.
+// Doubled class so it beats the theme's .mat-mdc-slide-toggle.mat-accent palette.
+.mat-mdc-slide-toggle.mat-mdc-slide-toggle {
+  @include mat.slide-toggle-overrides((
+    selected-track-color: $line-2,
+    selected-hover-track-color: $line-2,
+    selected-focus-track-color: $line-2,
+    selected-pressed-track-color: $line-2,
+    selected-handle-color: $gold,
+    selected-hover-handle-color: $gold,
+    selected-focus-handle-color: $gold,
+    selected-pressed-handle-color: $gold,
+    selected-icon-color: $gold-ink,
+    unselected-track-color: $line-2,
+    unselected-hover-track-color: $line-2,
+    unselected-focus-track-color: $line-2,
+    unselected-pressed-track-color: $line-2,
+    unselected-handle-color: $muted,
+    unselected-hover-handle-color: $text-2,
+    unselected-focus-handle-color: $text-2,
+    unselected-pressed-handle-color: $text-2,
+    unselected-icon-color: $sky,
+    disabled-selected-track-color: $line-2,
+    disabled-selected-handle-color: $gold,
+    disabled-unselected-track-color: $line,
+    disabled-unselected-handle-color: $muted-2,
+    disabled-track-opacity: .5,
+    disabled-selected-handle-opacity: .6,
+    disabled-unselected-handle-opacity: .6,
+    handle-elevation-shadow: none,
+    disabled-handle-elevation-shadow: none,
+    selected-hover-state-layer-color: $gold,
+    selected-focus-state-layer-color: $gold,
+    selected-pressed-state-layer-color: $gold,
+    unselected-hover-state-layer-color: $star,
+    unselected-focus-state-layer-color: $star,
+    unselected-pressed-state-layer-color: $star,
+  ));
+}
+
 // ---------------------------------------------------------------------------
 // Page
 // ---------------------------------------------------------------------------
@@ -267,6 +307,55 @@ html {
     flex-wrap: wrap;
     gap: 12px;
     margin-top: 28px;
+  }
+}
+
+// A setting: what it does on the left, the switch on the right
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px 24px;
+
+  & + .setting {
+    border-top: 1px solid $line;
+  }
+
+  .setting-text {
+    min-width: 0;
+  }
+
+  .setting-label {
+    display: block;
+    color: $star;
+    font-weight: 600;
+  }
+
+  .setting-desc {
+    margin: 4px 0 0;
+    color: $muted;
+    font-size: .875rem;
+    line-height: 1.5;
+    max-width: 62ch;
+
+    a {
+      color: $text-2;
+      text-underline-offset: 3px;
+
+      &:hover {
+        color: $star;
+      }
+    }
+  }
+
+  mat-slide-toggle {
+    flex: none;
+  }
+
+  @media (max-width: 560px) {
+    padding: 16px;
+    gap: 16px;
   }
 }
 
