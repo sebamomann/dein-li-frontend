@@ -1,11 +1,39 @@
 @use "src/app/styles/variables" as *;
 
+// One left edge for everything; on wide screens the destination's star hangs in the gutter before it
+$hang: 40px;
+
 .preview {
   margin-top: 6vh;
 }
 
+.dest {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 0;
+  font-size: clamp(2.25rem, 7vw, 4rem);
+  font-weight: 600;
+  letter-spacing: -.03em;
+  line-height: 1.05;
+  overflow-wrap: anywhere;
+
+  .star-point {
+    position: absolute;
+    left: -$hang;
+    top: 50%;
+    width: 16px;
+    height: 16px;
+    margin-top: -8px;
+
+    &::after {
+      inset: -9px;
+    }
+  }
+}
+
 .from {
-  margin: 12px 0 0 38px;
+  margin: 12px 0 0;
   color: $text-2;
   font-size: 1.0625rem;
 
@@ -14,40 +42,28 @@
   }
 
   &.loading {
-    margin-left: 0;
     color: $muted;
   }
 }
 
-.dest {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  margin-top: 0;
-  font-size: clamp(2.25rem, 7vw, 4rem);
-  font-weight: 600;
-  letter-spacing: -.03em;
-  line-height: 1.05;
-  word-break: break-word;
-
-  .star-point {
-    width: 16px;
-    height: 16px;
-
-    &::after {
-      inset: -9px;
-    }
-  }
-}
-
+// The full address: the host is what decides where you land, so it carries the weight
 .url {
-  margin-top: 22px;
+  margin: 24px 0 0;
   padding: 16px 18px;
   font-size: 14px;
   line-height: 1.6;
-  color: $text-2;
-  word-break: break-all;
+  color: $muted;
+  overflow-wrap: anywhere;
   user-select: all;
+
+  .host {
+    color: $star;
+    font-weight: 500;
+  }
+
+  .rest {
+    color: $text-2;
+  }
 }
 
 .notice .meta {
@@ -66,21 +82,32 @@
   }
 }
 
+// Reporting stays available but quiet, below everything else
 .report {
-  margin-top: 40px;
-  padding-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  margin-top: 48px;
+  padding-top: 16px;
   border-top: 1px solid $line;
-  margin-left: -12px;
+  color: $muted;
+  font-size: .875rem;
 }
 
 .skeleton {
-  margin-top: 22px;
+  margin-top: 24px;
   height: 64px;
-  max-width: 420px;
   border-radius: 12px;
   background: linear-gradient(90deg, $sky-1, $sky-2, $sky-1);
   background-size: 200% 100%;
   animation: shimmer 1.4s linear infinite;
+
+  &.dest-skeleton {
+    margin-top: 0;
+    width: min(360px, 70%);
+    height: clamp(2.25rem, 7vw, 4rem);
+  }
 }
 
 @keyframes shimmer {
@@ -106,8 +133,38 @@
   }
 }
 
+// Not enough gutter to hang the star: it moves into the line and the text follows it
+@media (max-width: 760px) {
+  .dest {
+    gap: 18px;
+
+    .star-point {
+      position: relative;
+      left: auto;
+      top: auto;
+      margin: 0 0 0 9px;
+      width: 12px;
+      height: 12px;
+
+      &::after {
+        inset: -7px;
+      }
+    }
+  }
+}
+
 @media (max-width: 560px) {
   .notice .actions button {
     flex: 1;
+  }
+
+  // the question and the action stack; pull the text button back so its flag meets the left edge
+  .report {
+    flex-direction: column;
+    align-items: flex-start;
+
+    app-report-block {
+      margin-left: -12px;
+    }
   }
 }

@@ -261,7 +261,7 @@ A near-monochrome night-blue scale with one warm gold accent and two state colou
 - **Body** (Sora 400, 16px, 1.55): default text.
 - **Label** (Sora 400, 0.8125 to 0.875rem, `muted`): column heads, meta, totals' terms, footer.
 - **Short Label** (Martian Mono 500, `dein.li/` base at 400 in `muted`): every short link. Fluid 1.5 to 2.125rem in gold for the freshly created link; 1.75 to 2.75rem in gold as the per-link page title; body size in `star` in lists and the preview line.
-- **Mono URL** (Martian Mono 400, 12 to 14px, `text-2` or `muted`): full destination URLs and the URL and custom-name inputs.
+- **Mono URL** (Martian Mono 400, 12 to 14px, `text-2` or `muted`): full destination URLs and the URL and custom-name inputs. On the preview the address is split: scheme in `muted`, host in `star` at 500 (it decides where you land), the rest in `text-2`, wrapping only before `/ ? & #`.
 
 ### Named Rules
 **The Light-and-Bold Rule.** Large type is Sora 300; emphasis is Sora 600. Mid weights do not carry hierarchy.

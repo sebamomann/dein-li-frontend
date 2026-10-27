@@ -1,3 +1,10 @@
+<ng-template #url let-original>
+  @let parts = partsOf(original);
+  <p class="url panel mono" [attr.aria-label]="'Vollständige Adresse: ' + original">
+    <span class="scheme">{{ parts.scheme }}</span><span class="host">{{ parts.host }}</span>@for (part of parts.rest; track $index) {<wbr><span class="rest">{{ part }}</span>}
+  </p>
+</ng-template>
+
 <article class="notice preview">
   @if (forwarding; as link) {
     <h1 class="dest">
@@ -7,7 +14,7 @@
     <p class="from" role="status">
       Du wirst von <span class="short-label"><span class="base">dein.li/</span>{{ link.short }}</span> weitergeleitet …
     </p>
-    <div class="url panel mono">{{ link.original }}</div>
+    <ng-container *ngTemplateOutlet="url; context: {$implicit: link.original}"></ng-container>
   } @else if ($link | async; as link) {
     <h1 class="dest">
       <span class="star-point" aria-hidden="true"></span>
@@ -15,7 +22,7 @@
     </h1>
     <p class="from">Ziel von <span class="short-label"><span class="base">dein.li/</span>{{ link.short }}</span></p>
 
-    <div class="url panel mono">{{ link.original }}</div>
+    <ng-container *ngTemplateOutlet="url; context: {$implicit: link.original}"></ng-container>
 
     <p class="meta">Erstellt am {{ link.iat | date: 'dd.MM.yyyy' }} um {{ link.iat | date: 'HH:mm' }} Uhr. Prüfe die Adresse, bevor du weitergehst.</p>
 
@@ -30,10 +37,12 @@
       <button mat-stroked-button (click)="redirectToHome()">Zurück</button>
     </div>
 
-    <div class="report">
+    <footer class="report">
+      <span>Stimmt mit diesem Ziel etwas nicht?</span>
       <app-report-block [short]="link.short"></app-report-block>
-    </div>
+    </footer>
   } @else {
+    <div class="skeleton dest-skeleton" aria-hidden="true"></div>
     <p class="from loading" role="status">Ziel wird geladen …</p>
     <div class="skeleton" aria-hidden="true"></div>
   }

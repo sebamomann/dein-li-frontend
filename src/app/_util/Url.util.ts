@@ -59,4 +59,23 @@ export class UrlUtil {
       return url;
     }
   }
+
+  /**
+   * Split a URL for display: scheme, host and the rest, the rest cut before / ? & # so it can wrap there.<br/>
+   * Unparsable URLs come back whole as the rest.
+   */
+  public static partsOf(url: string): { scheme: string, host: string, rest: string[] } {
+    try {
+      const parsed = new URL(url);
+      const rest = url.slice(url.indexOf(parsed.host) + parsed.host.length);
+
+      return {
+        scheme: parsed.protocol + '//',
+        host: parsed.host,
+        rest: rest.split(/(?=[\/?&#])/).filter((part) => part),
+      };
+    } catch {
+      return {scheme: '', host: '', rest: [url]};
+    }
+  }
 }

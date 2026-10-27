@@ -81,6 +81,10 @@ export class PreviewComponent implements OnInit {
     return UrlUtil.domainOf(url);
   }
 
+  public partsOf(url: string) {
+    return UrlUtil.partsOf(url);
+  }
+
   public redirectToHome() {
     this.router.navigate(["/"])
   }

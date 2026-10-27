@@ -1,14 +1,15 @@
 @use "src/app/styles/variables" as *;
 
 .report {
-  color: $muted;
+  // the label colour comes from the button token, not from color
+  --mat-button-text-label-text-color: #{$text-2};
 
   &:hover {
-    color: $amber;
+    --mat-button-text-label-text-color: #{$amber};
   }
 
   &.nav {
-    color: $star;
+    --mat-button-text-label-text-color: #{$star};
   }
 }
 
