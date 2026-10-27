@@ -9,4 +9,7 @@
 last 2 versions
 Firefox ESR
 not dead
+# Older iPhones stay on iOS 15/16; without this, class static blocks (Safari 16.4+) leave the page black
+iOS >= 15
+Safari >= 15
 not IE 9-11 # For IE 9-11 support, remove 'not'.

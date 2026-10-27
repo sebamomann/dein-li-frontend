@@ -19,6 +19,17 @@
  */
 
 /**
+ * Object.hasOwn is used by Angular, but only arrived in Safari 15.4 (iOS 15.0 - 15.3 lack it)
+ */
+if (!Object.hasOwn) {
+  Object.defineProperty(Object, 'hasOwn', {
+    value: (obj: object, key: PropertyKey) => Object.prototype.hasOwnProperty.call(obj, key),
+    configurable: true,
+    writable: true,
+  });
+}
+
+/**
  * By default, zone.js will patch all possible macroTask and DomEvents
  * user can disable parts of macroTask/DomEvents patch by setting following flags
  * because those flags need to be set before `zone.js` being loaded, and webpack
