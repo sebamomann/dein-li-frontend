@@ -92,7 +92,9 @@ export class AuthConfigService {
                   .catch((err) => {
                     console.log('[KEYCLOAK] - ERROR - LOGOUT');
                     this.authenticationValueService.refreshing = false;
-                    this.oauthService.revokeTokenAndLogout();
+                    // only drop the stale tokens locally; redirecting to the Keycloak logout endpoint
+                    // would take the visitor away from the page they opened (e.g. a short link)
+                    this.oauthService.logOut(true);
                     resolveFn(true);
                   });
               }
