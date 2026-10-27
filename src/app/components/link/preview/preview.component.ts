@@ -19,13 +19,20 @@ export class PreviewComponent implements OnInit {
   public $link: Observable<ILink>;
 
   public short: string;
+  public forwarding = false;
   public baseUrl = UrlUtil.getBaseDomain();
+
+  private readonly forcePreview: boolean;
 
   @ViewChild('btnRef') gotoLinkBtn: MatButton;
 
 
   constructor(private route: ActivatedRoute, private router: Router,
     private linkService: LinkService) {
+    // ?preview (or the "~" suffix, which arrives as type=preview) forces the preview page, even for links that open directly
+    const queryParamMap = this.route.snapshot.queryParamMap;
+    this.forcePreview = queryParamMap.has('preview') || queryParamMap.get('type') === 'preview';
+
     if (!this.route.snapshot.paramMap.get('link')) {
       this.route.queryParams
         .subscribe(
@@ -52,6 +59,10 @@ export class PreviewComponent implements OnInit {
             error: "not_found"
           }
         });
+      } else if (data.openDirectly && !this.forcePreview) {
+        // trusted owner chose to skip the preview; the API still stops at the threat page for reported links
+        this.forwarding = true;
+        LinkUtil.replaceLocation(window['env']['API_URL'] + "redirect/" + data.short);
       } else {
         setTimeout(() => {
           this.gotoLinkBtn?.focus();

@@ -59,6 +59,20 @@
   color: $muted;
 }
 
+.direct {
+  margin-top: 32px;
+  padding: 18px 24px;
+
+  .hint {
+    margin-top: 6px;
+    font-size: .875rem;
+
+    a {
+      color: $gold;
+    }
+  }
+}
+
 h2 {
   font-size: 1.5rem;
   font-weight: 600;

@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/co
 import {ILink} from '../../models/ILink.model';
 import {ActivatedRoute} from '@angular/router';
 import {LinkService} from '../../services/link.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 import {animate, query, stagger, style, transition, trigger} from '@angular/animations';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
@@ -14,6 +14,10 @@ import {LinkUtil} from '../../_util/Link.util';
 import {ChartFilter} from '../../models/ChartFilter/ChartFilter';
 import {ShareObject} from '../../models/ShareObejct';
 import {ToolbarService} from '../../services/toolbar.service';
+import {AccountService} from '../../services/account.service';
+import {IAccount} from '../../models/IAccount.model';
+import {MatSlideToggleChange} from '@angular/material/slide-toggle';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 export const fadeAnimation = trigger('listAnimation', [
   transition('* <=> *', [
@@ -42,6 +46,7 @@ export class LinkComponent implements OnInit {
   public $link: Observable<ILink>;
   // TODO PAGINATION
   public $linkVersions: Observable<ILink[]>;
+  public $account: Observable<IAccount>;
 
   public chartFilter: ChartFilter;
   public shareObject: ShareObject;
@@ -57,7 +62,8 @@ export class LinkComponent implements OnInit {
   @ViewChild('chartRef', {static: true}) public chartRef: BasicCallChartComponent;
 
   constructor(private route: ActivatedRoute, private linkService: LinkService,
-              private dialog: MatDialog, toolbarService: ToolbarService) {
+              private dialog: MatDialog, toolbarService: ToolbarService,
+              private accountService: AccountService, private snackBar: MatSnackBar) {
     this.route.queryParams.subscribe(params => {
       this.short = params.l;
       this.completeUrl = UrlUtil.getBaseUrl() + this.short;
@@ -77,6 +83,23 @@ export class LinkComponent implements OnInit {
   public ngOnInit() {
     this.$link = this.linkService.loadLinkByShort(this.short);
     this.$linkVersions = this.linkService.loadLinkVersions(this.short);
+    this.$account = this.accountService.me$;
+  }
+
+  /**
+   * Let this link skip the preview page (trusted accounts only)
+   */
+  public setDirect(event: MatSlideToggleChange) {
+    this.linkService.setDirect(this.short, event.checked)
+      .subscribe({
+        next: (link) => {
+          this.$link = of(link);
+        },
+        error: () => {
+          event.source.checked = !event.checked;
+          this.snackBar.open('Einstellung konnte nicht gespeichert werden', null, {duration: 3000});
+        }
+      });
   }
 
   /**

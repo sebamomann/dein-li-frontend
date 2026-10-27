@@ -4,6 +4,7 @@ import {IUser} from '../../../models/IUser.model';
 import {AuthenticationValuesService} from '../../../services/authentication.values.service';
 import {animate, style, transition, trigger} from '@angular/animations';
 import { MatMenuTrigger } from '@angular/material/menu';
+import {AccountService} from '../../../services/account.service';
 
 
 @Component({
@@ -53,18 +54,27 @@ export class AccountToolbarComponent implements OnInit {
 
   public username = '';
   public userIsLoggedIn = false;
+  public isAdmin = false;
 
   public refreshing = false;
   public refreshingOnInit: boolean;
 
   constructor(public authenticationValuesService: AuthenticationValuesService,
               private authenticationService: AuthenticationService,
+              private accountService: AccountService,
               private _cdr: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
     this.authenticationValuesService.loginStatus$.subscribe((status: boolean) => {
       this.userIsLoggedIn = status;
+
+      if (status) {
+        this.accountService.loadMe().subscribe();
+      }
+    });
+    this.accountService.me$.subscribe((account) => {
+      this.isAdmin = !!account?.admin;
     });
     this.authenticationValuesService.currentUserSubject$.subscribe((user: IUser) => {
       this.username = user ? user.preferred_username : '';

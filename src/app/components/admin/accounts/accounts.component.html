@@ -1,0 +1,44 @@
+<div class="page">
+  <header class="head">
+    <h1>Konten</h1>
+    <p class="hint">
+      Vertrauenswürdige Konten können ihre Links ohne Vorschau weiterleiten. Konten erscheinen hier, sobald sich jemand
+      einmal angemeldet hat.
+    </p>
+  </header>
+
+  @if ($accounts | async; as accounts) {
+    @if (accounts.length > 0) {
+      <ul class="list panel">
+        <li class="cols" aria-hidden="true">
+          <span>Konto</span><span class="d">Zuletzt gesehen</span><span class="t">Vertrauenswürdig</span>
+        </li>
+        @for (account of accounts; track accountTrackBy($index, account)) {
+          <li class="row">
+            <span class="who">
+              <span class="name">{{ account.username || account.id }}</span>
+              @if (account.email) {
+                <span class="email">{{ account.email }}</span>
+              }
+            </span>
+            <span class="d num">{{ account.lastSeen | date: 'dd.MM.yyyy' }}</span>
+            <span class="t">
+              <mat-slide-toggle
+                [checked]="account.trusted"
+                (change)="setTrusted(account, $event)"
+                [attr.aria-label]="(account.username || account.id) + ' vertrauen'">
+                @if (account.directForAll && account.trusted) {
+                  <span class="note">alle Links direkt</span>
+                }
+              </mat-slide-toggle>
+            </span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="loading">Noch keine Konten.</p>
+    }
+  } @else {
+    <p class="loading" role="status">Konten werden geladen …</p>
+  }
+</div>

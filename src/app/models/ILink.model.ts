@@ -3,4 +3,6 @@ export interface ILink {
   original: string;
   short: string;
   iat: Date;
+  direct?: boolean;
+  openDirectly?: boolean;
 }

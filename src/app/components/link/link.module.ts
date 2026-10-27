@@ -8,6 +8,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {AddVersionDialogComponent} from '../../dialogs/add-version-dialog/add-version-dialog.component';
 import {AddVersionDialogModule} from '../../dialogs/add-version-dialog/add-version-dialog.module';
 import {AuthGuard} from '../../_helper/auth.gaurd';
@@ -39,6 +40,7 @@ const routes: Routes = [
         ChartFilterModule,
         BasicCallChartModule,
         MatButtonModule,
+        MatSlideToggleModule,
         ShareModule
     ]
 })

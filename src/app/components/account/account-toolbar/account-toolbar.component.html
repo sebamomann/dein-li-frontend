@@ -20,6 +20,16 @@
     <mat-icon>link</mat-icon>
     Meine Links
   </button>
+  <button mat-menu-item [routerLink]="['/account']">
+    <mat-icon>settings</mat-icon>
+    Einstellungen
+  </button>
+  @if (isAdmin) {
+    <button mat-menu-item [routerLink]="['/admin/accounts']">
+      <mat-icon>verified_user</mat-icon>
+      Konten
+    </button>
+  }
   <button mat-menu-item (click)="openAccountSettings()">
     <mat-icon>person</mat-icon>
     Konto verwalten

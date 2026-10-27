@@ -1,0 +1,27 @@
+<div class="page narrow">
+  <h1>Einstellungen</h1>
+
+  @if ($account | async; as account) {
+    <section class="panel block">
+      <h2>Weiterleitung</h2>
+      @if (account.trusted) {
+        <mat-slide-toggle
+          [checked]="account.directForAll"
+          (change)="setDirectForAll($event)">
+          Alle Links ohne Vorschau weiterleiten
+        </mat-slide-toggle>
+        <p class="hint">
+          Wer einen deiner Kurzlinks öffnet, landet sofort auf dem Ziel statt auf der Vorschau.
+          Einzelne Links kannst du auch auf ihrer eigenen Seite umstellen. Gemeldete Links zeigen weiterhin eine Warnung.
+        </p>
+      } @else {
+        <p class="hint">
+          Deine Links zeigen immer zuerst eine Vorschau mit dem Ziel. Vertrauenswürdige Konten können die Vorschau
+          überspringen. Dafür muss ein Admin dein Konto freischalten.
+        </p>
+      }
+    </section>
+  } @else {
+    <p class="loading" role="status">Konto wird geladen …</p>
+  }
+</div>

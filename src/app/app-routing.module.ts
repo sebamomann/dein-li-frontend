@@ -7,6 +7,8 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', loadChildren: () => import('./components/dashboard/dashboard.module').then(m => m.DashboardModule) },
   { path: 'link', loadChildren: () => import('./components/link/link-router/link-router.module').then(m => m.LinkRouterModule) },
   { path: 'redirect', loadChildren: () => import('./components/redirect/redirect.module').then(m => m.RedirectModule) },
+  { path: 'account', loadChildren: () => import('./components/account/settings/settings.module').then(m => m.SettingsModule) },
+  { path: 'admin/accounts', loadChildren: () => import('./components/admin/accounts/accounts.module').then(m => m.AccountsModule) },
   { path: 'impressum', component: ImpressumComponent },
   { matcher: match, redirectTo: '/link/preview/:link' },
 ];

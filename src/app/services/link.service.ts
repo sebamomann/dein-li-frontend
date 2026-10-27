@@ -118,6 +118,12 @@ export class LinkService {
     );
   }
 
+  public setDirect(short: string, direct: boolean): Observable<ILink> {
+    const url = `${environment.API_URL}links/${short}/direct`;
+
+    return this.httpClient.put<ILink>(url, { direct });
+  }
+
   public loadLinks(orderBy = 'iat', order = 'DESC', limit = 15, offset = 0): Observable<ILink[]> {
     const url = `${environment.API_URL}links?order_by=${orderBy}&order=${order}&limit=${limit}&offset=${offset}`;
 

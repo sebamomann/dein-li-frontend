@@ -13,13 +13,33 @@
           <mat-icon>content_copy</mat-icon>
           Kopieren
         </button>
-        <a mat-stroked-button [routerLink]="['/link/preview', link.short]">Vorschau</a>
+        <a mat-stroked-button [routerLink]="['/link/preview', link.short]" [queryParams]="{preview: 1}">Vorschau</a>
         <button mat-stroked-button (click)="openAddVersionDialog()">
           <mat-icon>edit</mat-icon>
           Neues Ziel
         </button>
       </div>
     </header>
+
+    @if ($account | async; as account) {
+      @if (account.trusted) {
+        <section class="direct panel">
+          <mat-slide-toggle
+            [checked]="link.direct || account.directForAll"
+            [disabled]="account.directForAll"
+            (change)="setDirect($event)">
+            Ohne Vorschau weiterleiten
+          </mat-slide-toggle>
+          <p class="hint">
+            @if (account.directForAll) {
+              Alle deine Links leiten direkt weiter. Das kannst du in den <a routerLink="/account">Einstellungen</a> ändern.
+            } @else {
+              Wer <span class="mono">{{ baseUrl }}{{ link.short }}</span> öffnet, landet sofort auf dem Ziel. Gemeldete Links zeigen weiterhin eine Warnung.
+            }
+          </p>
+        </section>
+      }
+    }
   } @else {
     <p class="loading" role="status">Link wird geladen …</p>
   }

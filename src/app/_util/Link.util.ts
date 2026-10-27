@@ -16,4 +16,13 @@ export class LinkUtil {
   public static openLinkInSameTab(link: string): void {
     window.open(link, "_self");
   }
+
+  /**
+   * Replace the current page with the passed link, so going back skips the current page
+   *
+   * @param link String   Link to open
+   */
+  public static replaceLocation(link: string): void {
+    window.location.replace(link);
+  }
 }
