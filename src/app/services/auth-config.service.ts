@@ -76,6 +76,11 @@ export class AuthConfigService {
 
                 this.authenticationValueService.refreshing = false;
                 resolveFn(true);
+              } else if (!this.oauthService.getAccessToken() && !this.oauthService.getIdToken()) {
+                // never logged in here (or tokens already dropped): skip the Keycloak round trip,
+                // so anonymous visitors of a short link are not held up by the silent refresh iframe
+                this.authenticationValueService.refreshing = false;
+                resolveFn(true);
               } else {
                 this.authenticationValueService.refreshing = true;
                 console.log('[KEYCLOAK] - INVALID TOKEN');

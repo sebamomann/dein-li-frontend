@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, map, retry } from 'rxjs/operators';
 import { ILink } from '../models/ILink.model';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError, timer } from 'rxjs';
 import { ChartFilter } from '../models/ChartFilter/ChartFilter';
 import { ILinkStats } from '../models/ILinkStats.model';
 import { Interval } from '../models/Interval/Interval.class';
@@ -16,19 +16,35 @@ export class LinkService {
   constructor(private httpClient: HttpClient) {
   }
 
-  public loadLinkByShort(short: string): Observable<ILink> {
+  /**
+   * Load a link by its short. Network errors and 5xx are retried twice, because a single failed
+   * request (e.g. while the service worker updates) must not look like a missing link.
+   * Errors are passed on, so callers can tell a 404 from a failed request.
+   */
+  public fetchLinkByShort(short: string): Observable<ILink> {
     const url = `${environment.API_URL}links/${short}`;
 
-    const res = this.httpClient.get(url, { observe: 'response', reportProgress: true });
-
-    return res.pipe(
-      map(response => {
-        return response.body as ILink;
+    return this.httpClient.get<ILink>(url).pipe(
+      retry({
+        count: 2,
+        delay: (err, attempt) => LinkService.isTransient(err) ? timer(500 * attempt) : throwError(() => err),
       }),
+    );
+  }
+
+  public loadLinkByShort(short: string): Observable<ILink> {
+    return this.fetchLinkByShort(short).pipe(
       catchError(() => {
         return of(null);
       })
     );
+  }
+
+  /**
+   * Network error (status 0) or server error - worth another try, unlike a 404
+   */
+  private static isTransient(err: any): boolean {
+    return err instanceof HttpErrorResponse && (err.status === 0 || err.status >= 500);
   }
 
   public loadLinkVersions(short: string): Observable<ILink[]> {

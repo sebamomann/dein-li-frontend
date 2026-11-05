@@ -15,6 +15,17 @@
       Du wirst von <span class="short-label"><span class="base">dein.li/</span>{{ link.short }}</span> weitergeleitet …
     </p>
     <ng-container *ngTemplateOutlet="url; context: {$implicit: link.original}"></ng-container>
+  } @else if (failed) {
+    <span class="status-star muted" aria-hidden="true"></span>
+    <h1>Das Ziel konnte nicht geladen werden.</h1>
+    <p class="from" role="alert">Beim Laden von <span class="short-label"><span class="base">dein.li/</span>{{ short }}</span> hat die Verbindung gerade nicht geklappt.</p>
+    <div class="actions">
+      <button mat-flat-button (click)="load()">
+        Nochmal versuchen
+        <mat-icon iconPositionEnd>refresh</mat-icon>
+      </button>
+      <button mat-stroked-button (click)="redirectToHome()">Zur Startseite</button>
+    </div>
   } @else if ($link | async; as link) {
     <h1 class="dest">
       <span class="star-point" aria-hidden="true"></span>

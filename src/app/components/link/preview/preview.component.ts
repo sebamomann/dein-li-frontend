@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { EMPTY, Observable } from 'rxjs';
+import { catchError, shareReplay } from 'rxjs/operators';
 import { ILink } from '../../../models/ILink.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LinkService } from '../../../services/link.service';
@@ -23,6 +23,10 @@ export class PreviewComponent implements OnInit {
    * Link being forwarded to directly, shown while the browser leaves
    */
   public forwarding: ILink = null;
+  /**
+   * Loading failed for a reason other than a missing link
+   */
+  public failed = false;
   public baseUrl = UrlUtil.getBaseDomain();
 
   private readonly forcePreview: boolean;
@@ -52,9 +56,33 @@ export class PreviewComponent implements OnInit {
    * When view is loaded, load link by passed URL query parameter
    */
   public ngOnInit() {
+    this.load();
+  }
+
+  /**
+   * Load the link. Only a 404 leads to the "not found" page; any other failure (network, server)
+   * shows an error with a retry button instead
+   */
+  public load() {
+    this.failed = false;
+
     // shareReplay: the template's async pipe and the subscription below share one request,
     // so the button exists by the time we focus it
-    this.$link = this.linkService.loadLinkByShort(this.short).pipe(shareReplay(1));
+    this.$link = this.linkService.fetchLinkByShort(this.short).pipe(
+      catchError((err) => {
+        if (err?.status === 404) {
+          this.router.navigate(['/redirect'], {
+            queryParams: {
+              error: "not_found"
+            }
+          });
+        } else {
+          this.failed = true;
+        }
+        return EMPTY;
+      }),
+      shareReplay(1),
+    );
     this.$link.subscribe((data) => {
       if (data == null) {
         this.router.navigate(['/redirect'], {
